@@ -9,17 +9,21 @@ import java.util.regex.Pattern;
 
 public class EmplyeeView {
     Scanner scanner = new Scanner(System.in);
+    EmployeImpl employeImpl = new EmployeImpl();
 
     public EmplyeeView() {
         System.out.println("1- Ajouter un employé");
         System.out.println("2- Chercher un employé par matricule");
-        System.out.println("3- Mettre a jour un employé");
+        System.out.println("3- Supprimer un employé");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
             }
             case "2" -> {
                 this.findOneView();
+            }
+            case "3" -> {
+                this.deleteView();
             }
             default -> {
                 System.out.println("You must choose a valid choice");
@@ -44,8 +48,8 @@ public class EmplyeeView {
         employe.setMatricule(scanner.nextLine());
         LocalDate DateDeRecrutement = this.getDate("Date De Recrutement (yyyy-mm-dd) :");
         employe.setDateDeRecrutement(DateDeRecrutement);
-        EmployeImpl employe1 = new EmployeImpl();
-        employe1.save(employe);
+        employeImpl.save(employe);
+        System.out.println("Done");
     }
 
     public LocalDate getDate(String message) {
@@ -69,8 +73,16 @@ public class EmplyeeView {
         System.out.println("Matricule : ");
         Employe employe = new Employe();
         employe.setMatricule(scanner.nextLine());
-        EmployeImpl employe1 = new EmployeImpl();
-        Employe employe2 = employe1.findOne(employe);
-        System.out.println(employe2.getNom() + "    " + employe2.getPrenom()+ "    " + employe2.getTelephone()+ "    " + employe2.getMatricule()+ "    " + employe2.getEmail()+ "    " + employe2.getDateDeRecrutement()+ "    " + employe2.getDateDeNaissance());
+        Employe employe2 = employeImpl.findOne(employe);
+        System.out.println(employe2.getNom() + "    " + employe2.getPrenom() + "    " + employe2.getTelephone() + "    " + employe2.getMatricule() + "    " + employe2.getEmail() + "    " + employe2.getDateDeRecrutement() + "    " + employe2.getDateDeNaissance());
+    }
+
+    public void deleteView() {
+        System.out.println("Matricule : ");
+        Employe employe = new Employe();
+        employe.setMatricule(scanner.nextLine());
+        if (employeImpl.delete(employe) == 1) {
+            System.out.println("La suppression a bien été effectuée");
+        }
     }
 }

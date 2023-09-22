@@ -40,6 +40,15 @@ public class EmployeImpl implements EmployeInter {
 
     @Override
     public int delete(Employe employe) {
+        try {
+            String query = "DELETE FROM public.employe WHERE matricule=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, employe.getMatricule());
+            preparedStatement.execute();
+            return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return 0;
     }
 
@@ -50,7 +59,7 @@ public class EmployeImpl implements EmployeInter {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getMatricule());
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Employe employe1 = new Employe();
                 employe1.setMatricule(resultSet.getString("matricule"));
                 employe1.setEmail(resultSet.getString("email"));
@@ -60,7 +69,7 @@ public class EmployeImpl implements EmployeInter {
                 employe1.setNom(resultSet.getString("nom"));
                 return employe1;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return null;
