@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    private Connection connection;
     private static DatabaseConnection instance;
     private final String url = "jdbc:postgresql://localhost/myBank";
     private final String user = "postgres";
@@ -22,7 +21,7 @@ public class DatabaseConnection {
     }
 
     public Connection getConnection() {
-        return connection;
+        return this.conn;
     }
 
     public static DatabaseConnection getInstance() {

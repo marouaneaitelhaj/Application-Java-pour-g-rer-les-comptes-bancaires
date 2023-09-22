@@ -1,5 +1,5 @@
-DROP DATABASE myBank;
-CREATE DATABASE IF NOT EXISTS myBank;
+-- DROP DATABASE myBank;
+-- CREATE DATABASE IF NOT EXISTS myBank;
 
 
 
@@ -34,14 +34,14 @@ CREATE TABLE IF NOT EXISTS  Compte (
 
 CREATE TABLE IF NOT EXISTS  CompteEpargne (
     compte VARCHAR(255) PRIMARY KEY,
-    tauxDinteret DOUBLE,
+    tauxDinteret double precision,
     FOREIGN KEY (compte) REFERENCES compte(numero)
 );
 
 
 CREATE TABLE IF NOT EXISTS  CompteCourant (
     compte VARCHAR(255)  PRIMARY KEY,
-    decouvert DOUBLE,
+    decouvert double precision,
     FOREIGN KEY (compte) REFERENCES compte(numero)
 );
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS  MissionOfEmploye (
 CREATE TABLE IF NOT EXISTS  Operation (
                            numero VARCHAR(255),
                            dateDeCreation DATE,
-                           montant DOUBLE,
+                           montant double precision,
                            employe VARCHAR(255),
                            compte VARCHAR(255),
                            FOREIGN KEY (compte) REFERENCES Compte(numero),
