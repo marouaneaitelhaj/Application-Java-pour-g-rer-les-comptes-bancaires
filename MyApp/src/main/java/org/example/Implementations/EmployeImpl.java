@@ -6,7 +6,9 @@ import org.example.Interfaces.EmployeInter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeImpl implements EmployeInter {
@@ -43,6 +45,24 @@ public class EmployeImpl implements EmployeInter {
 
     @Override
     public Employe findOne(Employe employe) {
+        try {
+            String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM public.employe WHERE matricule=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, employe.getMatricule());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Employe employe1 = new Employe();
+                employe1.setMatricule(resultSet.getString("matricule"));
+                employe1.setEmail(resultSet.getString("email"));
+                employe1.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+                employe1.setDateDeRecrutement(LocalDate.parse(resultSet.getString("datederecrutement")));
+                employe1.setTelephone(resultSet.getString("telephone"));
+                employe1.setNom(resultSet.getString("nom"));
+                return employe1;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return null;
     }
 

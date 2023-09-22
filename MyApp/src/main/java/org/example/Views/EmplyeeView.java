@@ -12,11 +12,14 @@ public class EmplyeeView {
 
     public EmplyeeView() {
         System.out.println("1- Ajouter un employé");
-        System.out.println("2- Supprimer un employé");
+        System.out.println("2- Chercher un employé par matricule");
         System.out.println("3- Mettre a jour un employé");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
+            }
+            case "2" -> {
+                this.findOneView();
             }
             default -> {
                 System.out.println("You must choose a valid choice");
@@ -60,5 +63,14 @@ public class EmplyeeView {
             System.out.println("Format de date invalide. Veuillez entrer la date au format yyyy-mm-dd.");
             return getDate(message);
         }
+    }
+
+    public void findOneView() {
+        System.out.println("Matricule : ");
+        Employe employe = new Employe();
+        employe.setMatricule(scanner.nextLine());
+        EmployeImpl employe1 = new EmployeImpl();
+        Employe employe2 = employe1.findOne(employe);
+        System.out.println(employe2.getNom() + "    " + employe2.getPrenom()+ "    " + employe2.getTelephone()+ "    " + employe2.getMatricule()+ "    " + employe2.getEmail()+ "    " + employe2.getDateDeRecrutement()+ "    " + employe2.getDateDeNaissance());
     }
 }
