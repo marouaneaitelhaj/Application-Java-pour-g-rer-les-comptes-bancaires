@@ -1,5 +1,12 @@
--- Create the Client table
-CREATE TABLE Client (
+DROP DATABASE myBank;
+CREATE DATABASE IF NOT EXISTS myBank;
+
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS  Client (
                         nom VARCHAR(255),
                         prenom VARCHAR(255),
                         dateDeNaissance DATE,
@@ -7,19 +14,7 @@ CREATE TABLE Client (
                         code VARCHAR(255) PRIMARY KEY,
                         adresse VARCHAR(255)
 );
-
--- Create the Compte table with a foreign key reference to Client
-CREATE TABLE Compte (
-                        numero SERIAL PRIMARY KEY,
-                        solde INT,
-                        date DATE,
-                        etat CompteEtat,
-                        client VARCHAR(225),
-                        FOREIGN KEY (client) REFERENCES Client(code)
-);
-
--- Create the Employe table
-CREATE TABLE Employe (
+CREATE TABLE IF NOT EXISTS  Employe (
                          nom VARCHAR(255),
                          prenom VARCHAR(255),
                          dateDeNaissance DATE,
@@ -28,30 +23,51 @@ CREATE TABLE Employe (
                          dateDeRecrutement DATE,
                          email VARCHAR(255)
 );
-
--- Create the Mission table
-CREATE TABLE Mission (
-                         id SERIAL PRIMARY KEY,
-                         code VARCHAR(255),
-                         nom VARCHAR(255),
-                         description TEXT
+CREATE TABLE IF NOT EXISTS  Compte (
+                        numero VARCHAR(255) PRIMARY KEY,
+                        solde INT,
+                        date DATE,
+                        etat VARCHAR(255),
+                        client VARCHAR(225),
+                        FOREIGN KEY (client) REFERENCES Client(code)
 );
 
--- Create the MissionOfEmploye table
-CREATE TABLE MissionOfEmploye (
-                                  id SERIAL PRIMARY KEY,
-                                  mission_id INT,
-                                  employe_id INT,
+CREATE TABLE IF NOT EXISTS  CompteEpargne (
+    compte VARCHAR(255) PRIMARY KEY,
+    tauxDinteret DOUBLE,
+    FOREIGN KEY (compte) REFERENCES compte(numero)
+);
+
+
+CREATE TABLE IF NOT EXISTS  CompteCourant (
+    compte VARCHAR(255)  PRIMARY KEY,
+    decouvert DOUBLE,
+    FOREIGN KEY (compte) REFERENCES compte(numero)
+);
+
+
+
+CREATE TABLE IF NOT EXISTS  Mission (
+                         code VARCHAR(255) PRIMARY KEY,
+                         nom VARCHAR(255),
+                         description VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS  MissionOfEmploye (
+                                  mission VARCHAR(255),
+                                  employe VARCHAR(255),
                                   dateStart DATE,
                                   dateEnd DATE,
-                                  FOREIGN KEY (mission_id) REFERENCES Mission(id),
-                                  FOREIGN KEY (employe_id) REFERENCES Employe(id)
+                                  FOREIGN KEY (mission) REFERENCES Mission(code),
+                                  FOREIGN KEY (employe) REFERENCES Employe(matricule)
 );
 
--- Create the Operation table
-CREATE TABLE Operation (
-                           id SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS  Operation (
                            numero VARCHAR(255),
                            dateDeCreation DATE,
-                           montant REAL
+                           montant DOUBLE,
+                           employe VARCHAR(255),
+                           compte VARCHAR(255),
+                           FOREIGN KEY (compte) REFERENCES Compte(numero),
+                           FOREIGN KEY (employe) REFERENCES Employe(matricule)
 );
