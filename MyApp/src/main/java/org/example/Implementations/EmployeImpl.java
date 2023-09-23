@@ -60,14 +60,15 @@ public class EmployeImpl implements EmployeInter {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getMatricule());
             ResultSet resultSet = preparedStatement.executeQuery();
-            Employe employe1 = new Employe();
-            employe1.setMatricule(resultSet.getString("matricule"));
-            employe1.setEmail(resultSet.getString("email"));
-            employe1.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
-            employe1.setDateDeRecrutement(LocalDate.parse(resultSet.getString("datederecrutement")));
-            employe1.setTelephone(resultSet.getString("telephone"));
-            employe1.setNom(resultSet.getString("nom"));
-            return employe1;
+            while (resultSet.next()) {
+                employe.setMatricule(resultSet.getString("matricule"));
+                employe.setEmail(resultSet.getString("email"));
+                employe.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+                employe.setDateDeRecrutement(LocalDate.parse(resultSet.getString("datederecrutement")));
+                employe.setTelephone(resultSet.getString("telephone"));
+                employe.setNom(resultSet.getString("nom"));
+            }
+            return employe;
         } catch (Exception e) {
             System.out.println(e);
         }

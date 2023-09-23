@@ -13,12 +13,17 @@ public class ClientView {
 
     public ClientView() {
         System.out.println("1- Créer un client");
+        System.out.println("2- Chercher un client par matricule");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
             }
+            case "2" -> {
+                this.findOneView();
+            }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
+                new ClientView();
             }
         }
     }
@@ -41,5 +46,14 @@ public class ClientView {
             System.out.println("Le client a été bein ajoutée");
             MainPage mainPage = new MainPage();
         }
+    }
+
+    public void findOneView() {
+        Client client = new Client();
+        System.out.println("Code:");
+        client.setCode(scanner.nextLine());
+        ClientImpl clientImpl = new ClientImpl();
+        client = clientImpl.findOne(client);
+        System.out.println(client.getNom()+"    "+client.getPrenom()+"    "+client.getTelephone()+"    "+client.getCode()+"    "+client.getAdresse()+"    "+client.getDateDeNaissance());
     }
 }

@@ -16,6 +16,7 @@ public class MainPage {
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
+                new MainPage();
             }
         }
     }
