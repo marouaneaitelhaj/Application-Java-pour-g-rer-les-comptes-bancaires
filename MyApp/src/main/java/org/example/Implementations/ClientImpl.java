@@ -6,6 +6,8 @@ import org.example.Interfaces.ClientInter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ClientImpl implements ClientInter {
@@ -42,6 +44,24 @@ public class ClientImpl implements ClientInter {
 
     @Override
     public Client findOne(Client t) {
+        try {
+            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client WHERE code=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, t.getCode());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                t.setNom(resultSet.getString("nom"));
+                t.setPrenom(resultSet.getString("prenom"));
+                t.setTelephone(resultSet.getString("telephone"));
+                t.setCode(resultSet.getString("code"));
+                t.setAdresse(resultSet.getString("adresse"));
+                t.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+            }
+            return t;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         return null;
     }
 

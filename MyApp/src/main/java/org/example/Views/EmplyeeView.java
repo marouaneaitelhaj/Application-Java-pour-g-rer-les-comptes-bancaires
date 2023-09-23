@@ -13,8 +13,8 @@ public class EmplyeeView {
 
     public EmplyeeView() {
         System.out.println("1- Ajouter un employé");
-        System.out.println("2- Supprimer un employé");
-        System.out.println("3- Mettre a jour un employé");
+        System.out.println("2- Chercher un employé par matricule");
+        System.out.println("3- Supprimer un employé");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -27,6 +27,7 @@ public class EmplyeeView {
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
+                new EmplyeeView();
             }
         }
 
