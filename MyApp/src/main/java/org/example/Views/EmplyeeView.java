@@ -1,6 +1,7 @@
 package org.example.Views;
 
 import org.example.Entity.Employe;
+import org.example.Helpers.MyFunction;
 import org.example.Implementations.EmployeImpl;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public class EmplyeeView {
                 this.deleteView();
             }
             default -> {
-                System.out.println("You must choose a valid choice");
+                System.out.println("Vous devez choisir un choix valide");
             }
         }
 
@@ -40,33 +41,17 @@ public class EmplyeeView {
         employe.setPrenom(scanner.nextLine());
         System.out.println("Email :");
         employe.setEmail(scanner.nextLine());
-        LocalDate DateDeNaissance = this.getDate("Date De Naissance (yyyy-mm-dd) :");
+        LocalDate DateDeNaissance = MyFunction.getDate("Date De Naissance (yyyy-mm-dd) :");
         employe.setDateDeNaissance(DateDeNaissance);
         System.out.println("Telephone :");
         employe.setTelephone(scanner.nextLine());
         System.out.println("Matricule :");
         employe.setMatricule(scanner.nextLine());
-        LocalDate DateDeRecrutement = this.getDate("Date De Recrutement (yyyy-mm-dd) :");
+        LocalDate DateDeRecrutement = MyFunction.getDate("Date De Recrutement (yyyy-mm-dd) :");
         employe.setDateDeRecrutement(DateDeRecrutement);
         employeImpl.save(employe);
         System.out.println("Done");
-    }
-
-    public LocalDate getDate(String message) {
-        Pattern datePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
-        System.out.println(message);
-        String inputDate = scanner.nextLine();
-        if (datePattern.matcher(inputDate).matches()) {
-            try {
-                return LocalDate.parse(inputDate);
-            } catch (Exception e) {
-                System.out.println(e);
-                return getDate(message);
-            }
-        } else {
-            System.out.println("Format de date invalide. Veuillez entrer la date au format yyyy-mm-dd.");
-            return getDate(message);
-        }
+        MainPage mainPage = new MainPage();
     }
 
     public void findOneView() {
@@ -83,6 +68,7 @@ public class EmplyeeView {
         employe.setMatricule(scanner.nextLine());
         if (employeImpl.delete(employe) == 1) {
             System.out.println("La suppression a bien été effectuée");
+            MainPage mainPage = new MainPage();
         }
     }
 }
