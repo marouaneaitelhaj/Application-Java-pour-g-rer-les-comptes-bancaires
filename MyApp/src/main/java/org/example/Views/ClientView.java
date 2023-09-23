@@ -14,12 +14,16 @@ public class ClientView {
     public ClientView() {
         System.out.println("1- Créer un client");
         System.out.println("2- Chercher un client par matricule");
+        System.out.println("3- Supprimer un client");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
             }
             case "2" -> {
                 this.findOneView();
+            }
+            case "3" -> {
+                this.deleteView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -44,8 +48,10 @@ public class ClientView {
         client.setDateDeNaissance(DateDeNaissance);
         if (clientImpl.save(client) == client) {
             System.out.println("Le client a été bein ajoutée");
-            MainPage mainPage = new MainPage();
+        } else {
+            System.out.println("Le client n'a pas ajouté");
         }
+        MainPage mainPage = new MainPage();
     }
 
     public void findOneView() {
@@ -54,6 +60,22 @@ public class ClientView {
         client.setCode(scanner.nextLine());
         ClientImpl clientImpl = new ClientImpl();
         client = clientImpl.findOne(client);
-        System.out.println(client.getNom()+"    "+client.getPrenom()+"    "+client.getTelephone()+"    "+client.getCode()+"    "+client.getAdresse()+"    "+client.getDateDeNaissance());
+        if (client != null) {
+            System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
+        } else {
+            System.out.println("Aucun employé trouvé");
+        }
+        new ClientView();
+    }
+
+    public void deleteView() {
+        Client client = new Client();
+        System.out.println("Code:");
+        client.setCode(scanner.nextLine());
+        ClientImpl clientImpl = new ClientImpl();
+        if (clientImpl.delete(client) == 1) {
+            System.out.println("La suppression a bien été effectuée");
+            new MainPage();
+        }
     }
 }

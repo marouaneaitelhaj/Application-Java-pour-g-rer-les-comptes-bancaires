@@ -3,6 +3,7 @@ package org.example.Views;
 import org.example.Entity.Employe;
 import org.example.Helpers.MyFunction;
 import org.example.Implementations.EmployeImpl;
+import org.example.Main;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -50,7 +51,12 @@ public class EmplyeeView {
         LocalDate DateDeRecrutement = MyFunction.getDate("Date De Recrutement (yyyy-mm-dd) :");
         employe.setDateDeRecrutement(DateDeRecrutement);
         EmployeImpl employe1 = new EmployeImpl();
-        employe1.save(employe);
+        if (employe1.save(employe) == null) {
+            System.out.println("L'employé n'a pas ajouté");
+        } else {
+            System.out.println("L'employé est ajouté");
+        }
+        new EmplyeeView();
     }
 
 
@@ -59,7 +65,11 @@ public class EmplyeeView {
         Employe employe = new Employe();
         employe.setMatricule(scanner.nextLine());
         Employe employe2 = employeImpl.findOne(employe);
-        System.out.println(employe2.getNom() + "    " + employe2.getPrenom() + "    " + employe2.getTelephone() + "    " + employe2.getMatricule() + "    " + employe2.getEmail() + "    " + employe2.getDateDeRecrutement() + "    " + employe2.getDateDeNaissance());
+        if (employe2 != null) {
+            System.out.println(employe2.getNom() + "    " + employe2.getPrenom() + "    " + employe2.getTelephone() + "    " + employe2.getMatricule() + "    " + employe2.getEmail() + "    " + employe2.getDateDeRecrutement() + "    " + employe2.getDateDeNaissance());
+        } else {
+            System.out.println("Aucun employé trouvé");
+        }
     }
 
     public void deleteView() {
@@ -69,6 +79,9 @@ public class EmplyeeView {
         if (employeImpl.delete(employe) == 1) {
             System.out.println("La suppression a bien été effectuée");
             MainPage mainPage = new MainPage();
+        } else {
+            System.out.println("L'employé n'a pas supprimé");
+            new EmplyeeView();
         }
     }
 }

@@ -24,8 +24,9 @@ public class ClientImpl implements ClientInter {
             statement.setString(4, t.getTelephone());
             statement.setString(5, t.getCode());
             statement.setString(6, t.getAdresse());
-            statement.execute();
-            return t;
+            if (statement.execute()) {
+                return t;
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -39,6 +40,17 @@ public class ClientImpl implements ClientInter {
 
     @Override
     public int delete(Client t) {
+        try {
+            String query = "DELETE FROM public.client WHERE code=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, t.getCode());
+            System.out.println(preparedStatement.execute());
+            if (preparedStatement.execute()) {
+                return 1;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return 0;
     }
 
