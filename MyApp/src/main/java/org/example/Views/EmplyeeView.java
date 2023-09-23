@@ -6,6 +6,7 @@ import org.example.Implementations.EmployeImpl;
 import org.example.Main;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class EmplyeeView {
@@ -64,9 +65,9 @@ public class EmplyeeView {
         System.out.println("Matricule : ");
         Employe employe = new Employe();
         employe.setMatricule(scanner.nextLine());
-        Employe employe2 = employeImpl.findOne(employe);
-        if (employe2 != null) {
-            System.out.println(employe2.getNom() + "    " + employe2.getPrenom() + "    " + employe2.getTelephone() + "    " + employe2.getMatricule() + "    " + employe2.getEmail() + "    " + employe2.getDateDeRecrutement() + "    " + employe2.getDateDeNaissance());
+        Optional<Employe> employe2 = employeImpl.findOne(employe);
+        if (employe2.isPresent()) {
+            System.out.println(employe2.get().getNom() + "    " + employe2.get().getPrenom() + "    " + employe2.get().getTelephone() + "    " + employe2.get().getMatricule() + "    " + employe2.get().getEmail() + "    " + employe2.get().getDateDeRecrutement() + "    " + employe2.get().getDateDeNaissance());
         } else {
             System.out.println("Aucun employé trouvé");
         }

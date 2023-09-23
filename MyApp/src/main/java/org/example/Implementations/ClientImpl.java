@@ -9,12 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class ClientImpl implements ClientInter {
     Connection connection = DatabaseConnection.getInstance().getConnection();
 
     @Override
-    public Client save(Client t) {
+    public Optional<Client> save(Client t) {
         try {
             String query = "INSERT INTO public.client(nom, prenom, datedenaissance, telephone, code, adresse) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -25,17 +26,17 @@ public class ClientImpl implements ClientInter {
             statement.setString(5, t.getCode());
             statement.setString(6, t.getAdresse());
             if (statement.execute()) {
-                return t;
+                return Optional.of(t);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public Client update(Client t) {
-        return null;
+    public Optional<Client> update(Client t) {
+        return Optional.empty();
     }
 
     @Override
@@ -55,7 +56,7 @@ public class ClientImpl implements ClientInter {
     }
 
     @Override
-    public Client findOne(Client t) {
+    public Optional<Client> findOne(Client t) {
         try {
             String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client WHERE code=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -69,12 +70,12 @@ public class ClientImpl implements ClientInter {
                 t.setAdresse(resultSet.getString("adresse"));
                 t.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
             }
-            return t;
+            return Optional.of(t);
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     @Override

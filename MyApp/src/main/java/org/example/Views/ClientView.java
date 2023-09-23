@@ -5,6 +5,7 @@ import org.example.Helpers.MyFunction;
 import org.example.Implementations.ClientImpl;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ClientView {
@@ -46,7 +47,7 @@ public class ClientView {
         client.setAdresse(scanner.nextLine());
         LocalDate DateDeNaissance = MyFunction.getDate("Date De Naissance (yyyy-mm-dd) :");
         client.setDateDeNaissance(DateDeNaissance);
-        if (clientImpl.save(client) == client) {
+        if (clientImpl.save(client).isPresent()) {
             System.out.println("Le client a été bein ajoutée");
         } else {
             System.out.println("Le client n'a pas ajouté");
@@ -59,8 +60,8 @@ public class ClientView {
         System.out.println("Code:");
         client.setCode(scanner.nextLine());
         ClientImpl clientImpl = new ClientImpl();
-        client = clientImpl.findOne(client);
-        if (client != null) {
+        Optional<Client> client1 = clientImpl.findOne(client);
+        if (client1.isPresent()) {
             System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
         } else {
             System.out.println("Aucun employé trouvé");

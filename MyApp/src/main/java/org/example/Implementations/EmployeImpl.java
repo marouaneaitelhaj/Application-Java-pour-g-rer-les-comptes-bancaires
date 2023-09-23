@@ -9,12 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeImpl implements EmployeInter {
     Connection connection = DatabaseConnection.getInstance().getConnection();
 
     @Override
-    public Employe save(Employe employe) {
+    public Optional<Employe> save(Employe employe) {
         try {
             String query = "INSERT INTO public.employe( nom, prenom, datedenaissance, telephone, matricule, datederecrutement, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -26,16 +27,16 @@ public class EmployeImpl implements EmployeInter {
             preparedStatement.setString(6, employe.getDateDeRecrutement().toString());
             preparedStatement.setString(7, employe.getEmail());
             if (preparedStatement.execute()){
-                return employe;
+                return Optional.of(employe);
             }
         } catch (Exception e) {
             System.out.printf(String.valueOf(e));
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public Employe update(Employe employe) {
+    public Optional<Employe> update(Employe employe) {
         return null;
     }
 
@@ -55,7 +56,7 @@ public class EmployeImpl implements EmployeInter {
     }
 
     @Override
-    public Employe findOne(Employe employe) {
+    public Optional<Employe> findOne(Employe employe) {
 
         try {
             String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM public.employe WHERE matricule=?;";
@@ -70,11 +71,11 @@ public class EmployeImpl implements EmployeInter {
                 employe.setTelephone(resultSet.getString("telephone"));
                 employe.setNom(resultSet.getString("nom"));
             }
-            return employe;
+            return Optional.of(employe);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
