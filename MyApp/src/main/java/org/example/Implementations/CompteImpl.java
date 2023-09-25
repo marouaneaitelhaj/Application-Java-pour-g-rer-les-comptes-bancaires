@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,14 +46,23 @@ public class CompteImpl implements CompteInter {
             String query = "DELETE FROM public.compte WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, compte.getNumero());
+            if (preparedStatement.executeUpdate() == 0) {
+                return 0;
+            }
             return 1;
         } catch (Exception e) {
+            System.out.println(e);
         }
         return 0;
     }
 
     @Override
     public Optional<Compte> findOne(Compte compte) {
+        return Optional.empty();
+    }
+
+    public List<Compte> findByClient(Compte compte) {
+        List<Compte> compteArrayList = new ArrayList<Compte>();
         try {
             String query = "SELECT numero, solde, date, etat, client FROM public.compte WHERE client=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -66,12 +76,12 @@ public class CompteImpl implements CompteInter {
                 Client client = new Client();
                 client.setCode(resultSet.getString("client"));
                 compte.setClient(client);
-                return Optional.of(compte);
+                compteArrayList.add(compte);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return compteArrayList;
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.example.Implementations.CourantImpl;
 import org.example.Implementations.EpargneImpl;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -41,8 +42,10 @@ public class CompteView {
                 }
             }
             case "2" -> {
+                this.findByClientView();
             }
             case "3" -> {
+                this.deleteView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -67,21 +70,33 @@ public class CompteView {
         return optionalCompte;
     }
 
-    public void findOneView() {
+    public void findByClientView() {
         System.out.println("Client: ");
         Client client = new Client();
         client.setCode(scanner.nextLine());
         Compte compte = new Compte();
         compte.setClient(client);
-        Optional<Compte> compte1 = compteImpl.findOne(compte);
-        if (compte1.isPresent()) {
-            System.out.println(compte1.get().getNumero() + "    " + compte1.get().getSolde() + "  " + compte1.get().getDate() + "   " + compte1.get().getCompteEtat() + "   " + compte1.get().getClient());
-        } else {
+        List<Compte> compteList = compteImpl.findByClient(compte);
+        if (compteList.isEmpty()){
             System.out.println("Aucun employé trouvé");
+        }else {
+            compteList.stream().forEach(compte1 -> {
+                System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
+            });
         }
+        new CompteView();
     }
 
     public void deleteView() {
+        System.out.println("Numero : ");
+        Compte compte = new Compte();
+        compte.setNumero(scanner.nextLine());
+        if (compteImpl.delete(compte) == 1) {
+            System.out.println("La suppression a bien été effectuée");
+        } else {
+            System.out.println("La suppression n'a pas bien été effectuée");
+        }
+        new MainPage();
     }
 
     public void saveCompteEpargne() {

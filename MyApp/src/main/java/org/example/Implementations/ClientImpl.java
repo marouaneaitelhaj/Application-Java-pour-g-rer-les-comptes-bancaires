@@ -43,8 +43,9 @@ public class ClientImpl implements ClientInter {
             String query = "DELETE FROM public.client WHERE code=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, client.getCode());
-            System.out.println(preparedStatement.execute());
-            preparedStatement.execute();
+            if (preparedStatement.executeUpdate() == 0) {
+                return 0;
+            }
             return 1;
         } catch (Exception e) {
             System.out.println(e);

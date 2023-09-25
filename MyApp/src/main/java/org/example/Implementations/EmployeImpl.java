@@ -46,7 +46,9 @@ public class EmployeImpl implements EmployeInter {
             String query = "DELETE FROM public.employe WHERE matricule=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getMatricule());
-            preparedStatement.execute();
+            if (preparedStatement.executeUpdate() == 0) {
+                return 0;
+            }
             return 1;
         } catch (Exception e) {
             System.out.println(e);
