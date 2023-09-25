@@ -9,7 +9,7 @@
 CREATE TABLE IF NOT EXISTS  Client (
                         nom VARCHAR(255),
                         prenom VARCHAR(255),
-                        dateDeNaissance DATE,
+                        dateDeNaissance VARCHAR(255),
                         telephone VARCHAR(255),
                         code VARCHAR(255) PRIMARY KEY,
                         adresse VARCHAR(255)
@@ -17,16 +17,16 @@ CREATE TABLE IF NOT EXISTS  Client (
 CREATE TABLE IF NOT EXISTS  Employe (
                          nom VARCHAR(255),
                          prenom VARCHAR(255),
-                         dateDeNaissance DATE,
+                         dateDeNaissance VARCHAR(255),
                          telephone VARCHAR(255),
                          matricule VARCHAR(255) PRIMARY KEY,
-                         dateDeRecrutement DATE,
+                         dateDeRecrutement VARCHAR(255),
                          email VARCHAR(255)
 );
 CREATE TABLE IF NOT EXISTS  Compte (
                         numero VARCHAR(255) PRIMARY KEY,
                         solde INT,
-                        date DATE,
+                        date VARCHAR(255),
                         etat VARCHAR(255),
                         client VARCHAR(225),
                         FOREIGN KEY (client) REFERENCES Client(code)
@@ -56,15 +56,15 @@ CREATE TABLE IF NOT EXISTS  Mission (
 CREATE TABLE IF NOT EXISTS  MissionOfEmploye (
                                   mission VARCHAR(255),
                                   employe VARCHAR(255),
-                                  dateStart DATE,
-                                  dateEnd DATE,
+                                  dateStart VARCHAR(255),
+                                  dateEnd VARCHAR(255),
                                   FOREIGN KEY (mission) REFERENCES Mission(code),
                                   FOREIGN KEY (employe) REFERENCES Employe(matricule)
 );
 
 CREATE TABLE IF NOT EXISTS  Operation (
                            numero VARCHAR(255),
-                           dateDeCreation DATE,
+                           dateDeCreation VARCHAR(255),
                            montant double precision,
                            employe VARCHAR(255),
                            compte VARCHAR(255),
