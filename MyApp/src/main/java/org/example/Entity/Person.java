@@ -3,10 +3,10 @@ package org.example.Entity;
 import java.time.LocalDate;
 
 public abstract class Person {
-    private String nom;
-    private String prenom;
-    private LocalDate dateDeNaissance;
-    private String telephone;
+    protected String nom;
+    protected String prenom;
+    protected LocalDate dateDeNaissance;
+    protected String telephone;
 
     public String getNom() {
         return nom;

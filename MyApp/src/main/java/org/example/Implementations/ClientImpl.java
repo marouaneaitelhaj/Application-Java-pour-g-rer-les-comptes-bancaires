@@ -15,19 +15,17 @@ public class ClientImpl implements ClientInter {
     Connection connection = DatabaseConnection.getInstance().getConnection();
 
     @Override
-    public Optional<Client> save(Client t) {
+    public Optional<Client> save(Client client) {
         try {
             String query = "INSERT INTO public.client(nom, prenom, datedenaissance, telephone, code, adresse) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, t.getNom());
-            statement.setString(2, t.getPrenom());
-            statement.setString(3, t.getDateDeNaissance().toString());
-            statement.setString(4, t.getTelephone());
-            statement.setString(5, t.getCode());
-            statement.setString(6, t.getAdresse());
-            if (statement.execute()) {
-                return Optional.of(t);
-            }
+            statement.setString(1, client.getNom());
+            statement.setString(2, client.getPrenom());
+            statement.setString(3, client.getDateDeNaissance().toString());
+            statement.setString(4, client.getTelephone());
+            statement.setString(5, client.getCode());
+            statement.setString(6, client.getAdresse());
+            return Optional.of(client);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -35,20 +33,19 @@ public class ClientImpl implements ClientInter {
     }
 
     @Override
-    public Optional<Client> update(Client t) {
+    public Optional<Client> update(Client client) {
         return Optional.empty();
     }
 
     @Override
-    public int delete(Client t) {
+    public int delete(Client client) {
         try {
             String query = "DELETE FROM public.client WHERE code=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, t.getCode());
+            preparedStatement.setString(1, client.getCode());
             System.out.println(preparedStatement.execute());
-            if (preparedStatement.execute()) {
-                return 1;
-            }
+            preparedStatement.execute();
+            return 1;
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -56,21 +53,21 @@ public class ClientImpl implements ClientInter {
     }
 
     @Override
-    public Optional<Client> findOne(Client t) {
+    public Optional<Client> findOne(Client client) {
         try {
             String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client WHERE code=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, t.getCode());
+            preparedStatement.setString(1, client.getCode());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                t.setNom(resultSet.getString("nom"));
-                t.setPrenom(resultSet.getString("prenom"));
-                t.setTelephone(resultSet.getString("telephone"));
-                t.setCode(resultSet.getString("code"));
-                t.setAdresse(resultSet.getString("adresse"));
-                t.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+                client.setNom(resultSet.getString("nom"));
+                client.setPrenom(resultSet.getString("prenom"));
+                client.setTelephone(resultSet.getString("telephone"));
+                client.setCode(resultSet.getString("code"));
+                client.setAdresse(resultSet.getString("adresse"));
+                client.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
             }
-            return Optional.of(t);
+            return Optional.of(client);
         } catch (Exception e) {
             System.out.println(e);
         }

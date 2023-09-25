@@ -26,9 +26,8 @@ public class EmployeImpl implements EmployeInter {
             preparedStatement.setString(5, employe.getMatricule());
             preparedStatement.setString(6, employe.getDateDeRecrutement().toString());
             preparedStatement.setString(7, employe.getEmail());
-            if (preparedStatement.execute()){
-                return Optional.of(employe);
-            }
+            preparedStatement.execute();
+            return Optional.of(employe);
         } catch (Exception e) {
             System.out.printf(String.valueOf(e));
         }

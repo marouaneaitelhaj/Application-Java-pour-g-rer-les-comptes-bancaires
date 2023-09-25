@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CrudRepository<M> {
-    Optional<M> save(M t);
-    Optional<M> update(M t);
-    int delete(M t);
-    Optional<M> findOne(M t);
+    Optional<M> save(M m);
+    Optional<M> update(M m);
+    int delete(M m);
+    Optional<M> findOne(M m);
     List<M> findAll();
 }
