@@ -1,11 +1,12 @@
 package org.example.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CrudRepository<M> {
-    M save(M t);
-    M update(M t);
-    int delete(M t);
-    M findOne(M t);
+    Optional<M> save(M m);
+    Optional<M> update(M m);
+    int delete(M m);
+    Optional<M> findOne(M m);
     List<M> findAll();
 }
