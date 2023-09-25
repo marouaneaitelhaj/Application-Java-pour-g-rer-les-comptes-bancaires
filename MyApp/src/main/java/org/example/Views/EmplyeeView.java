@@ -6,6 +6,7 @@ import org.example.Implementations.EmployeImpl;
 import org.example.Main;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ public class EmplyeeView {
         System.out.println("1- Ajouter un employé");
         System.out.println("2- Chercher un employé par matricule");
         System.out.println("3- Supprimer un employé");
+        System.out.println("4- Afficher la liste des employés");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -26,6 +28,9 @@ public class EmplyeeView {
             }
             case "3" -> {
                 this.deleteView();
+            }
+            case "4" -> {
+                this.showView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -84,5 +89,12 @@ public class EmplyeeView {
             System.out.println("L'employé n'a pas supprimé");
             new EmplyeeView();
         }
+    }
+
+    public void showView() {
+        List<Employe> employeImplAll = employeImpl.findAll();
+        employeImplAll.stream().forEach(employe -> {
+            System.out.println(employe.getNom() + "     "+employe.getPrenom() + "     "+employe.getTelephone() + "     "+employe.getMatricule() + "     "+employe.getEmail() + "     "+employe.getDateDeNaissance() + "     "+employe.getDateDeRecrutement());
+        });
     }
 }
