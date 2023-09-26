@@ -1,12 +1,12 @@
 package org.example.Views;
 
 import org.example.Entity.Client;
-import org.example.Entity.Employe;
 import org.example.Helpers.MyFunction;
 import org.example.Implementations.ClientImpl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -20,6 +20,7 @@ public class ClientView {
         System.out.println("3- Supprimer un client");
         System.out.println("4- Afficher la liste des clients");
         System.out.println("5- La recherche");
+        System.out.println("6- Mettre a jour un client");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -35,6 +36,9 @@ public class ClientView {
             }
             case "5" -> {
                 this.findByAtrView();
+            }
+            case "6" -> {
+                this.updateView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -90,17 +94,19 @@ public class ClientView {
         }
     }
 
-    public void showAllView() {
+    public Optional<List<Client>> showAllView() {
         Optional<List<Client>> clientList = clientImpl.findAll();
         if (clientList.isEmpty()) {
             System.out.println("Aucun client trouvé");
-        }else {
+        } else {
             clientList.get().forEach(client -> {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
         }
+        return clientList;
     }
-    public void findByAtrView(){
+
+    public void findByAtrView() {
         System.out.println("Ecris quelque chose que tu cherches");
         Optional<List<Client>> optionalClientList = clientImpl.findByAtr(scanner.nextLine());
         if (optionalClientList.isEmpty()) {
@@ -111,5 +117,33 @@ public class ClientView {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
         }
+    }
+
+    public void updateView() {
+        Optional<List<Client>> clientList = this.showAllView();
+        System.out.println("code : ");
+        String code = scanner.nextLine();
+        clientList.get().stream().forEach(client11 -> {
+            if (Objects.equals(client11.getCode(), code)){
+                Client client = new Client();
+                System.out.println("Nom:");
+                client.setNom(scanner.nextLine());
+                System.out.println("Prenom:");
+                client.setPrenom(scanner.nextLine());
+                System.out.println("Telephone:");
+                client.setTelephone(scanner.nextLine());
+                client.setCode(code);
+                System.out.println("Adresse:");
+                client.setAdresse(scanner.nextLine());
+                LocalDate DateDeNaissance = MyFunction.getDate("Date De Naissance (yyyy-mm-dd) :");
+                client.setDateDeNaissance(DateDeNaissance);
+                if (clientImpl.update(client).isPresent()) {
+                    System.out.println("Le client a été bein mettre a jour");
+                } else {
+                    System.out.println("Le client n'a pas mettre a jour");
+                }
+                MainPage mainPage = new MainPage();
+            }
+        });
     }
 }

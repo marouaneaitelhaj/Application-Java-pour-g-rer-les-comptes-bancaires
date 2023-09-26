@@ -38,6 +38,20 @@ public class ClientImpl implements ClientInter {
 
     @Override
     public Optional<Client> update(Client client) {
+        try {
+            String query = "UPDATE public.client SET nom=?, prenom=?, telephone=?, adresse=?, datedenaissance=? WHERE code=?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, client.getNom());
+            statement.setString(2, client.getPrenom());
+            statement.setString(3, client.getTelephone());
+            statement.setString(4, client.getAdresse());
+            statement.setString(5, client.getDateDeNaissance().toString());
+            statement.setString(6, client.getCode());
+            statement.executeUpdate();
+            return Optional.of(client);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return Optional.empty();
     }
 
