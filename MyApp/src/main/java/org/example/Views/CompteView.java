@@ -11,6 +11,7 @@ import org.example.Implementations.EpargneImpl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -26,6 +27,8 @@ public class CompteView {
         System.out.println("3- Supprimer un compte");
         System.out.println("4- Changer le statut d'un compte");
         System.out.println("5- Afficher la liste des comptes");
+        System.out.println("6- Afficher la liste des comptes par etat");
+        System.out.println("7- Afficher la liste des comptes par date");
         switch (scanner.nextLine()) {
             case "1" -> {
                 System.out.println("1- Compte Courant");
@@ -50,10 +53,16 @@ public class CompteView {
                 this.deleteView();
             }
             case "4" -> {
-                this.updateView();
+                this.updateEtatView();
             }
             case "5" -> {
                 this.showAllView();
+            }
+            case "6" -> {
+                this.showAllByStatusView();
+            }
+            case "7" -> {
+                this.showAllByDateView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -146,14 +155,61 @@ public class CompteView {
 
     }
 
-    public void showAllView(){
+    public Optional<List<Compte>> showAllView() {
         Optional<List<Compte>> compteList = compteImpl.findAll();
-        if (compteList.isEmpty()){
+        if (compteList.isEmpty()) {
             System.out.println("Aucun compte trouvé");
-        }else {
-            compteList.get().stream().forEach(compte1 -> {
+        } else {
+            compteList.get().forEach(compte1 -> {
+                System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
+            });
+        }
+        return compteList;
+    }
+
+    public void showAllByStatusView() {
+        Optional<List<Compte>> compteList = compteImpl.findAllByStatus();
+        if (compteList.isEmpty()) {
+            System.out.println("Aucun compte trouvé");
+        } else {
+            compteList.get().forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
     }
+
+    public void showAllByDateView() {
+        Optional<List<Compte>> compteList = compteImpl.findAllByDate();
+        if (compteList.isEmpty()) {
+            System.out.println("Aucun compte trouvé");
+        } else {
+            compteList.get().forEach(compte1 -> {
+                System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
+            });
+        }
+    }
+
+    public void updateEtatView() {
+        Optional<List<Compte>> compteList = this.showAllView();
+        System.out.println("Numero: ");
+        String numero = scanner.nextLine();
+        if (compteList.isEmpty()) {
+        } else {
+            compteList.get().forEach(compte -> {
+                if (Objects.equals(numero, compte.getNumero())) {
+                    if (compte.getCompteEtat() == CompteEtat.Active) {
+                        compte.setCompteEtat(CompteEtat.Inactive);
+                    } else {
+                        compte.setCompteEtat(CompteEtat.Active);
+                    }
+                    if (compteImpl.updateEtat(compte).isEmpty()) {
+                        System.out.println("le compte n'a pas été mis à jour");
+                    } else {
+                        System.out.println("le compte est mis à jour");
+                    }
+                }
+            });
+        }
+    }
+
 }

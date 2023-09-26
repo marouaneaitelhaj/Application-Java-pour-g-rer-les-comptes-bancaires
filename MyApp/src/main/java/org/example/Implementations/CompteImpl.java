@@ -38,6 +38,22 @@ public class CompteImpl implements CompteInter {
 
     @Override
     public Optional<Compte> update(Compte compte) {
+        try {
+            String query = "UPDATE public.compte SET solde=?, etat=?, client=?, date=? WHERE numero=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, compte.getSolde());
+            preparedStatement.setString(2, compte.getCompteEtat().toString());
+            preparedStatement.setString(3, compte.getClient().getCode());
+            preparedStatement.setString(4, compte.getDate().toString());
+            preparedStatement.setString(5, compte.getNumero());
+            if (preparedStatement.executeUpdate() == 0) {
+                return Optional.empty();
+            } else {
+                return Optional.of(compte);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return Optional.empty();
     }
 
@@ -62,6 +78,7 @@ public class CompteImpl implements CompteInter {
         return Optional.empty();
     }
 
+    @Override
     public List<Compte> findByClient(Compte compte) {
         List<Compte> compteArrayList = new ArrayList<Compte>();
         try {
@@ -104,7 +121,75 @@ public class CompteImpl implements CompteInter {
                 compteArrayList.add(compte);
             }
             return Optional.of(compteArrayList);
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<Compte>> findAllByStatus() {
+        try {
+            List<Compte> compteArrayList = new ArrayList<Compte>();
+            String query = "SELECT numero, solde, etat, client, date FROM public.compte ORDER BY etat DESC;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Compte compte = new Compte();
+                compte.setNumero(resultSet.getString("numero"));
+                compte.setSolde(resultSet.getInt("solde"));
+                compte.setDate(LocalDate.parse(resultSet.getString("date")));
+                compte.setCompteEtat(CompteEtat.valueOf(resultSet.getString("etat")));
+                Client client = new Client();
+                client.setCode(resultSet.getString("client"));
+                compte.setClient(client);
+                compteArrayList.add(compte);
+            }
+            return Optional.of(compteArrayList);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<Compte>> findAllByDate() {
+        try {
+            List<Compte> compteArrayList = new ArrayList<Compte>();
+            String query = "SELECT numero, solde, etat, client, date FROM public.compte ORDER BY date DESC;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Compte compte = new Compte();
+                compte.setNumero(resultSet.getString("numero"));
+                compte.setSolde(resultSet.getInt("solde"));
+                compte.setDate(LocalDate.parse(resultSet.getString("date")));
+                compte.setCompteEtat(CompteEtat.valueOf(resultSet.getString("etat")));
+                Client client = new Client();
+                client.setCode(resultSet.getString("client"));
+                compte.setClient(client);
+                compteArrayList.add(compte);
+            }
+            return Optional.of(compteArrayList);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Compte> updateEtat(Compte compte) {
+        try {
+            String query = "UPDATE public.compte SET etat=? WHERE numero=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, compte.getCompteEtat().toString());
+            preparedStatement.setString(2, compte.getNumero());
+            if (preparedStatement.executeUpdate() == 0) {
+                return Optional.empty();
+            } else {
+                return Optional.of(compte);
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Optional.empty();
