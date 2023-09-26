@@ -19,7 +19,7 @@ public class OperationImpl implements OperationInter {
         try {
             String query = "BEGIN;" +
                     "INSERT INTO public.operation(datedecreation, montant, employe, compte) VALUES (?, ?, ?, ?);" +
-                    "UPDATE public.compte SET solde = ? WHERE numero=?;"+
+                    "UPDATE public.compte SET solde = ? WHERE numero=?;" +
                     "COMMIT;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, LocalDateTime.now().toString());
@@ -43,6 +43,18 @@ public class OperationImpl implements OperationInter {
 
     @Override
     public int delete(Operation operation) {
+        try {
+            String query = "DELETE FROM public.operation WHERE numero=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, operation.getNumero());
+            if (preparedStatement.executeUpdate() == 0) {
+                return 0;
+            }
+            return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         return 0;
     }
 

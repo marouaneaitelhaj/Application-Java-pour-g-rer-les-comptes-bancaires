@@ -1,17 +1,17 @@
 package org.example.Entity;
 
 public class Operation {
-    private String numero;
+    private int numero;
     private String dateDeCreation;
     private int montant;
     private Compte compte;
     private Employe employe;
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 

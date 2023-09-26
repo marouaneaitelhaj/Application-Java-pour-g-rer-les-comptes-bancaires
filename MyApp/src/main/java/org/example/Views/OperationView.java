@@ -7,6 +7,7 @@ import org.example.Helpers.MyFunction;
 import org.example.Implementations.CompteImpl;
 import org.example.Implementations.OperationImpl;
 
+import java.util.IllegalFormatCodePointException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -17,9 +18,13 @@ public class OperationView {
 
     public OperationView() {
         System.out.println("1- Ajouter une opération");
+        System.out.println("2- Supprimer une opération");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
+            }
+            case "2" -> {
+                this.deleteView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -99,6 +104,16 @@ public class OperationView {
                 System.out.println("opération ajoutée");
             }
             new OperationView();
+        }
+    }
+    public void deleteView(){
+        System.out.println("Numero: ");
+        Operation operation = new Operation();
+        operation.setNumero(Integer.parseInt(scanner.nextLine()));
+        if (operationImpl.delete(operation)==0){
+            System.out.println("l'opération n'a pas été supprimée");
+        }else {
+            System.out.println("opération supprimée");
         }
     }
 }
