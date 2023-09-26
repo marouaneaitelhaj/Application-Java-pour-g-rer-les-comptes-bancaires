@@ -85,7 +85,7 @@ public class CompteImpl implements CompteInter {
     }
 
     @Override
-    public List<Compte> findAll() {
+    public Optional<List<Compte>> findAll() {
         return null;
     }
 }

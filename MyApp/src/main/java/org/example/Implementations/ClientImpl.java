@@ -77,7 +77,7 @@ public class ClientImpl implements ClientInter {
     }
 
     @Override
-    public List<Client> findAll() {
+    public Optional<List<Client>> findAll() {
         return null;
     }
 }

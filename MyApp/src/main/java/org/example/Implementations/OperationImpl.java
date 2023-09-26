@@ -45,7 +45,7 @@ public class OperationImpl implements OperationInter {
     }
 
     @Override
-    public List<Operation> findAll() {
+    public Optional<List<Operation>> findAll() {
         return null;
     }
 }

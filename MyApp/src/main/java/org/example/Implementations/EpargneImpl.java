@@ -1,9 +1,7 @@
 package org.example.Implementations;
 
-import org.example.Entity.Employe;
 import org.example.Entity.Epargne;
 import org.example.Helpers.DatabaseConnection;
-import org.example.Interfaces.EmployeInter;
 import org.example.Interfaces.EpargneInter;
 
 import java.sql.Connection;
@@ -45,7 +43,7 @@ public class EpargneImpl implements EpargneInter {
     }
 
     @Override
-    public List<Epargne> findAll() {
+    public Optional<List<Epargne>> findAll() {
         return null;
     }
 }
