@@ -23,6 +23,7 @@ public class MissionView {
         System.out.println("2- Supprimer une mission");
         System.out.println("3- Afficher le liste des missions");
         System.out.println("4- Créer une nouvelle affectation");
+        System.out.println("5- Supprimer une affectation");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -36,11 +37,32 @@ public class MissionView {
             case "4" -> {
                 this.nouvelleAffectation();
             }
+            case "5" -> {
+                this.deleteAffectationView();
+            }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
                 new MissionView();
             }
         }
+    }
+
+    private void deleteAffectationView() {
+        MissionOfEmploye missionOfEmploye = new MissionOfEmploye();
+        System.out.println("mission:");
+        Mission mission = new Mission();
+        mission.setCode(Integer.parseInt(scanner.nextLine()));
+        missionOfEmploye.setMission(mission);
+        System.out.println("employe:");
+        Employe employe = new Employe();
+        employe.setMatricule(scanner.nextLine());
+        missionOfEmploye.setEmploye(employe);
+        if (missionOfEmployeImpl.delete(missionOfEmploye) == 0) {
+            System.out.println("l'affectation n'a pas été supprimée");
+        } else {
+            System.out.println("affectation supprimée");
+        }
+        new MissionView();
     }
 
     private void deleteView() {
@@ -72,6 +94,7 @@ public class MissionView {
         } else {
             System.out.println("affectation ajoutée");
         }
+        new MissionView();
     }
 
     private void showView() {

@@ -40,7 +40,7 @@ public class MissionOfEmployeImpl implements MissionOfEmployeInter {
         try {
             String query = "DELETE FROM public.missionofemploye WHERE mission=? AND employe=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, missionOfEmploye.getMission().getCode());
+            preparedStatement.setString(1, String.valueOf(missionOfEmploye.getMission().getCode()));
             preparedStatement.setString(2, missionOfEmploye.getEmploye().getMatricule());
             if (preparedStatement.executeUpdate() == 0) {
                 return 0;
