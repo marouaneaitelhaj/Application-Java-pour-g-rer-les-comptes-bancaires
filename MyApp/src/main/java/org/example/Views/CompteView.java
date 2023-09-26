@@ -29,6 +29,7 @@ public class CompteView {
         System.out.println("5- Afficher la liste des comptes");
         System.out.println("6- Afficher la liste des comptes par etat");
         System.out.println("7- Afficher la liste des comptes par date");
+        System.out.println("8- Mettre à jour un compte");
         switch (scanner.nextLine()) {
             case "1" -> {
                 System.out.println("1- Compte Courant");
@@ -63,6 +64,9 @@ public class CompteView {
             }
             case "7" -> {
                 this.showAllByDateView();
+            }
+            case "8" -> {
+                this.updateView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -152,8 +156,32 @@ public class CompteView {
     }
 
     public void updateView() {
-
+        Optional<List<Compte>> compteList = this.showAllView();
+        System.out.println("Numero: ");
+        String numero = scanner.nextLine();
+        if (compteList.isEmpty()) {
+            System.out.println("quelque chose s'est mal passé");
+        } else {
+            compteList.get().forEach(compte11 -> {
+                if (Objects.equals(compte11.getNumero(), numero)) {
+                    Compte compte = new Compte();
+                    Client client = new Client();
+                    compte.setNumero(numero);
+                    System.out.println("Solde ($): ");
+                    compte.setSolde(Integer.parseInt(scanner.nextLine()));
+                    compte.setCompteEtat(CompteEtat.Active);
+                    System.out.println("Client");
+                    client.setCode(scanner.nextLine());
+                    compte.setClient(client);
+                    compte.setDate(LocalDate.now());
+                    Optional<Compte> optionalCompte = Optional.of(compte);
+                    optionalCompte.ifPresent(value -> compteImpl.update(value));
+                    System.out.println("le compte est mis à jour");
+                }
+            });
+        }
     }
+
 
     public Optional<List<Compte>> showAllView() {
         Optional<List<Compte>> compteList = compteImpl.findAll();
