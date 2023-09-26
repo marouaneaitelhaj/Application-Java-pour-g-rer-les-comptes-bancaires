@@ -27,6 +27,7 @@ public class CompteView {
         System.out.println("4- Changer le statut d'un compte");
         System.out.println("5- Afficher la liste des comptes");
         System.out.println("6- Afficher la liste des comptes par etat");
+        System.out.println("7- Afficher la liste des comptes par date");
         switch (scanner.nextLine()) {
             case "1" -> {
                 System.out.println("1- Compte Courant");
@@ -58,6 +59,9 @@ public class CompteView {
             }
             case "6" -> {
                 this.showAllByStatusView();
+            }
+            case "7" -> {
+                this.showAllByDateView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -150,22 +154,34 @@ public class CompteView {
 
     }
 
-    public void showAllView(){
+    public void showAllView() {
         Optional<List<Compte>> compteList = compteImpl.findAll();
-        if (compteList.isEmpty()){
+        if (compteList.isEmpty()) {
             System.out.println("Aucun compte trouvé");
-        }else {
-            compteList.get().stream().forEach(compte1 -> {
+        } else {
+            compteList.get().forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
     }
-    public void showAllByStatusView(){
+
+    public void showAllByStatusView() {
         Optional<List<Compte>> compteList = compteImpl.findAllByStatus();
-        if (compteList.isEmpty()){
+        if (compteList.isEmpty()) {
             System.out.println("Aucun compte trouvé");
-        }else {
-            compteList.get().stream().forEach(compte1 -> {
+        } else {
+            compteList.get().forEach(compte1 -> {
+                System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
+            });
+        }
+    }
+
+    public void showAllByDateView() {
+        Optional<List<Compte>> compteList = compteImpl.findAllByDate();
+        if (compteList.isEmpty()) {
+            System.out.println("Aucun compte trouvé");
+        } else {
+            compteList.get().forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
