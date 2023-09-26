@@ -3,6 +3,7 @@ package org.example.Views;
 import org.example.Entity.Mission;
 import org.example.Implementations.MissionImpl;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ public class MissionView {
     public MissionView() {
         System.out.println("1- Ajouter une mission");
         System.out.println("2- Supprimer une mission");
-        System.out.println("3- Ajouter une mission");
+        System.out.println("3- Afficher le liste des missions");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -37,14 +38,26 @@ public class MissionView {
         mission.setCode(scanner.nextInt());
         if (missionImpl.delete(mission) == 0) {
             System.out.println("la mission n'a pas été supprimée");
-        }else {
+        } else {
             System.out.println("mission supprimée");
         }
         new MissionView();
     }
 
     private void showView() {
+        Optional<List<Mission>> optionalMission = missionImpl.findAll();
 
+        if (optionalMission.isPresent()) {
+            List<Mission> missions = optionalMission.get();
+            if (missions.isEmpty()) {
+                System.out.println("aucune mission trouvée");
+                new MissionView();
+            } else {
+                missions.forEach(mission -> {
+                    System.out.println(mission.getCode() + "     " + mission.getNom() + "     " + mission.getDescription());
+                });
+            }
+        }
     }
 
     private void saveView() {

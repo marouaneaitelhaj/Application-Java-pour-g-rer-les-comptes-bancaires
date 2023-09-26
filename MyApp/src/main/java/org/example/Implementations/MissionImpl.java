@@ -71,9 +71,10 @@ public class MissionImpl implements MissionInter {
                 mission.setDescription(resultSet.getString("description"));
                 missions.add(mission);
             }
+            return Optional.of(missions);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.of(missions);
+        return Optional.empty();
     }
 }
