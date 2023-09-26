@@ -5,6 +5,7 @@ import org.example.Helpers.MyFunction;
 import org.example.Implementations.ClientImpl;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -68,7 +69,7 @@ public class ClientView {
         if (client1.isPresent()) {
             System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
         } else {
-            System.out.println("Aucun employé trouvé");
+            System.out.println("Aucun client trouvé");
         }
         new ClientView();
     }
@@ -83,7 +84,15 @@ public class ClientView {
             new MainPage();
         }
     }
-    public void showAllView(){
 
+    public void showAllView() {
+        Optional<List<Client>> clientList = clientImpl.findAll();
+        if (clientList.isEmpty()) {
+            System.out.println("Aucun client trouvé");
+        }else {
+            clientList.get().forEach(client -> {
+                System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
+            });
+        }
     }
 }

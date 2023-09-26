@@ -4,10 +4,7 @@ import org.example.Entity.Employe;
 import org.example.Helpers.DatabaseConnection;
 import org.example.Interfaces.EmployeInter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,8 +129,8 @@ public class EmployeImpl implements EmployeInter {
         try {
             List<Employe> employeArrayList = new ArrayList<Employe>();
             String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM public.employe;";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 Employe employe = new Employe();
                 employe.setNom(resultSet.getString("nom"));

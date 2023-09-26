@@ -7,9 +7,12 @@ import org.example.Interfaces.ClientInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.RecursiveTask;
 
 public class ClientImpl implements ClientInter {
     Connection connection = DatabaseConnection.getInstance().getConnection();
@@ -78,6 +81,25 @@ public class ClientImpl implements ClientInter {
 
     @Override
     public Optional<List<Client>> findAll() {
-        return null;
+        try {
+            List<Client> clientList = new ArrayList<Client>();
+            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Client client = new Client();
+                client.setNom(resultSet.getString("nom"));
+                client.setPrenom(resultSet.getString("prenom"));
+                client.setTelephone(resultSet.getString("telephone"));
+                client.setCode(resultSet.getString("code"));
+                client.setAdresse(resultSet.getString("adresse"));
+                client.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+                clientList.add(client);
+            }
+            return Optional.of(clientList);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return Optional.empty();
     }
 }
