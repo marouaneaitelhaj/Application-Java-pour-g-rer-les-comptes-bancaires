@@ -11,6 +11,7 @@ import org.example.Implementations.EpargneImpl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -52,7 +53,7 @@ public class CompteView {
                 this.deleteView();
             }
             case "4" -> {
-                this.updateView();
+                this.updateEtatView();
             }
             case "5" -> {
                 this.showAllView();
@@ -154,7 +155,7 @@ public class CompteView {
 
     }
 
-    public void showAllView() {
+    public Optional<List<Compte>> showAllView() {
         Optional<List<Compte>> compteList = compteImpl.findAll();
         if (compteList.isEmpty()) {
             System.out.println("Aucun compte trouvé");
@@ -163,6 +164,7 @@ public class CompteView {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
+        return compteList;
     }
 
     public void showAllByStatusView() {
@@ -183,6 +185,29 @@ public class CompteView {
         } else {
             compteList.get().forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
+            });
+        }
+    }
+
+    public void updateEtatView() {
+        Optional<List<Compte>> compteList = this.showAllView();
+        System.out.println("Numero: ");
+        String numero = scanner.nextLine();
+        if (compteList.isEmpty()) {
+        } else {
+            compteList.get().forEach(compte -> {
+                if (Objects.equals(numero, compte.getNumero())) {
+                    if (compte.getCompteEtat() == CompteEtat.Active) {
+                        compte.setCompteEtat(CompteEtat.Inactive);
+                    } else {
+                        compte.setCompteEtat(CompteEtat.Active);
+                    }
+                    if (compteImpl.updateEtat(compte).isEmpty()) {
+                        System.out.println("le compte n'a pas été mis à jour");
+                    } else {
+                        System.out.println("le compte est mis à jour");
+                    }
+                }
             });
         }
     }

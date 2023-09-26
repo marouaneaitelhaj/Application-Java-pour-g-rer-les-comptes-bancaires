@@ -38,6 +38,22 @@ public class CompteImpl implements CompteInter {
 
     @Override
     public Optional<Compte> update(Compte compte) {
+        try {
+            String query = "UPDATE public.compte SET solde=?, etat=?, client=?, date=? WHERE numero=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, compte.getSolde());
+            preparedStatement.setString(2, compte.getCompteEtat().toString());
+            preparedStatement.setString(3, compte.getClient().getCode());
+            preparedStatement.setString(4, compte.getDate().toString());
+            preparedStatement.setString(5, compte.getNumero());
+            if (preparedStatement.executeUpdate() == 0) {
+                return Optional.empty();
+            } else {
+                return Optional.of(compte);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return Optional.empty();
     }
 
@@ -61,6 +77,7 @@ public class CompteImpl implements CompteInter {
     public Optional<Compte> findOne(Compte compte) {
         return Optional.empty();
     }
+
     @Override
     public List<Compte> findByClient(Compte compte) {
         List<Compte> compteArrayList = new ArrayList<Compte>();
@@ -104,13 +121,14 @@ public class CompteImpl implements CompteInter {
                 compteArrayList.add(compte);
             }
             return Optional.of(compteArrayList);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Optional.empty();
     }
+
     @Override
-    public Optional<List<Compte>> findAllByStatus(){
+    public Optional<List<Compte>> findAllByStatus() {
         try {
             List<Compte> compteArrayList = new ArrayList<Compte>();
             String query = "SELECT numero, solde, etat, client, date FROM public.compte ORDER BY etat DESC;";
@@ -128,13 +146,14 @@ public class CompteImpl implements CompteInter {
                 compteArrayList.add(compte);
             }
             return Optional.of(compteArrayList);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Optional.empty();
     }
+
     @Override
-    public Optional<List<Compte>> findAllByDate(){
+    public Optional<List<Compte>> findAllByDate() {
         try {
             List<Compte> compteArrayList = new ArrayList<Compte>();
             String query = "SELECT numero, solde, etat, client, date FROM public.compte ORDER BY date DESC;";
@@ -152,7 +171,25 @@ public class CompteImpl implements CompteInter {
                 compteArrayList.add(compte);
             }
             return Optional.of(compteArrayList);
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Compte> updateEtat(Compte compte) {
+        try {
+            String query = "UPDATE public.compte SET etat=? WHERE numero=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, compte.getCompteEtat().toString());
+            preparedStatement.setString(2, compte.getNumero());
+            if (preparedStatement.executeUpdate() == 0) {
+                return Optional.empty();
+            } else {
+                return Optional.of(compte);
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Optional.empty();

@@ -12,4 +12,6 @@ public interface CompteInter extends CrudRepository<Compte> {
     Optional<List<Compte>> findAllByStatus();
 
     Optional<List<Compte>> findAllByDate();
+
+    Optional<Compte> updateEtat(Compte compte);
 }
