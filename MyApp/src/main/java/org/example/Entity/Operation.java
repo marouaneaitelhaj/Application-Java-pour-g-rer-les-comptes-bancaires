@@ -3,7 +3,7 @@ package org.example.Entity;
 public class Operation {
     private String numero;
     private String dateDeCreation;
-    private String montant;
+    private int montant;
     private Compte compte;
     private Employe employe;
 
@@ -23,11 +23,11 @@ public class Operation {
         this.dateDeCreation = dateDeCreation;
     }
 
-    public String getMontant() {
+    public int getMontant() {
         return montant;
     }
 
-    public void setMontant(String montant) {
+    public void setMontant(int montant) {
         this.montant = montant;
     }
 

@@ -6,6 +6,8 @@ import org.example.Interfaces.OperationInter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,16 +17,21 @@ public class OperationImpl implements OperationInter {
     @Override
     public Optional<Operation> save(Operation operation) {
         try {
-            String query = "INSERT INTO public.operation(numero, datedecreation, montant, employe, compte) VALUES (?, ?, ?, ?, ?);";
+            String query = "BEGIN;" +
+                    "INSERT INTO public.operation(datedecreation, montant, employe, compte) VALUES (?, ?, ?, ?);" +
+                    "UPDATE public.compte SET solde = ? WHERE numero=?;"+
+                    "COMMIT;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, operation.getNumero());
-            preparedStatement.setString(2, operation.getDateDeCreation());
-            preparedStatement.setString(3, operation.getMontant());
-            preparedStatement.setString(4, operation.getEmploye().getMatricule());
-            preparedStatement.setString(5, operation.getCompte().getNumero());
-            preparedStatement.execute();
+            preparedStatement.setString(1, LocalDateTime.now().toString());
+            preparedStatement.setInt(2, operation.getMontant());
+            preparedStatement.setString(3, operation.getEmploye().getMatricule());
+            preparedStatement.setString(4, operation.getCompte().getNumero());
+            preparedStatement.setInt(5, operation.getCompte().getSolde());
+            preparedStatement.setString(6, operation.getCompte().getNumero());
+            preparedStatement.executeUpdate();
             return Optional.of(operation);
         } catch (Exception e) {
+            System.out.println(e);
         }
         return Optional.empty();
     }
