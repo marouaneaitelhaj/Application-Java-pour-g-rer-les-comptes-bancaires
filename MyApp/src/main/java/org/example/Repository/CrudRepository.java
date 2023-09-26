@@ -8,5 +8,5 @@ public interface CrudRepository<M> {
     Optional<M> update(M m);
     int delete(M m);
     Optional<M> findOne(M m);
-    List<M> findAll();
+    Optional<List<M>> findAll();
 }

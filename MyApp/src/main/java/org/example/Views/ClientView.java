@@ -16,6 +16,7 @@ public class ClientView {
         System.out.println("1- Créer un client");
         System.out.println("2- Chercher un client par matricule");
         System.out.println("3- Supprimer un client");
+        System.out.println("4- Afficher la liste des clients");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -25,6 +26,9 @@ public class ClientView {
             }
             case "3" -> {
                 this.deleteView();
+            }
+            case "4" -> {
+                this.showAllView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -78,5 +82,8 @@ public class ClientView {
             System.out.println("La suppression a bien été effectuée");
             new MainPage();
         }
+    }
+    public void showAllView(){
+
     }
 }
