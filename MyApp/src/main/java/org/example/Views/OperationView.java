@@ -19,12 +19,16 @@ public class OperationView {
     public OperationView() {
         System.out.println("1- Ajouter une opération");
         System.out.println("2- Supprimer une opération");
+        System.out.println("3- Chercher une opération par numéro");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
             }
             case "2" -> {
                 this.deleteView();
+            }
+            case "3" -> {
+                this.findOneView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -106,14 +110,28 @@ public class OperationView {
             new OperationView();
         }
     }
-    public void deleteView(){
+
+    public void deleteView() {
         System.out.println("Numero: ");
         Operation operation = new Operation();
         operation.setNumero(Integer.parseInt(scanner.nextLine()));
-        if (operationImpl.delete(operation)==0){
+        if (operationImpl.delete(operation) == 0) {
             System.out.println("l'opération n'a pas été supprimée");
-        }else {
+        } else {
             System.out.println("opération supprimée");
+        }
+    }
+
+    public void findOneView() {
+        System.out.println("Numero: ");
+        Operation operation = new Operation();
+        operation.setNumero(Integer.parseInt(scanner.nextLine()));
+        Optional<Operation> operationOperation = operationImpl.findOne(operation);
+        if (operationOperation.isEmpty()) {
+            System.out.println("Aucun opération trouvé");
+        } else {
+            Operation operation1 = operationOperation.get();
+            System.out.println(operation1.getMontant() + "       " + operation1.getEmploye().getMatricule() + "       " + operation1.getCompte().getNumero() + "       " + operation1.getNumero() + "       " + operation1.getDateDeCreation());
         }
     }
 }
