@@ -30,6 +30,7 @@ public class CompteView {
         System.out.println("6- Afficher la liste des comptes par etat");
         System.out.println("7- Afficher la liste des comptes par date");
         System.out.println("8- Mettre à jour un compte");
+        System.out.println("9- Chercher un compte par numero d'operation");
         switch (scanner.nextLine()) {
             case "1" -> {
                 System.out.println("1- Compte Courant");
@@ -67,6 +68,9 @@ public class CompteView {
             }
             case "8" -> {
                 this.updateView();
+            }
+            case "9" -> {
+                this.findByNumero();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -237,6 +241,19 @@ public class CompteView {
                     }
                 }
             });
+        }
+    }
+    public void findByNumero(){
+        System.out.println("Numero: ");
+        Compte compte = new Compte();
+        compte.setNumero(scanner.nextLine());
+        Optional<Compte> optionalCompte = compteImpl.findOne(compte);
+        if (optionalCompte.isEmpty()){
+            System.out.println("aucun compte trouvé");
+        }
+        else {
+            Compte compte1 = optionalCompte.get();
+            System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
         }
     }
 

@@ -51,7 +51,7 @@ public class CompteImpl implements CompteInter {
             } else {
                 return Optional.of(compte);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Optional.empty();
@@ -75,6 +75,24 @@ public class CompteImpl implements CompteInter {
 
     @Override
     public Optional<Compte> findOne(Compte compte) {
+        try {
+            String query = "SELECT numero, solde, date, etat, client FROM public.compte WHERE numero=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, compte.getNumero());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                compte.setNumero(resultSet.getString("numero"));
+                compte.setSolde(resultSet.getInt("solde"));
+                compte.setDate(LocalDate.parse(resultSet.getString("date")));
+                compte.setCompteEtat(CompteEtat.valueOf(resultSet.getString("etat")));
+                Client client = new Client();
+                client.setCode(resultSet.getString("client"));
+                compte.setClient(client);
+                return Optional.of(compte);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return Optional.empty();
     }
 
