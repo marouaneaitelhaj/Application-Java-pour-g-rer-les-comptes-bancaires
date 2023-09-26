@@ -9,6 +9,7 @@ public class MainPage {
         System.out.println("2- Client");
         System.out.println("3- Compte");
         System.out.println("4- Operation");
+        System.out.println("5- Missions");
         switch (scanner.nextLine()) {
             case "1" -> {
                 EmplyeeView emplyeeView = new EmplyeeView();
@@ -21,6 +22,9 @@ public class MainPage {
             }
             case "4" ->{
                 OperationView operationView = new OperationView();
+            }
+            case "5" ->{
+                MissionView missionView = new MissionView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
