@@ -32,7 +32,15 @@ public class MissionView {
     }
 
     private void deleteView() {
-        System.out.println();
+        System.out.println("code :");
+        Mission mission = new Mission();
+        mission.setCode(scanner.nextInt());
+        if (missionImpl.delete(mission) == 0) {
+            System.out.println("la mission n'a pas été supprimée");
+        }else {
+            System.out.println("mission supprimée");
+        }
+        new MissionView();
     }
 
     private void showView() {
@@ -45,9 +53,9 @@ public class MissionView {
         mission.setNom(scanner.nextLine());
         System.out.println("description: ");
         mission.setDescription(scanner.nextLine());
-        if (missionImpl.save(mission).isEmpty()){
+        if (missionImpl.save(mission).isEmpty()) {
             System.out.println("la mission n'a pas été ajoutée");
-        }else {
+        } else {
             System.out.println("mission ajoutée");
         }
         new MissionView();

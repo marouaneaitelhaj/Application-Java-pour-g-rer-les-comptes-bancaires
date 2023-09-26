@@ -40,7 +40,7 @@ public class MissionImpl implements MissionInter {
         try {
             String query = "DELETE FROM public.mission WHERE code=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, mission.getCode());
+            preparedStatement.setInt(1, mission.getCode());
             if (preparedStatement.executeUpdate() == 0) {
                 return 0;
             } else {
@@ -66,7 +66,7 @@ public class MissionImpl implements MissionInter {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 Mission mission = new Mission();
-                mission.setCode(resultSet.getString("code"));
+                mission.setCode(resultSet.getInt("code"));
                 mission.setNom(resultSet.getString("nom"));
                 mission.setDescription(resultSet.getString("description"));
                 missions.add(mission);
