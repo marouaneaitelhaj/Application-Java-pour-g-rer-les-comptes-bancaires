@@ -1,6 +1,7 @@
 package org.example.Views;
 
 import org.example.Entity.Client;
+import org.example.Entity.Employe;
 import org.example.Helpers.MyFunction;
 import org.example.Implementations.ClientImpl;
 
@@ -18,6 +19,7 @@ public class ClientView {
         System.out.println("2- Chercher un client par matricule");
         System.out.println("3- Supprimer un client");
         System.out.println("4- Afficher la liste des clients");
+        System.out.println("5- La recherche");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -30,6 +32,9 @@ public class ClientView {
             }
             case "4" -> {
                 this.showAllView();
+            }
+            case "5" -> {
+                this.findByAtrView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -91,6 +96,18 @@ public class ClientView {
             System.out.println("Aucun client trouvé");
         }else {
             clientList.get().forEach(client -> {
+                System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
+            });
+        }
+    }
+    public void findByAtrView(){
+        System.out.println("Ecris quelque chose que tu cherches");
+        Optional<List<Client>> optionalClientList = clientImpl.findByAtr(scanner.nextLine());
+        if (optionalClientList.isEmpty()) {
+            System.out.println("Aucun employé trouvé");
+            new EmplyeeView();
+        } else {
+            optionalClientList.get().forEach(client -> {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
         }

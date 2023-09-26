@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.PropertyResourceBundle;
 import java.util.concurrent.RecursiveTask;
 
 public class ClientImpl implements ClientInter {
@@ -99,6 +100,34 @@ public class ClientImpl implements ClientInter {
             return Optional.of(clientList);
         } catch (Exception e) {
             System.out.println(e);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<List<Client>> findByAtr(String text) {
+        try {
+            List<Client> clientList = new ArrayList<Client>();
+            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client WHERE nom LIKE ? OR prenom LIKE ? OR telephone LIKE ? OR code LIKE ? OR adresse LIKE ? OR datedenaissance LIKE ? ;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "%" + text + "%");
+            preparedStatement.setString(2, "%" + text + "%");
+            preparedStatement.setString(3, "%" + text + "%");
+            preparedStatement.setString(4, "%" + text + "%");
+            preparedStatement.setString(5, "%" + text + "%");
+            preparedStatement.setString(6, "%" + text + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Client client = new Client();
+                client.setNom(resultSet.getString("nom"));
+                client.setPrenom(resultSet.getString("prenom"));
+                client.setTelephone(resultSet.getString("telephone"));
+                client.setCode(resultSet.getString("code"));
+                client.setAdresse(resultSet.getString("adresse"));
+                client.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+                clientList.add(client);
+            }
+            return Optional.of(clientList);
+        } catch (Exception e) {
         }
         return Optional.empty();
     }
