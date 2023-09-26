@@ -9,6 +9,7 @@ import org.example.Interfaces.CompteInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,26 @@ public class CompteImpl implements CompteInter {
 
     @Override
     public Optional<List<Compte>> findAll() {
-        return null;
+        try {
+            List<Compte> compteArrayList = new ArrayList<Compte>();
+            String query = "SELECT numero, solde, etat, client, date FROM public.compte;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Compte compte = new Compte();
+                compte.setNumero(resultSet.getString("numero"));
+                compte.setSolde(resultSet.getInt("solde"));
+                compte.setDate(LocalDate.parse(resultSet.getString("date")));
+                compte.setCompteEtat(CompteEtat.valueOf(resultSet.getString("etat")));
+                Client client = new Client();
+                client.setCode(resultSet.getString("client"));
+                compte.setClient(client);
+                compteArrayList.add(compte);
+            }
+            return Optional.of(compteArrayList);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return Optional.empty();
     }
 }

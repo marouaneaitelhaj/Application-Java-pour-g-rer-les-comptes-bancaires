@@ -24,6 +24,8 @@ public class CompteView {
         System.out.println("1- Créer un compte");
         System.out.println("2- Chercher un compte par client");
         System.out.println("3- Supprimer un compte");
+        System.out.println("4- Changer le statut d'un compte");
+        System.out.println("5- Afficher la liste des comptes");
         switch (scanner.nextLine()) {
             case "1" -> {
                 System.out.println("1- Compte Courant");
@@ -46,6 +48,12 @@ public class CompteView {
             }
             case "3" -> {
                 this.deleteView();
+            }
+            case "4" -> {
+                this.updateView();
+            }
+            case "5" -> {
+                this.showAllView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
@@ -77,9 +85,9 @@ public class CompteView {
         Compte compte = new Compte();
         compte.setClient(client);
         List<Compte> compteList = compteImpl.findByClient(compte);
-        if (compteList.isEmpty()){
+        if (compteList.isEmpty()) {
             System.out.println("Aucun employé trouvé");
-        }else {
+        } else {
             compteList.stream().forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
@@ -132,5 +140,20 @@ public class CompteView {
             System.out.println("Le client n'a pas ajouté");
         }
         new CompteView();
+    }
+
+    public void updateView() {
+
+    }
+
+    public void showAllView(){
+        Optional<List<Compte>> compteList = compteImpl.findAll();
+        if (compteList.isEmpty()){
+            System.out.println("Aucun compte trouvé");
+        }else {
+            compteList.get().stream().forEach(compte1 -> {
+                System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
+            });
+        }
     }
 }
