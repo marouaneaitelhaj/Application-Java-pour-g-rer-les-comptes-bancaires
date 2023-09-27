@@ -19,10 +19,11 @@ public class MissionImpl implements MissionInter {
     @Override
     public Optional<Mission> save(Mission mission) {
         try {
-            String query = "INSERT INTO public.mission(nom, description) VALUES (?, ?);";
+            String query = "INSERT INTO public.mission(code, nomMission, description) VALUES (?,?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, mission.getNom());
-            preparedStatement.setString(2, mission.getDescription());
+            preparedStatement.setString(1, mission.getCode());
+            preparedStatement.setString(2, mission.getNom());
+            preparedStatement.setString(3, mission.getDescription());
             preparedStatement.execute();
             return Optional.of(mission);
         } catch (Exception e) {
@@ -41,7 +42,7 @@ public class MissionImpl implements MissionInter {
         try {
             String query = "DELETE FROM public.mission WHERE code=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, mission.getCode());
+            preparedStatement.setString(1, mission.getCode());
             if (preparedStatement.executeUpdate() == 0) {
                 return 0;
             } else {
@@ -62,13 +63,13 @@ public class MissionImpl implements MissionInter {
     public Optional<List<Mission>> findAll() {
         List<Mission> missions = new ArrayList<Mission>();
         try {
-            String query = "SELECT code, nom, description FROM public.mission;";
+            String query = "SELECT code, nomMission, description FROM public.mission;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 Mission mission = new Mission();
-                mission.setCode(resultSet.getInt("code"));
-                mission.setNom(resultSet.getString("nom"));
+                mission.setCode(resultSet.getString("code"));
+                mission.setNom(resultSet.getString("nomMission"));
                 mission.setDescription(resultSet.getString("description"));
                 missions.add(mission);
             }

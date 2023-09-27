@@ -42,7 +42,7 @@ public class MissionView {
     private void deleteView() {
         System.out.println("code :");
         Mission mission = new Mission();
-        mission.setCode(scanner.nextInt());
+        mission.setCode(scanner.nextLine());
         if (missionImpl.delete(mission) == 0) {
             System.out.println("la mission n'a pas été supprimée");
         } else {
@@ -73,6 +73,8 @@ public class MissionView {
         Mission mission = new Mission();
         System.out.println("nom: ");
         mission.setNom(scanner.nextLine());
+        System.out.println("code: ");
+        mission.setCode(scanner.nextLine());
         System.out.println("description: ");
         mission.setDescription(scanner.nextLine());
         if (missionImpl.save(mission).isEmpty()) {

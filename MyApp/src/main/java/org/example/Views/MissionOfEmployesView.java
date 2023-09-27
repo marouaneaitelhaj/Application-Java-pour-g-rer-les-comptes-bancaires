@@ -11,19 +11,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class missionOfEmployesView {
+public class MissionOfEmployesView {
     MissionOfEmployeImpl missionOfEmployeImpl = new MissionOfEmployeImpl();
     Scanner scanner = new Scanner(System.in);
-    public missionOfEmployesView() {
+
+    public MissionOfEmployesView() {
         System.out.println("1- Créer une nouvelle affectation");
         System.out.println("2- Supprimer une affectation");
-        System.out.println("3- Supprimer une affectation");
-        switch (scanner.nextLine()){
+        System.out.println("3- Afficher l'historique des affectations d'un employé");
+        switch (scanner.nextLine()) {
             case "1" -> {
-                this.nouvelleAffectation();
+                this.saveView();
             }
             case "2" -> {
-                this.deleteAffectationView();
+                this.deleteView();
             }
             case "3" -> {
                 this.findByEmployeView();
@@ -34,25 +35,26 @@ public class missionOfEmployesView {
             }
         }
     }
+
     private void findByEmployeView() {
         System.out.println("Employe:");
         MissionOfEmploye missionOfEmploye = new MissionOfEmploye();
         Employe employe = new Employe();
         employe.setMatricule(scanner.nextLine());
         missionOfEmploye.setEmploye(employe);
-        Optional<List<MissionOfEmployeImpl>> optionalmissionOfEmployes = missionOfEmployeImpl.findByEmploye(employe);
-        List<MissionOfEmployeImpl> missionOfEmployes = optionalmissionOfEmployes.get();
+        Optional<List<MissionOfEmploye>> optionalmissionOfEmployes = missionOfEmployeImpl.findByEmploye(employe);
+        List<MissionOfEmploye> missionOfEmployes = optionalmissionOfEmployes.get();
         missionOfEmployes.forEach(missionOfEmploye1 -> {
-            System.out.println("test");
+            System.out.println(missionOfEmploye1.getEmploye().getNom() + "       " + missionOfEmploye1.getMission().getNom() + "       " + missionOfEmploye1.getDateStart() + "       ");
         });
 
     }
 
-    private void deleteAffectationView() {
+    private void deleteView() {
         MissionOfEmploye missionOfEmploye = new MissionOfEmploye();
         System.out.println("mission:");
         Mission mission = new Mission();
-        mission.setCode(Integer.parseInt(scanner.nextLine()));
+        mission.setCode(scanner.nextLine());
         missionOfEmploye.setMission(mission);
         System.out.println("employe:");
         Employe employe = new Employe();
@@ -65,11 +67,12 @@ public class missionOfEmployesView {
         }
         new MissionView();
     }
-    public void nouvelleAffectation() {
+
+    public void saveView() {
         MissionOfEmploye missionOfEmploye = new MissionOfEmploye();
         System.out.println("mission:");
         Mission mission = new Mission();
-        mission.setCode(Integer.parseInt(scanner.nextLine()));
+        mission.setCode(scanner.nextLine());
         missionOfEmploye.setMission(mission);
         System.out.println("employe:");
         Employe employe = new Employe();
