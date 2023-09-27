@@ -5,8 +5,12 @@ import java.util.Optional;
 
 public interface CrudRepository<M> {
     Optional<M> save(M m);
+
     Optional<M> update(M m);
+
     int delete(M m);
+
     Optional<M> findOne(M m);
+
     Optional<List<M>> findAll();
 }
