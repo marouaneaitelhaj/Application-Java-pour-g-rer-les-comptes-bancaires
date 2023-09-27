@@ -9,12 +9,12 @@ import org.example.Interfaces.MissionOfEmployeInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.RecursiveTask;
 
 public class MissionOfEmployeImpl implements MissionOfEmployeInter {
     Connection connection = DatabaseConnection.getInstance().getConnection();
@@ -69,10 +69,44 @@ public class MissionOfEmployeImpl implements MissionOfEmployeInter {
     }
 
     @Override
+    public Optional<HashMap<String, Integer>> EmployeStatistiques() {
+        try {
+            String query = "SELECT employe.nom, COUNT(missionofemploye.*) FROM public.employe JOIN missionofemploye ON employe.matricule = missionofemploye.employe GROUP BY employe.nom;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            HashMap<String, Integer> stringIntegerHashMaps = new HashMap<String, Integer>();
+            while (resultSet.next()) {
+                stringIntegerHashMaps.put(resultSet.getString("nom"), resultSet.getInt("count"));
+            }
+            return Optional.of(stringIntegerHashMaps);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<HashMap<String, Integer>> MissionStatistiques() {
+        try {
+            String query = "SELECT mission.*, COUNT(missionofemploye.*) FROM mission JOIN missionofemploye ON mission.code = missionofemploye.mission GROUP BY mission.code;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            HashMap<String, Integer> stringIntegerHashMaps = new HashMap<String, Integer>();
+            while (resultSet.next()) {
+                stringIntegerHashMaps.put(resultSet.getString("nomMission"), resultSet.getInt("count"));
+            }
+            return Optional.of(stringIntegerHashMaps);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<List<MissionOfEmploye>> findByEmploye(Employe employe) {
         try {
             List<MissionOfEmploye> missionOfEmployes = new ArrayList<MissionOfEmploye>();
-            String query = "SELECT * FROM missionofemploye ms JOIN mission ON ms.mission = mission.code JOIN employe ON ms.employe = employe.matricule WHERE ms.employe =? ORDER BY ms.datestart DESC" ;
+            String query = "SELECT * FROM missionofemploye ms JOIN mission ON ms.mission = mission.code JOIN employe ON ms.employe = employe.matricule WHERE ms.employe =? ORDER BY ms.datestart DESC";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getMatricule());
             ResultSet resultSet = preparedStatement.executeQuery();

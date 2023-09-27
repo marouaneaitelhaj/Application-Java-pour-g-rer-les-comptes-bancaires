@@ -7,6 +7,7 @@ import org.example.Helpers.MyFunction;
 import org.example.Implementations.MissionOfEmployeImpl;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -19,6 +20,7 @@ public class MissionOfEmployesView {
         System.out.println("1- Créer une nouvelle affectation");
         System.out.println("2- Supprimer une affectation");
         System.out.println("3- Afficher l'historique des affectations d'un employé");
+        System.out.println("4- Statistiques sur les affectation");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -29,10 +31,48 @@ public class MissionOfEmployesView {
             case "3" -> {
                 this.findByEmployeView();
             }
+            case "4" -> {
+                System.out.println("1- Employe Statistiques");
+                System.out.println("2- Mission Statistiques");
+                switch (scanner.nextLine()) {
+                    case "1" -> {
+                        this.EmployeStatistiques();
+                    }
+                    case "2" -> {
+                        this.MissionStatistiques();
+                    }
+                    default -> {
+                        System.out.println("Vous devez choisir un choix valide");
+                        new MissionOfEmployesView();
+                    }
+                }
+            }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
                 new MissionView();
             }
+        }
+    }
+
+    private void MissionStatistiques() {
+        Optional<HashMap<String, Integer>> missionStatistiques = missionOfEmployeImpl.MissionStatistiques();
+        if (missionStatistiques.isEmpty()) {
+            System.out.println("rien à montrer");
+        } else {
+            missionStatistiques.get().forEach((s, integer) -> {
+                System.out.println(s + "     " + integer);
+            });
+        }
+    }
+
+    private void EmployeStatistiques() {
+        Optional<HashMap<String, Integer>> employeStatistiques = missionOfEmployeImpl.EmployeStatistiques();
+        if (employeStatistiques.isEmpty()) {
+            System.out.println("rien à montrer");
+        } else {
+            employeStatistiques.get().forEach((s, integer) -> {
+                System.out.println(s + "     " + integer);
+            });
         }
     }
 
