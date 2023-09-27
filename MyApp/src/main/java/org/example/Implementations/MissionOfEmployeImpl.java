@@ -1,5 +1,6 @@
 package org.example.Implementations;
 
+import org.example.Entity.Employe;
 import org.example.Entity.MissionOfEmploye;
 import org.example.Helpers.DatabaseConnection;
 import org.example.Interfaces.MissionOfEmployeInter;
@@ -59,6 +60,15 @@ public class MissionOfEmployeImpl implements MissionOfEmployeInter {
 
     @Override
     public Optional<List<MissionOfEmploye>> findAll() {
+        return Optional.empty();
+    }
+    @Override
+    public Optional<List<MissionOfEmployeImpl>> findByEmploye(Employe employe) {
+        try {
+            String query = "";
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return Optional.empty();
     }
 }

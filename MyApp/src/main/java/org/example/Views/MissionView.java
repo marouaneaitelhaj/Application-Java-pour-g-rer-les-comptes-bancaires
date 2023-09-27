@@ -8,22 +8,18 @@ import org.example.Implementations.MissionImpl;
 import org.example.Implementations.MissionOfEmployeImpl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class MissionView {
     MissionImpl missionImpl = new MissionImpl();
-    MissionOfEmployeImpl missionOfEmployeImpl = new MissionOfEmployeImpl();
     Scanner scanner = new Scanner(System.in);
 
     public MissionView() {
         System.out.println("1- Ajouter une mission");
         System.out.println("2- Supprimer une mission");
         System.out.println("3- Afficher le liste des missions");
-        System.out.println("4- Créer une nouvelle affectation");
-        System.out.println("5- Supprimer une affectation");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -34,12 +30,6 @@ public class MissionView {
             case "3" -> {
                 this.showView();
             }
-            case "4" -> {
-                this.nouvelleAffectation();
-            }
-            case "5" -> {
-                this.deleteAffectationView();
-            }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
                 new MissionView();
@@ -47,23 +37,7 @@ public class MissionView {
         }
     }
 
-    private void deleteAffectationView() {
-        MissionOfEmploye missionOfEmploye = new MissionOfEmploye();
-        System.out.println("mission:");
-        Mission mission = new Mission();
-        mission.setCode(Integer.parseInt(scanner.nextLine()));
-        missionOfEmploye.setMission(mission);
-        System.out.println("employe:");
-        Employe employe = new Employe();
-        employe.setMatricule(scanner.nextLine());
-        missionOfEmploye.setEmploye(employe);
-        if (missionOfEmployeImpl.delete(missionOfEmploye) == 0) {
-            System.out.println("l'affectation n'a pas été supprimée");
-        } else {
-            System.out.println("affectation supprimée");
-        }
-        new MissionView();
-    }
+
 
     private void deleteView() {
         System.out.println("code :");
@@ -77,25 +51,7 @@ public class MissionView {
         new MissionView();
     }
 
-    public void nouvelleAffectation() {
-        MissionOfEmploye missionOfEmploye = new MissionOfEmploye();
-        System.out.println("mission:");
-        Mission mission = new Mission();
-        mission.setCode(Integer.parseInt(scanner.nextLine()));
-        missionOfEmploye.setMission(mission);
-        System.out.println("employe:");
-        Employe employe = new Employe();
-        employe.setMatricule(scanner.nextLine());
-        missionOfEmploye.setEmploye(employe);
-        LocalDate endDate = MyFunction.getDate("End date : (yyyy-mm-dd)");
-        missionOfEmploye.setDateEnd(endDate);
-        if (missionOfEmployeImpl.save(missionOfEmploye).isEmpty()) {
-            System.out.println("l'affectation n'a pas été ajoutée");
-        } else {
-            System.out.println("affectation ajoutée");
-        }
-        new MissionView();
-    }
+
 
     private void showView() {
         Optional<List<Mission>> optionalMission = missionImpl.findAll();
