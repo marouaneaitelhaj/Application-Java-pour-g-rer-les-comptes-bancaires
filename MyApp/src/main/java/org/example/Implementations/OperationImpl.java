@@ -7,6 +7,7 @@ import org.example.Helpers.DatabaseConnection;
 import org.example.Interfaces.OperationInter;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ public class OperationImpl implements OperationInter {
                     "UPDATE public.compte SET solde = ? WHERE numero=?;" +
                     "COMMIT;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, LocalDateTime.now().toString());
+            preparedStatement.setDate(1, Date.valueOf(LocalDateTime.now().toString()));
             preparedStatement.setInt(2, operation.getMontant());
             preparedStatement.setString(3, operation.getEmploye().getMatricule());
             preparedStatement.setString(4, operation.getCompte().getNumero());

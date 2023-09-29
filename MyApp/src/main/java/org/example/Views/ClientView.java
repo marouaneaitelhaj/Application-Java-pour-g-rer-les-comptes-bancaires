@@ -102,6 +102,8 @@ public class ClientView {
             clientList.get().forEach(client -> {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
+            MyFunction.appuyezPourQuitter();
+            new ClientView();
         }
         return clientList;
     }
@@ -124,7 +126,7 @@ public class ClientView {
         System.out.println("code : ");
         String code = scanner.nextLine();
         clientList.get().stream().forEach(client11 -> {
-            if (Objects.equals(client11.getCode(), code)){
+            if (Objects.equals(client11.getCode(), code)) {
                 Client client = new Client();
                 System.out.println("Nom:");
                 client.setNom(scanner.nextLine());

@@ -1,5 +1,8 @@
 package org.example.Helpers;
 
+import org.example.Views.ClientView;
+import org.example.Views.MainPage;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -21,5 +24,10 @@ public class MyFunction {
             System.out.println("Format de date invalide. Veuillez entrer la date au format yyyy-mm-dd.");
             return getDate(message);
         }
+    }
+    public static void appuyezPourQuitter(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Appuyez sur une touche pour quitter");
+        scanner.nextLine();
     }
 }

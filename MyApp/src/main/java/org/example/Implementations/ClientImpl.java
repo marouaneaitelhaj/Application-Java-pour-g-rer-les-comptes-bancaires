@@ -4,10 +4,7 @@ import org.example.Entity.Client;
 import org.example.Helpers.DatabaseConnection;
 import org.example.Interfaces.ClientInter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +22,11 @@ public class ClientImpl implements ClientInter {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, client.getNom());
             statement.setString(2, client.getPrenom());
-            statement.setString(3, client.getDateDeNaissance().toString());
+            statement.setDate(3, Date.valueOf(client.getDateDeNaissance()));
             statement.setString(4, client.getTelephone());
             statement.setString(5, client.getCode());
             statement.setString(6, client.getAdresse());
+            statement.execute();
             return Optional.of(client);
         } catch (Exception e) {
             System.out.println(e);
@@ -45,7 +43,7 @@ public class ClientImpl implements ClientInter {
             statement.setString(2, client.getPrenom());
             statement.setString(3, client.getTelephone());
             statement.setString(4, client.getAdresse());
-            statement.setString(5, client.getDateDeNaissance().toString());
+            statement.setDate(5, Date.valueOf(client.getDateDeNaissance().toString()));
             statement.setString(6, client.getCode());
             statement.executeUpdate();
             return Optional.of(client);

@@ -5,6 +5,7 @@ import org.example.Entity.Compte;
 import org.example.Entity.Courant;
 import org.example.Entity.Epargne;
 import org.example.Enums.CompteEtat;
+import org.example.Helpers.MyFunction;
 import org.example.Implementations.CompteImpl;
 import org.example.Implementations.CourantImpl;
 import org.example.Implementations.EpargneImpl;

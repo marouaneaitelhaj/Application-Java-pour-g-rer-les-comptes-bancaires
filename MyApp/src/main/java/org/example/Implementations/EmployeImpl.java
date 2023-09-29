@@ -20,10 +20,10 @@ public class EmployeImpl implements EmployeInter {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getNom());
             preparedStatement.setString(2, employe.getPrenom());
-            preparedStatement.setString(3, employe.getDateDeNaissance().toString());
+            preparedStatement.setDate(3, Date.valueOf(employe.getDateDeNaissance().toString()));
             preparedStatement.setString(4, employe.getTelephone());
             preparedStatement.setString(5, employe.getMatricule());
-            preparedStatement.setString(6, employe.getDateDeRecrutement().toString());
+            preparedStatement.setDate(6, Date.valueOf(employe.getDateDeRecrutement().toString()));
             preparedStatement.setString(7, employe.getEmail());
             preparedStatement.execute();
             return Optional.of(employe);
@@ -42,8 +42,8 @@ public class EmployeImpl implements EmployeInter {
             preparedStatement.setString(2, employe.getPrenom());
             preparedStatement.setString(3, employe.getTelephone());
             preparedStatement.setString(4, employe.getEmail());
-            preparedStatement.setString(5, employe.getDateDeRecrutement().toString());
-            preparedStatement.setString(6, employe.getDateDeNaissance().toString());
+            preparedStatement.setDate(5, Date.valueOf(employe.getDateDeRecrutement().toString()));
+            preparedStatement.setDate(6, Date.valueOf(employe.getDateDeNaissance().toString()));
             preparedStatement.setString(7, employe.getMatricule());
             if (preparedStatement.executeUpdate() != 0) {
                 return Optional.of(employe);
