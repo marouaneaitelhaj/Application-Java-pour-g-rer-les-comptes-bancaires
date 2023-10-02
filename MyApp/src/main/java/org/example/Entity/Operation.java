@@ -9,6 +9,14 @@ public class Operation {
     private Compte compte;
     private Employe employe;
 
+    public Operation(int numero, LocalDate dateDeCreation, int montant, Compte compte, Employe employe) {
+        this.numero = numero;
+        this.dateDeCreation = dateDeCreation;
+        this.montant = montant;
+        this.compte = compte;
+        this.employe = employe;
+    }
+
     public int getNumero() {
         return numero;
     }

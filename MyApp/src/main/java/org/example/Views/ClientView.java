@@ -48,19 +48,18 @@ public class ClientView {
     }
 
     public void saveView() {
-        Client client = new Client();
         System.out.println("Nom:");
-        client.setNom(scanner.nextLine());
+        String nom = scanner.nextLine();
         System.out.println("Prenom:");
-        client.setPrenom(scanner.nextLine());
+        String prenom = scanner.nextLine();
         System.out.println("Telephone:");
-        client.setTelephone(scanner.nextLine());
+        String telephone = scanner.nextLine();
         System.out.println("Code:");
-        client.setCode(scanner.nextLine());
+        String code = scanner.nextLine();
         System.out.println("Adresse:");
-        client.setAdresse(scanner.nextLine());
+        String adresse = scanner.nextLine();
         LocalDate DateDeNaissance = MyFunction.getDate("Date De Naissance (yyyy-mm-dd) :");
-        client.setDateDeNaissance(DateDeNaissance);
+        Client client = new Client(nom, prenom, DateDeNaissance, telephone, code, adresse);
         if (clientImpl.save(client).isPresent()) {
             System.out.println("Le client a été bein ajoutée");
         } else {

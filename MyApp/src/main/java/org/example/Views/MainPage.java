@@ -16,7 +16,7 @@ public class MainPage {
                 EmplyeeView emplyeeView = new EmplyeeView();
             }
             case "2" ->{
-                ClientView clientView = new ClientView();
+                new ClientView();
             }
             case "3" ->{
                 CompteView compteView = new CompteView();

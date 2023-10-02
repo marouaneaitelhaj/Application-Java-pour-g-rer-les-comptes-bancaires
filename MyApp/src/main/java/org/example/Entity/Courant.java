@@ -1,14 +1,15 @@
 package org.example.Entity;
 
+import org.example.Enums.CompteEtat;
+
+import java.time.LocalDate;
+
 public class Courant extends Compte {
     private Double decouvert;
 
-    public Courant(Double decouvert) {
-        this.decouvert = decouvert;
-    }
-
-    public Courant(Compte compte) {
-        super(compte.getNumero(), compte.getSolde(), compte.getDate(), compte.getCompteEtat(), compte.getClient());
+    public Courant(String numero, int solde, LocalDate date, CompteEtat compteEtat, Client client,Double decouvert) {
+        super(numero, solde, date, compteEtat, client);
+        setDecouvert(decouvert);
     }
 
     public Double getDecouvert() {

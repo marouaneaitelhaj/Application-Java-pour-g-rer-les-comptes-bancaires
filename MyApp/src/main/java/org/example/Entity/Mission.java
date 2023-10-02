@@ -5,6 +5,12 @@ public class Mission {
     private String nom;
     private String description;
 
+    public Mission(String code, String nom, String description) {
+        this.code = code;
+        this.nom = nom;
+        this.description = description;
+    }
+
     public String getCode() {
         return code;
     }

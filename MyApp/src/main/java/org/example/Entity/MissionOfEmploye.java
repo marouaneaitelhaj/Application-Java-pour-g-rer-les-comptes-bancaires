@@ -6,6 +6,14 @@ public class MissionOfEmploye {
     private LocalDate dateStart;
     private LocalDate dateEnd;
     private Mission mission;
+    private Employe employe;
+
+    public MissionOfEmploye(LocalDate dateStart, LocalDate dateEnd, Mission mission, Employe employe) {
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.mission = mission;
+        this.employe = employe;
+    }
 
     public LocalDate getDateEnd() {
         return dateEnd;
@@ -39,5 +47,4 @@ public class MissionOfEmploye {
         this.dateStart = dateStart;
     }
 
-    private Employe employe;
 }

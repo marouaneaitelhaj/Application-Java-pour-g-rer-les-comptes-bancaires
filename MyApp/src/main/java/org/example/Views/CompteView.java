@@ -81,17 +81,15 @@ public class CompteView {
     }
 
     public Optional<Compte> createCompteView() {
-        Compte compte = new Compte();
-        Client client = new Client();
         System.out.println("Numero: ");
-        compte.setNumero(scanner.nextLine());
+        String numero = scanner.nextLine();
         System.out.println("Solde ($): ");
-        compte.setSolde(Integer.parseInt(scanner.nextLine()));
-        compte.setCompteEtat(CompteEtat.Active);
+        int sold = Integer.parseInt(scanner.nextLine());
         System.out.println("Client");
-        client.setCode(scanner.nextLine());
-        compte.setClient(client);
-        compte.setDate(LocalDate.now());
+        String code = scanner.nextLine();
+        Client client = new Client(code);
+        LocalDate date = LocalDate.now();
+        Compte compte = new Compte(numero,sold,date,CompteEtat.Active,client);
         Optional<Compte> optionalCompte = compteImpl.save(compte);
         return optionalCompte;
     }
@@ -147,8 +145,7 @@ public class CompteView {
         Optional<Compte> compte = this.createCompteView();
         if (compte.isPresent()) {
             System.out.println("Decouvert :");
-            Courant courant = new Courant(compte.get());
-            courant.setDecouvert(Double.valueOf(scanner.nextLine()));
+            Courant courant = new Courant(compte.get().getNumero(), compte.get().getSolde(), compte.get().getDate(), compte.get().getCompteEtat(), compte.get().getClient(), Double.valueOf(scanner.nextLine()));
             Optional<Courant> courant1 = courantImpl.save(courant);
             if (courant1.isPresent()) {
                 System.out.println("Le client a été bein ajoutée");

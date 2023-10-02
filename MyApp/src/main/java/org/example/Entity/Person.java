@@ -8,6 +8,17 @@ public abstract class Person {
     protected LocalDate dateDeNaissance;
     protected String telephone;
 
+    public Person(String nom, String prenom, LocalDate dateDeNaissance, String telephone) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateDeNaissance = dateDeNaissance;
+        this.telephone = telephone;
+    }
+
+    public Person() {
+
+    }
+
     public String getNom() {
         return nom;
     }
