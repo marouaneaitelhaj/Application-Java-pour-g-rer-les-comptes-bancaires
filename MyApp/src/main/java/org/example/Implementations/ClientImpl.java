@@ -18,7 +18,7 @@ public class ClientImpl implements ClientInter {
     @Override
     public Optional<Client> save(Client client) {
         try {
-            String query = "INSERT INTO public.client(nom, prenom, datedenaissance, telephone, code, adresse) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO client(nom, prenom, datedenaissance, telephone, code, adresse) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, client.getNom());
             statement.setString(2, client.getPrenom());
@@ -37,7 +37,7 @@ public class ClientImpl implements ClientInter {
     @Override
     public Optional<Client> update(Client client) {
         try {
-            String query = "UPDATE public.client SET nom=?, prenom=?, telephone=?, adresse=?, datedenaissance=? WHERE code=?;";
+            String query = "UPDATE client SET nom=?, prenom=?, telephone=?, adresse=?, datedenaissance=? WHERE code=?;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, client.getNom());
             statement.setString(2, client.getPrenom());
@@ -56,7 +56,7 @@ public class ClientImpl implements ClientInter {
     @Override
     public int delete(Client client) {
         try {
-            String query = "DELETE FROM public.client WHERE code=?";
+            String query = "DELETE FROM client WHERE code=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, client.getCode());
             if (preparedStatement.executeUpdate() == 0) {
@@ -72,7 +72,7 @@ public class ClientImpl implements ClientInter {
     @Override
     public Optional<Client> findOne(Client client) {
         try {
-            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client WHERE code=?";
+            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM client WHERE code=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, client.getCode());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -96,7 +96,7 @@ public class ClientImpl implements ClientInter {
     public Optional<List<Client>> findAll() {
         try {
             List<Client> clientList = new ArrayList<Client>();
-            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client;";
+            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM client;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -119,14 +119,13 @@ public class ClientImpl implements ClientInter {
     public Optional<List<Client>> findByAtr(String text) {
         try {
             List<Client> clientList = new ArrayList<Client>();
-            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM public.client WHERE nom LIKE ? OR prenom LIKE ? OR telephone LIKE ? OR code LIKE ? OR adresse LIKE ? OR datedenaissance LIKE ? ;";
+            String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM client WHERE nom LIKE ? OR prenom LIKE ? OR telephone LIKE ? OR code LIKE ? OR adresse LIKE ? ;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "%" + text + "%");
             preparedStatement.setString(2, "%" + text + "%");
             preparedStatement.setString(3, "%" + text + "%");
             preparedStatement.setString(4, "%" + text + "%");
             preparedStatement.setString(5, "%" + text + "%");
-            preparedStatement.setString(6, "%" + text + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Client client = new Client();

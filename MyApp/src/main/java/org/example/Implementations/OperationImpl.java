@@ -22,17 +22,17 @@ public class OperationImpl implements OperationInter {
     public Optional<Operation> save(Operation operation) {
         try {
             String query = "BEGIN;" +
-                    "INSERT INTO public.operation(datedecreation, montant, employe, compte) VALUES (?, ?, ?, ?);" +
-                    "UPDATE public.compte SET solde = ? WHERE numero=?;" +
+                    "INSERT INTO operation(datedecreation, montant, employe, compte) VALUES (?, ?, ?, ?);" +
+                    "UPDATE compte SET solde = ? WHERE numero=?;" +
                     "COMMIT;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setDate(1, Date.valueOf(LocalDateTime.now().toString()));
-            preparedStatement.setInt(2, operation.getMontant());
+            preparedStatement.setDate(1, Date.valueOf(operation.getDateDeCreation()));
+            preparedStatement.setDouble(2, operation.getMontant());
             preparedStatement.setString(3, operation.getEmploye().getMatricule());
             preparedStatement.setString(4, operation.getCompte().getNumero());
             preparedStatement.setInt(5, operation.getCompte().getSolde());
             preparedStatement.setString(6, operation.getCompte().getNumero());
-            preparedStatement.executeUpdate();
+            preparedStatement.execute();
             return Optional.of(operation);
         } catch (Exception e) {
             System.out.println(e);
@@ -48,7 +48,7 @@ public class OperationImpl implements OperationInter {
     @Override
     public int delete(Operation operation) {
         try {
-            String query = "DELETE FROM public.operation WHERE numero=?;";
+            String query = "DELETE FROM operation WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, operation.getNumero());
             if (preparedStatement.executeUpdate() == 0) {
@@ -65,12 +65,12 @@ public class OperationImpl implements OperationInter {
     @Override
     public Optional<Operation> findOne(Operation operation) {
         try {
-            String query = "SELECT montant, employe, compte, numero, datedecreation FROM public.operation WHERE numero=?;";
+            String query = "SELECT montant, employe, compte, numero, datedecreation FROM operation WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, operation.getNumero());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                operation.setDateDeCreation(resultSet.getString("montant"));
+                operation.setDateDeCreation(LocalDate.parse(resultSet.getString("datedecreation")));
                 Compte compte = new Compte();
                 compte.setNumero(resultSet.getString("compte"));
                 operation.setCompte(compte);

@@ -16,7 +16,7 @@ public class ClientView {
 
     public ClientView() {
         System.out.println("1- Créer un client");
-        System.out.println("2- Chercher un client par matricule");
+        System.out.println("2- Chercher un client par code");
         System.out.println("3- Supprimer un client");
         System.out.println("4- Afficher la liste des clients");
         System.out.println("5- La recherche");
@@ -66,7 +66,7 @@ public class ClientView {
         } else {
             System.out.println("Le client n'a pas ajouté");
         }
-        MainPage mainPage = new MainPage();
+        new ClientView();
     }
 
     public void findOneView() {
@@ -80,6 +80,7 @@ public class ClientView {
         } else {
             System.out.println("Aucun client trouvé");
         }
+        MyFunction.appuyezPourQuitter();
         new ClientView();
     }
 
@@ -102,8 +103,6 @@ public class ClientView {
             clientList.get().forEach(client -> {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
-            MyFunction.appuyezPourQuitter();
-            new ClientView();
         }
         return clientList;
     }
@@ -112,13 +111,14 @@ public class ClientView {
         System.out.println("Ecris quelque chose que tu cherches");
         Optional<List<Client>> optionalClientList = clientImpl.findByAtr(scanner.nextLine());
         if (optionalClientList.isEmpty()) {
-            System.out.println("Aucun employé trouvé");
-            new EmplyeeView();
+            System.out.println("Aucun Client trouvé");
         } else {
             optionalClientList.get().forEach(client -> {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new ClientView();
     }
 
     public void updateView() {

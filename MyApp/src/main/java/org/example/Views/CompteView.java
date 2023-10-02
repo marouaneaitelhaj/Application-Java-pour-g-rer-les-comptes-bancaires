@@ -110,6 +110,7 @@ public class CompteView {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
+        MyFunction.appuyezPourQuitter();
         new CompteView();
     }
 
@@ -185,6 +186,8 @@ public class CompteView {
                 }
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new CompteView();
     }
 
 
@@ -209,6 +212,8 @@ public class CompteView {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new CompteView();
     }
 
     public void showAllByDateView() {
@@ -220,6 +225,8 @@ public class CompteView {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new CompteView();
     }
 
     public void updateEtatView() {
@@ -243,16 +250,18 @@ public class CompteView {
                 }
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new CompteView();
     }
-    public void findByNumero(){
+
+    public void findByNumero() {
         System.out.println("Numero: ");
         Compte compte = new Compte();
         compte.setNumero(scanner.nextLine());
         Optional<Compte> optionalCompte = compteImpl.findOne(compte);
-        if (optionalCompte.isEmpty()){
+        if (optionalCompte.isEmpty()) {
             System.out.println("aucun compte trouvé");
-        }
-        else {
+        } else {
             Compte compte1 = optionalCompte.get();
             System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
         }

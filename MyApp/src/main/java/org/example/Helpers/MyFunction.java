@@ -27,7 +27,7 @@ public class MyFunction {
     }
     public static void appuyezPourQuitter(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Appuyez sur une touche pour quitter");
+        System.out.println("Appuyez sur Enter pour quitter");
         scanner.nextLine();
     }
 }

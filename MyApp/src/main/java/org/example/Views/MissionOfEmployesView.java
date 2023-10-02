@@ -63,6 +63,8 @@ public class MissionOfEmployesView {
                 System.out.println(s + "     " + integer);
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new MissionOfEmployesView();
     }
 
     private void EmployeStatistiques() {
@@ -74,6 +76,8 @@ public class MissionOfEmployesView {
                 System.out.println(s + "     " + integer);
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new MissionOfEmployesView();
     }
 
     private void findByEmployeView() {
@@ -87,7 +91,8 @@ public class MissionOfEmployesView {
         missionOfEmployes.forEach(missionOfEmploye1 -> {
             System.out.println(missionOfEmploye1.getEmploye().getNom() + "       " + missionOfEmploye1.getMission().getNom() + "       " + missionOfEmploye1.getDateStart() + "       ");
         });
-
+        MyFunction.appuyezPourQuitter();
+        new MissionOfEmployesView();
     }
 
     private void deleteView() {
@@ -105,7 +110,8 @@ public class MissionOfEmployesView {
         } else {
             System.out.println("affectation supprimée");
         }
-        new MissionView();
+        MyFunction.appuyezPourQuitter();
+        new MissionOfEmployesView();
     }
 
     public void saveView() {
@@ -125,6 +131,7 @@ public class MissionOfEmployesView {
         } else {
             System.out.println("affectation ajoutée");
         }
-        new MissionView();
+        MyFunction.appuyezPourQuitter();
+        new MissionOfEmployesView();
     }
 }

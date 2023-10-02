@@ -1,5 +1,6 @@
 package org.example.Entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Employe extends Person {

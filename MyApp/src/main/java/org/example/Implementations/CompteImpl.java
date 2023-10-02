@@ -18,7 +18,7 @@ public class CompteImpl implements CompteInter {
     @Override
     public Optional<Compte> save(Compte compte) {
         try {
-            String query = "INSERT INTO public.compte(numero, solde, date, etat, client) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO compte(numero, solde, date, etat, client) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, compte.getNumero());
             preparedStatement.setInt(2, compte.getSolde());
@@ -36,7 +36,7 @@ public class CompteImpl implements CompteInter {
     @Override
     public Optional<Compte> update(Compte compte) {
         try {
-            String query = "UPDATE public.compte SET solde=?, etat=?, client=?, date=? WHERE numero=?;";
+            String query = "UPDATE compte SET solde=?, etat=?, client=?, date=? WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, compte.getSolde());
             preparedStatement.setString(2, compte.getCompteEtat().toString());
@@ -57,7 +57,7 @@ public class CompteImpl implements CompteInter {
     @Override
     public int delete(Compte compte) {
         try {
-            String query = "DELETE FROM public.compte WHERE numero=?;";
+            String query = "DELETE FROM compte WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, compte.getNumero());
             if (preparedStatement.executeUpdate() == 0) {
@@ -73,7 +73,7 @@ public class CompteImpl implements CompteInter {
     @Override
     public Optional<Compte> findOne(Compte compte) {
         try {
-            String query = "SELECT numero, solde, date, etat, client FROM public.compte WHERE numero=?;";
+            String query = "SELECT numero, solde, date, etat, client FROM compte WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, compte.getNumero());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -102,7 +102,7 @@ public class CompteImpl implements CompteInter {
     public List<Compte> findByClient(Compte compte) {
         List<Compte> compteArrayList = new ArrayList<Compte>();
         try {
-            String query = "SELECT numero, solde, date, etat, client FROM public.compte WHERE client=?;";
+            String query = "SELECT numero, solde, date, etat, client FROM compte WHERE client=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, compte.getClient().getCode());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -126,7 +126,7 @@ public class CompteImpl implements CompteInter {
     public Optional<List<Compte>> findAll() {
         try {
             List<Compte> compteArrayList = new ArrayList<Compte>();
-            String query = "SELECT numero, solde, etat, client, date FROM public.compte;";
+            String query = "SELECT numero, solde, etat, client, date FROM compte;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -151,7 +151,7 @@ public class CompteImpl implements CompteInter {
     public Optional<List<Compte>> findAllByStatus() {
         try {
             List<Compte> compteArrayList = new ArrayList<Compte>();
-            String query = "SELECT numero, solde, etat, client, date FROM public.compte ORDER BY etat DESC;";
+            String query = "SELECT numero, solde, etat, client, date FROM compte ORDER BY etat DESC;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -176,7 +176,7 @@ public class CompteImpl implements CompteInter {
     public Optional<List<Compte>> findAllByDate() {
         try {
             List<Compte> compteArrayList = new ArrayList<Compte>();
-            String query = "SELECT numero, solde, etat, client, date FROM public.compte ORDER BY date DESC;";
+            String query = "SELECT numero, solde, etat, client, date FROM compte ORDER BY date DESC;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -200,7 +200,7 @@ public class CompteImpl implements CompteInter {
     @Override
     public Optional<Compte> updateEtat(Compte compte) {
         try {
-            String query = "UPDATE public.compte SET etat=? WHERE numero=?;";
+            String query = "UPDATE compte SET etat=? WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, compte.getCompteEtat().toString());
             preparedStatement.setString(2, compte.getNumero());

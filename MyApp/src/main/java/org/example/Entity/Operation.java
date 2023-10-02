@@ -1,8 +1,10 @@
 package org.example.Entity;
 
+import java.time.LocalDate;
+
 public class Operation {
     private int numero;
-    private String dateDeCreation;
+    private LocalDate dateDeCreation;
     private int montant;
     private Compte compte;
     private Employe employe;
@@ -15,11 +17,11 @@ public class Operation {
         this.numero = numero;
     }
 
-    public String getDateDeCreation() {
+    public LocalDate getDateDeCreation() {
         return dateDeCreation;
     }
 
-    public void setDateDeCreation(String dateDeCreation) {
+    public void setDateDeCreation(LocalDate dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
     }
 

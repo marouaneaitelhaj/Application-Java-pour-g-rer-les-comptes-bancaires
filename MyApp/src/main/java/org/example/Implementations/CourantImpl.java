@@ -15,7 +15,7 @@ public class CourantImpl implements CourantInter {
     @Override
     public Optional<Courant> save(Courant courant) {
         try {
-            String query = "INSERT INTO public.comptecourant(compte, decouvert) VALUES (?, ?);";
+            String query = "INSERT INTO comptecourant(compte, decouvert) VALUES (?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, courant.getNumero());
             preparedStatement.setDouble(2, courant.getDecouvert());

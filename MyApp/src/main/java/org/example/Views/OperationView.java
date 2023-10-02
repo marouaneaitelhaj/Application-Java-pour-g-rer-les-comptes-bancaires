@@ -7,6 +7,7 @@ import org.example.Helpers.MyFunction;
 import org.example.Implementations.CompteImpl;
 import org.example.Implementations.OperationImpl;
 
+import java.time.LocalDate;
 import java.util.IllegalFormatCodePointException;
 import java.util.Optional;
 import java.util.Scanner;
@@ -74,6 +75,7 @@ public class OperationView {
             } else {
                 compte.setSolde(optionalCompte.get().getSolde() - operation.getMontant());
                 operation.setCompte(compte);
+                operation.setDateDeCreation(LocalDate.now());
                 if (operationImpl.save(operation).isEmpty()) {
                     System.out.println("l'opération n'a pas été ajoutée");
                 } else {
@@ -102,7 +104,9 @@ public class OperationView {
         } else {
             compte.setSolde(optionalCompte.get().getSolde() + operation.getMontant());
             operation.setCompte(compte);
-            if (operationImpl.save(operation).isEmpty()) {
+            operation.setDateDeCreation(LocalDate.now());
+            Optional<Operation> operation1 = operationImpl.save(operation);
+            if (operation1.isEmpty()) {
                 System.out.println("l'opération n'a pas été ajoutée");
             } else {
                 System.out.println("opération ajoutée");
@@ -120,6 +124,8 @@ public class OperationView {
         } else {
             System.out.println("opération supprimée");
         }
+        MyFunction.appuyezPourQuitter();
+        new OperationView();
     }
 
     public void findOneView() {
@@ -133,5 +139,7 @@ public class OperationView {
             Operation operation1 = operationOperation.get();
             System.out.println(operation1.getMontant() + "       " + operation1.getEmploye().getMatricule() + "       " + operation1.getCompte().getNumero() + "       " + operation1.getNumero() + "       " + operation1.getDateDeCreation());
         }
+        MyFunction.appuyezPourQuitter();
+        new OperationView();
     }
 }

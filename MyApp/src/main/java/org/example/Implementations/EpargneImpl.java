@@ -15,7 +15,7 @@ public class EpargneImpl implements EpargneInter {
     @Override
     public Optional<Epargne> save(Epargne epargne) {
         try {
-            String query = "INSERT INTO public.compteepargne(compte, tauxdinteret) VALUES (?, ?);";
+            String query = "INSERT INTO compteepargne(compte, tauxdinteret) VALUES (?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, epargne.getNumero());
             preparedStatement.setDouble(2, epargne.getTauxDinteret());

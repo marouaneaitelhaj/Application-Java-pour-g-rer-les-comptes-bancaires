@@ -84,6 +84,8 @@ public class EmplyeeView {
         } else {
             System.out.println("Aucun employé trouvé");
         }
+        MyFunction.appuyezPourQuitter();
+        new EmplyeeView();
     }
 
     public void deleteView() {
@@ -103,10 +105,9 @@ public class EmplyeeView {
         Optional<List<Employe>> employeImplAll = employeImpl.findAll();
         if (employeImplAll.isEmpty()) {
             System.out.println("Aucun employé trouvé");
-            new EmplyeeView();
         } else {
             employeImplAll.get().forEach(employe -> {
-                System.out.println(employe.getNom() + "     " + employe.getPrenom() + "     " + employe.getTelephone() + "     " + employe.getMatricule() + "     " + employe.getEmail() + "     " + employe.getDateDeNaissance() + "     " + employe.getDateDeRecrutement());
+                System.out.println(employe.getNom() + "     " + employe.getPrenom() + "     " + employe.getTelephone() + "     " + employe.getMatricule() + "     " + employe.getEmail() + "     " + employe.getDateDeNaissance().toString() + "     " + employe.getDateDeRecrutement().toString());
             });
         }
         return employeImplAll;
@@ -117,12 +118,13 @@ public class EmplyeeView {
         Optional<List<Employe>> optionalEmployeList = employeImpl.findByAtr(scanner.nextLine());
         if (optionalEmployeList.isEmpty()) {
             System.out.println("Aucun employé trouvé");
-            new EmplyeeView();
         } else {
             optionalEmployeList.get().forEach(employe -> {
                 System.out.println(employe.getNom() + "     " + employe.getPrenom() + "     " + employe.getTelephone() + "     " + employe.getMatricule() + "     " + employe.getEmail() + "     " + employe.getDateDeNaissance() + "     " + employe.getDateDeRecrutement());
             });
         }
+        MyFunction.appuyezPourQuitter();
+        new EmplyeeView();
     }
     public void updateView(){
         Optional<List<Employe>> employeImplAll = this.showView();

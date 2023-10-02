@@ -19,7 +19,7 @@ public class MissionImpl implements MissionInter {
     @Override
     public Optional<Mission> save(Mission mission) {
         try {
-            String query = "INSERT INTO public.mission(code, nomMission, description) VALUES (?,?, ?);";
+            String query = "INSERT INTO mission(code, nomMission, description) VALUES (?,?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, mission.getCode());
             preparedStatement.setString(2, mission.getNom());
@@ -40,7 +40,7 @@ public class MissionImpl implements MissionInter {
     @Override
     public int delete(Mission mission) {
         try {
-            String query = "DELETE FROM public.mission WHERE code=?;";
+            String query = "DELETE FROM mission WHERE code=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, mission.getCode());
             if (preparedStatement.executeUpdate() == 0) {
@@ -63,7 +63,7 @@ public class MissionImpl implements MissionInter {
     public Optional<List<Mission>> findAll() {
         List<Mission> missions = new ArrayList<Mission>();
         try {
-            String query = "SELECT code, nomMission, description FROM public.mission;";
+            String query = "SELECT code, nomMission, description FROM mission;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {

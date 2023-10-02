@@ -16,17 +16,19 @@ public class EmployeImpl implements EmployeInter {
     @Override
     public Optional<Employe> save(Employe employe) {
         try {
-            String query = "INSERT INTO public.employe( nom, prenom, datedenaissance, telephone, matricule, datederecrutement, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO employe( nom, prenom, datedenaissance, telephone, matricule, datederecrutement, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getNom());
             preparedStatement.setString(2, employe.getPrenom());
-            preparedStatement.setDate(3, Date.valueOf(employe.getDateDeNaissance().toString()));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(employe.getDateDeNaissance()));
             preparedStatement.setString(4, employe.getTelephone());
             preparedStatement.setString(5, employe.getMatricule());
-            preparedStatement.setDate(6, Date.valueOf(employe.getDateDeRecrutement().toString()));
+            preparedStatement.setDate(6, java.sql.Date.valueOf(employe.getDateDeRecrutement()));
             preparedStatement.setString(7, employe.getEmail());
-            preparedStatement.execute();
-            return Optional.of(employe);
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows != 0) {
+                return Optional.of(employe);
+            }
         } catch (Exception e) {
             System.out.printf(String.valueOf(e));
         }
@@ -36,7 +38,7 @@ public class EmployeImpl implements EmployeInter {
     @Override
     public Optional<Employe> update(Employe employe) {
         try {
-            String query = "UPDATE public.employe SET nom=?, prenom=?, telephone=? ,email=?, datederecrutement=?, datedenaissance=? WHERE matricule=?;";
+            String query = "UPDATE employe SET nom=?, prenom=?, telephone=? ,email=?, datederecrutement=?, datedenaissance=? WHERE matricule=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getNom());
             preparedStatement.setString(2, employe.getPrenom());
@@ -58,7 +60,7 @@ public class EmployeImpl implements EmployeInter {
     public int delete(Employe employe) {
 
         try {
-            String query = "DELETE FROM public.employe WHERE matricule=?";
+            String query = "DELETE FROM employe WHERE matricule=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getMatricule());
             if (preparedStatement.executeUpdate() == 0) {
@@ -74,15 +76,15 @@ public class EmployeImpl implements EmployeInter {
     @Override
     public Optional<Employe> findOne(Employe employe) {
         try {
-            String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM public.employe WHERE matricule=?;";
+            String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM employe WHERE matricule=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employe.getMatricule());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 employe.setMatricule(resultSet.getString("matricule"));
                 employe.setEmail(resultSet.getString("email"));
-                employe.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
-                employe.setDateDeRecrutement(LocalDate.parse(resultSet.getString("datederecrutement")));
+                employe.setDateDeNaissance(resultSet.getDate("datedenaissance").toLocalDate());
+                employe.setDateDeRecrutement(resultSet.getDate("datederecrutement").toLocalDate());
                 employe.setTelephone(resultSet.getString("telephone"));
                 employe.setNom(resultSet.getString("nom"));
             }
@@ -92,19 +94,18 @@ public class EmployeImpl implements EmployeInter {
         }
         return Optional.empty();
     }
+
     @Override
     public Optional<List<Employe>> findByAtr(String text) {
         try {
             List<Employe> employeArrayList = new ArrayList<Employe>();
-            String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM public.employe WHERE nom LIKE ? OR  prenom LIKE ? OR  telephone LIKE ? OR  matricule LIKE ? OR  email LIKE ? OR  datederecrutement LIKE ? OR  datedenaissance LIKE ? ;";
+            String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM employe WHERE nom LIKE ? OR  prenom LIKE ? OR  telephone LIKE ? OR  matricule LIKE ? OR  email LIKE ? ;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "%" + text + "%");
             preparedStatement.setString(2, "%" + text + "%");
             preparedStatement.setString(3, "%" + text + "%");
             preparedStatement.setString(4, "%" + text + "%");
             preparedStatement.setString(5, "%" + text + "%");
-            preparedStatement.setString(6, "%" + text + "%");
-            preparedStatement.setString(7, "%" + text + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Employe employe = new Employe();
@@ -113,8 +114,8 @@ public class EmployeImpl implements EmployeInter {
                 employe.setTelephone(resultSet.getString("telephone"));
                 employe.setMatricule(resultSet.getString("matricule"));
                 employe.setEmail(resultSet.getString("email"));
-                employe.setDateDeRecrutement(LocalDate.parse(resultSet.getString("datederecrutement")));
-                employe.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+                employe.setDateDeRecrutement(resultSet.getDate("datederecrutement").toLocalDate());
+                employe.setDateDeNaissance(resultSet.getDate("datedenaissance").toLocalDate());
                 employeArrayList.add(employe);
             }
             return Optional.of(employeArrayList);
@@ -128,7 +129,7 @@ public class EmployeImpl implements EmployeInter {
     public Optional<List<Employe>> findAll() {
         try {
             List<Employe> employeArrayList = new ArrayList<Employe>();
-            String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM public.employe;";
+            String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM employe;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
@@ -138,8 +139,8 @@ public class EmployeImpl implements EmployeInter {
                 employe.setTelephone(resultSet.getString("telephone"));
                 employe.setMatricule(resultSet.getString("matricule"));
                 employe.setEmail(resultSet.getString("email"));
-                employe.setDateDeRecrutement(LocalDate.parse(resultSet.getString("datederecrutement")));
-                employe.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
+                employe.setDateDeRecrutement(resultSet.getDate("datederecrutement").toLocalDate());
+                employe.setDateDeNaissance(resultSet.getDate("datedenaissance").toLocalDate());
                 employeArrayList.add(employe);
             }
             return Optional.of(employeArrayList);

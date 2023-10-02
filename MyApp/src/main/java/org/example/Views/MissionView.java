@@ -67,6 +67,8 @@ public class MissionView {
                 });
             }
         }
+        MyFunction.appuyezPourQuitter();
+        new MissionView();
     }
 
     private void saveView() {

@@ -19,12 +19,12 @@ public class MissionOfEmployeImpl implements MissionOfEmployeInter {
     @Override
     public Optional<MissionOfEmploye> save(MissionOfEmploye missionOfEmploye) {
         try {
-            String query = "INSERT INTO public.missionofemploye(mission, employe, datestart, dateend) VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO missionofemploye(mission, employe, datestart, dateend) VALUES (?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, missionOfEmploye.getMission().getCode());
             preparedStatement.setString(2, missionOfEmploye.getEmploye().getMatricule());
             preparedStatement.setDate(3, Date.valueOf(LocalDate.now()));
-            preparedStatement.setString(4, missionOfEmploye.getDateEnd().toString());
+            preparedStatement.setDate(4, Date.valueOf(missionOfEmploye.getDateEnd()));
             preparedStatement.execute();
             return Optional.of(missionOfEmploye);
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class MissionOfEmployeImpl implements MissionOfEmployeInter {
     @Override
     public int delete(MissionOfEmploye missionOfEmploye) {
         try {
-            String query = "DELETE FROM public.missionofemploye WHERE mission=? AND employe=?;";
+            String query = "DELETE FROM missionofemploye WHERE mission=? AND employe=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, String.valueOf(missionOfEmploye.getMission().getCode()));
             preparedStatement.setString(2, missionOfEmploye.getEmploye().getMatricule());
@@ -68,7 +68,7 @@ public class MissionOfEmployeImpl implements MissionOfEmployeInter {
     @Override
     public Optional<HashMap<String, Integer>> EmployeStatistiques() {
         try {
-            String query = "SELECT employe.nom, COUNT(missionofemploye.*) FROM public.employe JOIN missionofemploye ON employe.matricule = missionofemploye.employe GROUP BY employe.nom;";
+            String query = "SELECT employe.nom, COUNT(missionofemploye.*) FROM employe JOIN missionofemploye ON employe.matricule = missionofemploye.employe GROUP BY employe.nom;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             HashMap<String, Integer> stringIntegerHashMaps = new HashMap<String, Integer>();
