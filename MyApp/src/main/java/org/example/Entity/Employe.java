@@ -9,6 +9,7 @@ public class Employe extends Person {
     private LocalDate dateDeRecrutement;
     private String email;
     private List<MissionOfEmploye> missionOfEmployeList;
+    private List<EmployeAgenceLogs> employeAgenceLogs;
 
     public Employe(String nom, String prenom, LocalDate dateDeNaissance, String telephone, String matricule, LocalDate dateDeRecrutement, String email) {
         super(nom, prenom, dateDeNaissance, telephone);
