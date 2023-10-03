@@ -16,6 +16,9 @@ public class Operation {
         this.compte = compte;
         this.employe = employe;
     }
+    public Operation() {
+
+    }
 
     public int getNumero() {
         return numero;

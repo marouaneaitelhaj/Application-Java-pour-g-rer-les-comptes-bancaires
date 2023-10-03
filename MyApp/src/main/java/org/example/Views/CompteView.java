@@ -100,11 +100,11 @@ public class CompteView {
         client.setCode(scanner.nextLine());
         Compte compte = new Compte();
         compte.setClient(client);
-        List<Compte> compteList = compteImpl.findByClient(compte);
+        Optional<List<Compte>> compteList = compteImpl.findByClient(compte);
         if (compteList.isEmpty()) {
             System.out.println("Aucun employé trouvé");
         } else {
-            compteList.stream().forEach(compte1 -> {
+            compteList.get().stream().forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }

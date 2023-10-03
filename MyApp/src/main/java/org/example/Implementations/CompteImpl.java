@@ -99,7 +99,7 @@ public class CompteImpl implements CompteInter {
     }
 
     @Override
-    public List<Compte> findByClient(Compte compte) {
+    public Optional<List<Compte>> findByClient(Compte compte) {
         List<Compte> compteArrayList = new ArrayList<Compte>();
         try {
             String query = "SELECT numero, solde, date, etat, client FROM compte WHERE client=?;";
@@ -119,7 +119,7 @@ public class CompteImpl implements CompteInter {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return compteArrayList;
+        return Optional.empty();
     }
 
     @Override

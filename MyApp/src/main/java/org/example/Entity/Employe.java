@@ -17,6 +17,10 @@ public class Employe extends Person {
         this.email = email;
     }
 
+    public Employe() {
+
+    }
+
     public String getMatricule() {
         return matricule;
     }

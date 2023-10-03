@@ -15,6 +15,9 @@ public class MissionOfEmploye {
         this.employe = employe;
     }
 
+    public MissionOfEmploye() {
+    }
+
     public LocalDate getDateEnd() {
         return dateEnd;
     }

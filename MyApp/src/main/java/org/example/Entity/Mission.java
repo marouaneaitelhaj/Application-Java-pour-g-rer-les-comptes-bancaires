@@ -10,6 +10,8 @@ public class Mission {
         this.nom = nom;
         this.description = description;
     }
+    public Mission() {
+    }
 
     public String getCode() {
         return code;
