@@ -15,7 +15,6 @@ public class Credit {
     private CreditEtat creditEtat;
 
     public Credit(String numero, Client client, Agence agence, Date date, Double montant, Double duree, String remarques, CreditEtat creditEtat) {
-        //CreditEtat.APPROUVE.compareTo()
         this.numero = numero;
         this.client = client;
         this.agence = agence;

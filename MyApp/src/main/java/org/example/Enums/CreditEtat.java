@@ -4,5 +4,5 @@ public enum CreditEtat {
     EN_ATTENTE,
     APPROUVE,
     REFUSE,
-    EXPIRE
+    EXPIRE;
 }

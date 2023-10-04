@@ -18,6 +18,9 @@ public class Employe extends Person {
         this.email = email;
     }
 
+    public Employe(String matricule) {
+        this.matricule = matricule;
+    }
     public Employe() {
 
     }
