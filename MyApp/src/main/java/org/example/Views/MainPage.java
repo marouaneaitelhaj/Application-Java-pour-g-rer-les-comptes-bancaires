@@ -1,5 +1,8 @@
 package org.example.Views;
 
+import org.example.Implementations.AgenceImpl;
+import org.example.Service.AgenceService;
+
 import java.util.Scanner;
 
 public class MainPage {
@@ -11,6 +14,7 @@ public class MainPage {
         System.out.println("4- Operation");
         System.out.println("5- Missions");
         System.out.println("6- Affectation");
+        System.out.println("7- Agence");
         switch (scanner.nextLine()) {
             case "1" -> {
                 EmplyeeView emplyeeView = new EmplyeeView();
@@ -29,6 +33,10 @@ public class MainPage {
             }
             case "6" ->{
                 MissionOfEmployesView MissionOfEmployesView = new MissionOfEmployesView();
+            }
+            case "7" ->{
+                AgenceView agenceView= new AgenceView();
+                agenceView.AgenceMenuView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");

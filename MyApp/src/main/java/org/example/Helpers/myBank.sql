@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS  MissionOfEmploye (
                                   employe VARCHAR(255),
                                   dateStart DATE,
                                   dateEnd DATE,
-                                  FOREIGN KEY (mission) REFERENCES Mission(code),
+                                  FOREIGN KEY (mission) REFERENCES Mission(code) ,
                                   FOREIGN KEY (employe) REFERENCES Employe(matricule)
 );
 
@@ -70,4 +70,29 @@ CREATE TABLE IF NOT EXISTS  Operation (
                            compte VARCHAR(255),
                            FOREIGN KEY (compte) REFERENCES Compte(numero),
                            FOREIGN KEY (employe) REFERENCES Employe(matricule)
+);
+
+-- V2
+CREATE TABLE IF NOT EXISTS Agence (
+    code VARCHAR(255) PRIMARY KEY,
+    nom VARCHAR(255),
+    adresse VARCHAR(255),
+    numero VARCHAR(255),
+);
+CREATE TABLE IF NOT EXISTS Credit (
+    numero SERIAL PRIMARY KEY,
+    client VARCHAR(255),
+    agence VARCHAR(255),
+    date VARCHAR(255),
+    DOUBLE VARCHAR(255),
+    montant double precision,
+    duree double precision,
+    remarques VARCHAR(255),
+);
+CREATE TABLE IF NOT EXISTS EmployeAgenceLogs (
+    date Date;
+    employe VARCHAR(255),
+    agence VARCHAR(255),
+    FOREIGN KEY (employe) REFERENCES Employe(matricule) ON DELETE CASCADE,
+    FOREIGN KEY (agence) REFERENCES Agence(code) ON DELETE CASCADE
 );

@@ -1,9 +1,13 @@
 package org.example.Entity;
 
+import java.util.List;
+
 public class Mission {
     private String code;
     private String nom;
     private String description;
+
+    private List<MissionOfEmploye> missionOfEmployeList;
 
     public Mission(String code, String nom, String description) {
         this.code = code;
