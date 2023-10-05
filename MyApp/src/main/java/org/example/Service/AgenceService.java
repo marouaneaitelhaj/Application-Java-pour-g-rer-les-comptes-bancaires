@@ -1,35 +1,34 @@
 package org.example.Service;
 
 import org.example.Entity.Agence;
-import org.example.Implementations.AgenceImpl;
-import org.example.Views.AgenceView;
+import org.example.Interfaces.AgenceInter;
 
 import java.util.Optional;
 
 public class AgenceService {
-    private AgenceImpl agenceImpl;
+    private final AgenceInter agenceImpl;
 
-    public AgenceService(AgenceImpl agenceImpl) {
+    public AgenceService(AgenceInter agenceImpl) {
         this.agenceImpl = agenceImpl;
     }
 
-    private void findByCode() {
+    public Optional<Agence> findByCode(Agence agence) {
+        return agenceImpl.findOne(agence);
     }
 
-    private void delete() {
+    public void delete() {
     }
 
-    private void findByAdresse() {
+    public void findByAdresse() {
     }
 
-    private void update() {
+    public void update() {
     }
 
-    private void findByEmploye() {
+    public void findByEmploye() {
     }
 
-    public boolean save(Agence agence) {
-        Optional<Agence> agenceOptional = this.agenceImpl.save(agence);
-        return agenceOptional.isPresent();
+    public Optional<Agence> save(Agence agence) {
+        return this.agenceImpl.save(agence);
     }
 }

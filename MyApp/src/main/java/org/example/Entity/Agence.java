@@ -18,6 +18,10 @@ public class Agence {
         this.employe = employe;
     }
 
+    public Agence(String code) {
+        this.code = code;
+    }
+
     public Employe getEmploye() {
         return employe;
     }

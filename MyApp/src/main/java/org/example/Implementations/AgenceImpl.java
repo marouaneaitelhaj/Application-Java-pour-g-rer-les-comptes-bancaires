@@ -79,18 +79,20 @@ public class AgenceImpl implements AgenceInter {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, agence.getCode());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.getFetchSize() == 0) {
+            if (resultSet.next()) {
+                agence.setAdresse(resultSet.getString("adresse"));
+                agence.setNom(resultSet.getString("nom"));
+                agence.setNumeroTelephone(resultSet.getString("numero"));
+            }else {
                 return Optional.empty();
             }
-            agence.setAdresse(resultSet.getString("adresse"));
-            agence.setNom(resultSet.getString("nom"));
-            agence.setNumeroTelephone(resultSet.getString("numero"));
             return Optional.of(agence);
         } catch (Exception e) {
             System.out.println(e);
         }
         return Optional.empty();
     }
+
     @Override
     public Optional<Agence> findOneByAdresse(Agence agence) {
         try {

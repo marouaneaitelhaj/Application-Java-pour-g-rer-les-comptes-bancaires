@@ -3,16 +3,19 @@ package org.example.Views;
 import org.example.Entity.Agence;
 import org.example.Entity.Employe;
 import org.example.Implementations.AgenceImpl;
+import org.example.Interfaces.AgenceInter;
 import org.example.Service.AgenceService;
+
+import java.util.Optional;
 import java.util.Scanner;
 
 public class AgenceView {
 
     Scanner scanner = new Scanner(System.in);
-    AgenceImpl agenceImpl = new AgenceImpl();
+    AgenceInter agenceImpl = new AgenceImpl();
     AgenceService agenceService = new AgenceService(agenceImpl);
 
-    public void AgenceMenuView() {
+    protected void AgenceMenuView() {
         System.out.println("1- Ajouter une agence");
         System.out.println("2- Chercher une agence par code");
         System.out.println("3- Supprimer une agence");
@@ -50,22 +53,31 @@ public class AgenceView {
         }
     }
 
-    private void deleteView() {
+    protected void deleteView() {
     }
 
-    private void findByAdresseView() {
+    protected void findByAdresseView() {
     }
 
-    private void updateView() {
+    protected void updateView() {
     }
 
-    private void findByEmployeView() {
+    protected void findByEmployeView() {
     }
 
-    public void findByCodeView() {
+    protected void findByCodeView() {
+        System.out.println("Code : ");
+        String code = scanner.nextLine();
+        Agence agence = new Agence(code);
+        Optional<Agence> agenceOptional = agenceService.findByCode(agence);
+        agenceOptional.ifPresent(agence1 -> {
+            System.out.println(agence1.getNom() + "      " + agence1.getAdresse());
+        });
+        scanner.nextLine();
+        this.AgenceMenuView();
     }
 
-    public void saveView() {
+    protected void saveView() {
         System.out.println("Code :");
         String code = scanner.nextLine();
         System.out.println("nom :");
@@ -77,10 +89,10 @@ public class AgenceView {
         Employe employe1 = new Employe(employe);
         System.out.println("numero Telephone :");
         String numeroTelephone = scanner.nextLine();
-        Agence agence = new Agence(code,nom,adresse,numeroTelephone,employe1);
-        if (agenceService.save(agence)){
+        Agence agence = new Agence(code, nom, adresse, numeroTelephone, employe1);
+        if (agenceService.save(agence).isPresent()) {
             System.out.println("L'agence a été bein ajoutée");
-        }else {
+        } else {
             System.out.println("L'agence n'a pas ajoutée");
         }
         this.AgenceMenuView();
