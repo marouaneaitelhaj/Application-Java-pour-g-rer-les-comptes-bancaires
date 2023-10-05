@@ -54,6 +54,17 @@ public class AgenceView {
     }
 
     protected void deleteView() {
+        System.out.println("Code : ");
+        String code = scanner.nextLine();
+        Agence agence = new Agence(code);
+        int deleted = agenceService.delete(agence);
+        if (deleted == 1) {
+            System.out.println("Agence est bien supprimé");
+        } else {
+            System.out.println("Agence n'est pas supprimé");
+        }
+        scanner.nextLine();
+        this.AgenceMenuView();
     }
 
     protected void findByAdresseView() {

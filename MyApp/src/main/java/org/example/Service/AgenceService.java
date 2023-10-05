@@ -16,7 +16,8 @@ public class AgenceService {
         return agenceImpl.findOne(agence);
     }
 
-    public void delete() {
+    public int delete(Agence agence) {
+        return this.agenceImpl.delete(agence);
     }
 
     public void findByAdresse() {
