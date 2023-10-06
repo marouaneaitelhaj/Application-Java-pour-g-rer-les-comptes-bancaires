@@ -118,7 +118,7 @@ public class AgenceView {
         Employe employe1 = new Employe(employe);
         List<Agence> agenceList = agenceService.findByEmploye(employe1);
         agenceList.forEach(agence1 -> {
-            System.out.println(agence1.getNom() + "      " + agence1.getAdresse());
+            System.out.println(agence1.getNom() + "         " + agence1.getAdresse());
         });
         scanner.nextLine();
         this.AgenceMenuView();
