@@ -77,22 +77,22 @@ CREATE TABLE IF NOT EXISTS Agence (
     code VARCHAR(255) PRIMARY KEY,
     nom VARCHAR(255),
     adresse VARCHAR(255),
-    numero VARCHAR(255),
-);
+    numero VARCHAR(255)
+    );
 CREATE TABLE IF NOT EXISTS Credit (
-    numero SERIAL PRIMARY KEY,
-    client VARCHAR(255),
+                                      numero SERIAL PRIMARY KEY,
+                                      client VARCHAR(255),
     agence VARCHAR(255),
     date VARCHAR(255),
     DOUBLE VARCHAR(255),
     montant double precision,
     duree double precision,
-    remarques VARCHAR(255),
-);
+    remarques VARCHAR(255)
+    );
 CREATE TABLE IF NOT EXISTS EmployeAgenceLogs (
-    date Date;
-    employe VARCHAR(255),
+                                                 date Date,
+                                                 employe VARCHAR(255),
     agence VARCHAR(255),
     FOREIGN KEY (employe) REFERENCES Employe(matricule) ON DELETE CASCADE,
     FOREIGN KEY (agence) REFERENCES Agence(code) ON DELETE CASCADE
-);
+    );

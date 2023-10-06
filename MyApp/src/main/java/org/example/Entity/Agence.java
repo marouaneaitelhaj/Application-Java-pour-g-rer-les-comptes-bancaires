@@ -6,29 +6,21 @@ public class Agence {
     private String code;
     private String nom;
     private String adresse;
-    private Employe employe;
     private String numeroTelephone;
     private List<EmployeAgenceLogs> employeAgenceLogs;
 
-    public Agence(String code, String nom, String adresse, String numeroTelephone, Employe employe) {
+    public Agence(String code, String nom, String adresse, String numeroTelephone) {
         this.code = code;
         this.nom = nom;
         this.adresse = adresse;
         this.numeroTelephone = numeroTelephone;
-        this.employe = employe;
     }
 
     public Agence(String code) {
         this.code = code;
     }
 
-    public Employe getEmploye() {
-        return employe;
-    }
 
-    public void setEmploye(Employe employe) {
-        this.employe = employe;
-    }
 
     public List<EmployeAgenceLogs> getEmployeAgenceLogs() {
         return employeAgenceLogs;

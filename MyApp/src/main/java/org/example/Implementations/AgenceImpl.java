@@ -37,7 +37,7 @@ public class AgenceImpl implements AgenceInter {
     @Override
     public Optional<Agence> update(Agence agence) {
         try {
-            String query = "UPDATE agence nom=?, adresse=?, numero=? WHERE code?;";
+            String query = "UPDATE agence SET nom=?, adresse=?, numero=? WHERE code=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, agence.getNom());
             preparedStatement.setString(2, agence.getAdresse());
