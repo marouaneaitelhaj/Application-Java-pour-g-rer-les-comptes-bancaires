@@ -11,4 +11,6 @@ public interface AgenceInter extends CrudRepository<Agence> {
     List<Agence> findByEmploye(Employe employe);
 
     Optional<Agence> findOneByAdresse(Agence agence);
+
+    List<Agence> contact();
 }

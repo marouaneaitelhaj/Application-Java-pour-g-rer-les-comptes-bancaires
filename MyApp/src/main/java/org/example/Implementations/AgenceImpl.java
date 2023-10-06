@@ -8,6 +8,7 @@ import org.example.Interfaces.AgenceInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -138,4 +139,24 @@ public class AgenceImpl implements AgenceInter {
     public Optional<List<Agence>> findAll() {
         return Optional.empty();
     }
+
+    @Override
+    public List<Agence> contact() {
+        List<Agence> agenceList = new ArrayList<>();
+        try {
+            String query = "SELECT adresse, numero FROM agence;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Agence agence = new Agence();
+                agence.setNumeroTelephone(resultSet.getString("numero"));
+                agence.setAdresse(resultSet.getString("adresse"));
+                agenceList.add(agence);
+            }
+        } catch (Exception e) {
+
+        }
+        return agenceList;
+    }
+
 }

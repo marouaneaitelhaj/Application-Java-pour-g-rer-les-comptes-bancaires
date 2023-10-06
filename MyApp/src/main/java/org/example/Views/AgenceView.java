@@ -47,13 +47,21 @@ public class AgenceView {
                 this.findByEmployeView();
             }
             case "7" -> {
-
+                this.showContactView();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
                 new AgenceView();
             }
         }
+    }
+
+    private void showContactView() {
+        agenceService.contactService().forEach(agence -> {
+            System.out.println(agence.getNumeroTelephone() + "      " + agence.getAdresse());
+        });
+        scanner.nextLine();
+        this.AgenceMenuView();
     }
 
     protected void deleteView() {

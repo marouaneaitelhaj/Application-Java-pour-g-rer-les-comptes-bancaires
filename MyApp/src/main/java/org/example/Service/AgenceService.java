@@ -6,6 +6,7 @@ import org.example.Entity.Employe;
 import org.example.Exceptions.AgenceException;
 import org.example.Interfaces.AgenceInter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ public class AgenceService {
     public AgenceService(AgenceInter agenceImpl) {
         this.agenceImpl = agenceImpl;
     }
+
 
     public Optional<Agence> findByCode(Agence agence) throws AgenceException {
         if (agence.getCode().isEmpty())
@@ -41,7 +43,6 @@ public class AgenceService {
             return this.agenceImpl.update(agence);
         }
     }
-
     public List<Agence> findByEmploye(Employe employe) {
         return this.agenceImpl.findByEmploye(employe);
     }
@@ -50,5 +51,8 @@ public class AgenceService {
         if (agence.getCode().isEmpty())
             throw new AgenceException("Le champ de code est vide");
         return this.agenceImpl.save(agence);
+    }
+    public List<Agence> contactService(){
+        return this.agenceImpl.contact();
     }
 }
