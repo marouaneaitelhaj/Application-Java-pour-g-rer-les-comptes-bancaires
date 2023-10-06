@@ -1,10 +1,12 @@
 package org.example.Repository;
 
+import org.example.Exceptions.AgenceException;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface CrudRepository<M> {
-    Optional<M> save(M m);
+    Optional<M> save(M m) throws AgenceException;
 
     Optional<M> update(M m);
 

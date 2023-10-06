@@ -15,6 +15,7 @@ public class MainPage {
         System.out.println("5- Missions");
         System.out.println("6- Affectation");
         System.out.println("7- Agence");
+        System.out.println("8- Agence et employe");
         switch (scanner.nextLine()) {
             case "1" -> {
                 EmplyeeView emplyeeView = new EmplyeeView();
@@ -37,6 +38,10 @@ public class MainPage {
             case "7" ->{
                 AgenceView agenceView= new AgenceView();
                 agenceView.AgenceMenuView();
+            }
+            case "8" ->{
+                AgenceOfEmployeView agenceOfEmployeView= new AgenceOfEmployeView();
+                agenceOfEmployeView.AgenceOfEmployeViewMenu();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");

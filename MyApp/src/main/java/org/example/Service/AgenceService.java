@@ -13,22 +13,28 @@ public class AgenceService {
         this.agenceImpl = agenceImpl;
     }
 
-    public Optional<Agence> findByCode(Agence agence) {
+    public Optional<Agence> findByCode(Agence agence) throws AgenceException {
+        if (agence.getCode().isEmpty())
+            throw new AgenceException("Le champ de code est vide");
         return agenceImpl.findOne(agence);
     }
 
-    public int delete(Agence agence) {
+    public int delete(Agence agence) throws AgenceException {
+        if (agence.getCode().isEmpty())
+            throw new AgenceException("Le champ de code est vide");
         return this.agenceImpl.delete(agence);
     }
 
-    public Optional<Agence> findByAdresse(Agence agence) {
+    public Optional<Agence> findByAdresse(Agence agence) throws AgenceException {
+        if (agence.getAdresse().isEmpty())
+            throw new AgenceException("Le champ de adresse est vide");
         return agenceImpl.findOneByAdresse(agence);
     }
 
     public Optional<Agence> update(Agence agence) throws AgenceException {
-        if (agence.getCode().isEmpty()){
+        if (agence.getCode().isEmpty()) {
             throw new AgenceException("Le champ de code est vide");
-        }else {
+        } else {
             return this.agenceImpl.update(agence);
         }
     }
@@ -36,7 +42,9 @@ public class AgenceService {
     public void findByEmploye() {
     }
 
-    public Optional<Agence> save(Agence agence) {
+    public Optional<Agence> save(Agence agence) throws AgenceException {
+        if (agence.getCode().isEmpty())
+            throw new AgenceException("Le champ de code est vide");
         return this.agenceImpl.save(agence);
     }
 }
