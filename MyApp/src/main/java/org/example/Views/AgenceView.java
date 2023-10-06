@@ -1,12 +1,14 @@
 package org.example.Views;
 
 import org.example.Entity.Agence;
+import org.example.Entity.AgenceOfEmploye;
 import org.example.Entity.Employe;
 import org.example.Exceptions.AgenceException;
 import org.example.Implementations.AgenceImpl;
 import org.example.Interfaces.AgenceInter;
 import org.example.Service.AgenceService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -111,6 +113,15 @@ public class AgenceView {
     }
 
     protected void findByEmployeView() {
+        System.out.println("Employe : ");
+        String employe = scanner.nextLine();
+        Employe employe1 = new Employe(employe);
+        List<Agence> agenceList = agenceService.findByEmploye(employe1);
+        agenceList.forEach(agence1 -> {
+            System.out.println(agence1.getNom() + "      " + agence1.getAdresse());
+        });
+        scanner.nextLine();
+        this.AgenceMenuView();
     }
 
     protected void findByCodeView() {

@@ -1,12 +1,14 @@
 package org.example.Implementations;
 
 import org.example.Entity.Agence;
+import org.example.Entity.Employe;
 import org.example.Helpers.DatabaseConnection;
 import org.example.Interfaces.AgenceInter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,6 +75,24 @@ public class AgenceImpl implements AgenceInter {
     }
 
     @Override
+    public List<Agence> findByEmploye(Employe employe) {
+        List<Agence> agenceList = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM employeagencelogs where employe=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, employe.getMatricule());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Agence agence = new Agence(resultSet.getString("agence"));
+                this.findOne(agence).ifPresent(agenceList::add);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return agenceList;
+    }
+
+    @Override
     public Optional<Agence> findOne(Agence agence) {
         try {
             String query = "SELECT code, nom, adresse, numero FROM agence WHERE code=?;";
@@ -83,7 +103,7 @@ public class AgenceImpl implements AgenceInter {
                 agence.setAdresse(resultSet.getString("adresse"));
                 agence.setNom(resultSet.getString("nom"));
                 agence.setNumeroTelephone(resultSet.getString("numero"));
-            }else {
+            } else {
                 return Optional.empty();
             }
             return Optional.of(agence);
@@ -100,11 +120,11 @@ public class AgenceImpl implements AgenceInter {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, agence.getAdresse());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 agence.setCode(resultSet.getString("code"));
                 agence.setNom(resultSet.getString("nom"));
                 agence.setNumeroTelephone(resultSet.getString("numero"));
-            }else {
+            } else {
                 return Optional.empty();
             }
             return Optional.of(agence);

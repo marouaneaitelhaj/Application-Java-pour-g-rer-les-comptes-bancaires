@@ -1,9 +1,12 @@
 package org.example.Service;
 
 import org.example.Entity.Agence;
+import org.example.Entity.AgenceOfEmploye;
+import org.example.Entity.Employe;
 import org.example.Exceptions.AgenceException;
 import org.example.Interfaces.AgenceInter;
 
+import java.util.List;
 import java.util.Optional;
 
 public class AgenceService {
@@ -39,7 +42,8 @@ public class AgenceService {
         }
     }
 
-    public void findByEmploye() {
+    public List<Agence> findByEmploye(Employe employe) {
+        return this.agenceImpl.findByEmploye(employe);
     }
 
     public Optional<Agence> save(Agence agence) throws AgenceException {
