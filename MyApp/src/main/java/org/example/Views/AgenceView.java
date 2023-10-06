@@ -2,6 +2,7 @@ package org.example.Views;
 
 import org.example.Entity.Agence;
 import org.example.Entity.Employe;
+import org.example.Exceptions.AgenceException;
 import org.example.Implementations.AgenceImpl;
 import org.example.Interfaces.AgenceInter;
 import org.example.Service.AgenceService;
@@ -68,9 +69,37 @@ public class AgenceView {
     }
 
     protected void findByAdresseView() {
+        System.out.println("Adresse :");
+        String adresse = scanner.nextLine();
+        Agence agence = new Agence();
+        agence.setAdresse(adresse);
+        Optional<Agence> agenceOptional = agenceService.findByAdresse(agence);
+        agenceOptional.ifPresent(value -> System.out.println(value.getNom() + "        " + value.getAdresse() + "        " + value.getNumeroTelephone()));
+        scanner.nextLine();
+        this.AgenceMenuView();
     }
 
     protected void updateView() {
+        System.out.println("Code :");
+        String code = scanner.nextLine();
+        System.out.println("nom :");
+        String nom = scanner.nextLine();
+        System.out.println("adresse :");
+        String adresse = scanner.nextLine();
+        System.out.println("numero Telephone :");
+        String numeroTelephone = scanner.nextLine();
+        Agence agence = new Agence(code, nom, adresse, numeroTelephone);
+        try {
+            if (agenceService.update(agence).isPresent()) {
+                System.out.println("l'agence est bien à jour");
+            } else {
+                System.out.println("l'agence n'a pas été mise à jour");
+            }
+        } catch (AgenceException e) {
+            System.out.println(e.getMessage());
+        }
+        scanner.nextLine();
+        this.AgenceMenuView();
     }
 
     protected void findByEmployeView() {
@@ -95,12 +124,9 @@ public class AgenceView {
         String nom = scanner.nextLine();
         System.out.println("adresse :");
         String adresse = scanner.nextLine();
-        System.out.println("employe :");
-        String employe = scanner.nextLine();
-        Employe employe1 = new Employe(employe);
         System.out.println("numero Telephone :");
         String numeroTelephone = scanner.nextLine();
-        Agence agence = new Agence(code, nom, adresse, numeroTelephone, employe1);
+        Agence agence = new Agence(code, nom, adresse, numeroTelephone);
         if (agenceService.save(agence).isPresent()) {
             System.out.println("L'agence a été bein ajoutée");
         } else {

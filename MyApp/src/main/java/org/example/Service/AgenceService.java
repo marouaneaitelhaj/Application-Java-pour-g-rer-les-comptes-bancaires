@@ -1,6 +1,7 @@
 package org.example.Service;
 
 import org.example.Entity.Agence;
+import org.example.Exceptions.AgenceException;
 import org.example.Interfaces.AgenceInter;
 
 import java.util.Optional;
@@ -20,10 +21,16 @@ public class AgenceService {
         return this.agenceImpl.delete(agence);
     }
 
-    public void findByAdresse() {
+    public Optional<Agence> findByAdresse(Agence agence) {
+        return agenceImpl.findOneByAdresse(agence);
     }
 
-    public void update() {
+    public Optional<Agence> update(Agence agence) throws AgenceException {
+        if (agence.getCode().isEmpty()){
+            throw new AgenceException("Le champ de code est vide");
+        }else {
+            return this.agenceImpl.update(agence);
+        }
     }
 
     public void findByEmploye() {
