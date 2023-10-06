@@ -20,7 +20,8 @@ public class AgenceService {
         return this.agenceImpl.delete(agence);
     }
 
-    public void findByAdresse() {
+    public Optional<Agence> findByAdresse(Agence agence) {
+        return agenceImpl.findOneByAdresse(agence);
     }
 
     public void update() {

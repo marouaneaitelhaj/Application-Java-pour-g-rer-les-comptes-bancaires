@@ -68,6 +68,14 @@ public class AgenceView {
     }
 
     protected void findByAdresseView() {
+        System.out.println("Adresse :");
+        String adresse = scanner.nextLine();
+        Agence agence = new Agence();
+        agence.setAdresse(adresse);
+        Optional<Agence> agenceOptional = agenceService.findByAdresse(agence);
+        agenceOptional.ifPresent(value -> System.out.println(value.getNom() + "        " + value.getAdresse() + "        " + value.getNumeroTelephone()));
+        scanner.nextLine();
+        this.AgenceMenuView();
     }
 
     protected void updateView() {
