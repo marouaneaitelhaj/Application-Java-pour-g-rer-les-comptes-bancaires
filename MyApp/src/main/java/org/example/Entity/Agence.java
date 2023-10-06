@@ -7,7 +7,7 @@ public class Agence {
     private String nom;
     private String adresse;
     private String numeroTelephone;
-    private List<EmployeAgenceLogs> employeAgenceLogs;
+    private List<AgenceOfEmploye> employeAgenceLogs;
 
     public Agence(String code, String nom, String adresse, String numeroTelephone) {
         this.code = code;
@@ -22,16 +22,17 @@ public class Agence {
 
 
 
-    public List<EmployeAgenceLogs> getEmployeAgenceLogs() {
+    public List<AgenceOfEmploye> getEmployeAgenceLogs() {
         return employeAgenceLogs;
     }
 
-    public void setEmployeAgenceLogs(List<EmployeAgenceLogs> employeAgenceLogs) {
+    public void setEmployeAgenceLogs(List<AgenceOfEmploye> employeAgenceLogs) {
         this.employeAgenceLogs = employeAgenceLogs;
     }
 
     public Agence() {
     }
+
 
     public String getCode() {
         return code;

@@ -2,17 +2,22 @@ package org.example.Entity;
 
 import java.util.Date;
 
-public class EmployeAgenceLogs {
+public class AgenceOfEmploye {
     private Employe employe;
     private Agence agence;
     private Date date;
 
-    public EmployeAgenceLogs(Employe employe, Agence agence, Date date) {
+    public AgenceOfEmploye(Employe employe, Agence agence, Date date) {
         this.employe = employe;
         this.agence = agence;
         this.date = date;
     }
-    public EmployeAgenceLogs() {
+    public AgenceOfEmploye() {
+    }
+
+    public AgenceOfEmploye(Employe employe, Agence agence) {
+        this.employe = employe;
+        this.agence = agence;
     }
 
     public Employe getEmploye() {

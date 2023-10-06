@@ -58,11 +58,15 @@ public class AgenceView {
         System.out.println("Code : ");
         String code = scanner.nextLine();
         Agence agence = new Agence(code);
-        int deleted = agenceService.delete(agence);
-        if (deleted == 1) {
-            System.out.println("Agence est bien supprimé");
-        } else {
-            System.out.println("Agence n'est pas supprimé");
+        try {
+            int deleted = agenceService.delete(agence);
+            if (deleted == 1) {
+                System.out.println("Agence est bien supprimé");
+            } else {
+                System.out.println("Agence n'est pas supprimé");
+            }
+        } catch (AgenceException e) {
+            System.out.println(e.getMessage());
         }
         scanner.nextLine();
         this.AgenceMenuView();
@@ -73,8 +77,12 @@ public class AgenceView {
         String adresse = scanner.nextLine();
         Agence agence = new Agence();
         agence.setAdresse(adresse);
-        Optional<Agence> agenceOptional = agenceService.findByAdresse(agence);
-        agenceOptional.ifPresent(value -> System.out.println(value.getNom() + "        " + value.getAdresse() + "        " + value.getNumeroTelephone()));
+        try {
+            Optional<Agence> agenceOptional = agenceService.findByAdresse(agence);
+            agenceOptional.ifPresent(value -> System.out.println(value.getNom() + "        " + value.getAdresse() + "        " + value.getNumeroTelephone()));
+        } catch (AgenceException e) {
+            System.out.println(e.getMessage());
+        }
         scanner.nextLine();
         this.AgenceMenuView();
     }
@@ -109,10 +117,14 @@ public class AgenceView {
         System.out.println("Code : ");
         String code = scanner.nextLine();
         Agence agence = new Agence(code);
-        Optional<Agence> agenceOptional = agenceService.findByCode(agence);
-        agenceOptional.ifPresent(agence1 -> {
-            System.out.println(agence1.getNom() + "      " + agence1.getAdresse());
-        });
+        try {
+            Optional<Agence> agenceOptional = agenceService.findByCode(agence);
+            agenceOptional.ifPresent(agence1 -> {
+                System.out.println(agence1.getNom() + "      " + agence1.getAdresse());
+            });
+        } catch (AgenceException e) {
+            System.out.println(e.getMessage());
+        }
         scanner.nextLine();
         this.AgenceMenuView();
     }
@@ -127,10 +139,14 @@ public class AgenceView {
         System.out.println("numero Telephone :");
         String numeroTelephone = scanner.nextLine();
         Agence agence = new Agence(code, nom, adresse, numeroTelephone);
-        if (agenceService.save(agence).isPresent()) {
-            System.out.println("L'agence a été bein ajoutée");
-        } else {
-            System.out.println("L'agence n'a pas ajoutée");
+        try {
+            if (agenceService.save(agence).isPresent()) {
+                System.out.println("L'agence a été bein ajoutée");
+            } else {
+                System.out.println("L'agence n'a pas ajoutée");
+            }
+        } catch (AgenceException e) {
+            System.out.println(e.getMessage());
         }
         this.AgenceMenuView();
     }
