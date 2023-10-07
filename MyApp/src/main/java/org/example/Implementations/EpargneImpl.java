@@ -43,7 +43,7 @@ public class EpargneImpl implements EpargneInter {
     }
 
     @Override
-    public Optional<List<Epargne>> findAll() {
+    public List<Epargne> findAll() {
         return null;
     }
 }

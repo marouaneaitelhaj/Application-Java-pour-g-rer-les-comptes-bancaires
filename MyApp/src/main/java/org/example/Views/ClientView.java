@@ -94,12 +94,12 @@ public class ClientView {
         }
     }
 
-    public Optional<List<Client>> showAllView() {
-        Optional<List<Client>> clientList = clientImpl.findAll();
-        if (clientList.isEmpty()) {
+    public List<Client> showAllView() {
+        List<Client> clientList = clientImpl.findAll();
+        if (clientList.size() == 0) {
             System.out.println("Aucun client trouvé");
         } else {
-            clientList.get().forEach(client -> {
+            clientList.forEach(client -> {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
         }
@@ -108,11 +108,11 @@ public class ClientView {
 
     public void findByAtrView() {
         System.out.println("Ecris quelque chose que tu cherches");
-        Optional<List<Client>> optionalClientList = clientImpl.findByAtr(scanner.nextLine());
-        if (optionalClientList.isEmpty()) {
+        List<Client> optionalClientList = clientImpl.findByAtr(scanner.nextLine());
+        if (optionalClientList.size() == 0) {
             System.out.println("Aucun Client trouvé");
         } else {
-            optionalClientList.get().forEach(client -> {
+            optionalClientList.forEach(client -> {
                 System.out.println(client.getNom() + "    " + client.getPrenom() + "    " + client.getTelephone() + "    " + client.getCode() + "    " + client.getAdresse() + "    " + client.getDateDeNaissance());
             });
         }
@@ -121,10 +121,10 @@ public class ClientView {
     }
 
     public void updateView() {
-        Optional<List<Client>> clientList = this.showAllView();
+        List<Client> clientList = this.showAllView();
         System.out.println("code : ");
         String code = scanner.nextLine();
-        clientList.get().stream().forEach(client11 -> {
+        clientList.stream().forEach(client11 -> {
             if (Objects.equals(client11.getCode(), code)) {
                 Client client = new Client();
                 System.out.println("Nom:");

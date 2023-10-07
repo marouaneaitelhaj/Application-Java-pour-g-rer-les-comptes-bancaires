@@ -60,7 +60,7 @@ public class MissionImpl implements MissionInter {
     }
 
     @Override
-    public Optional<List<Mission>> findAll() {
+    public List<Mission> findAll() {
         List<Mission> missions = new ArrayList<Mission>();
         try {
             String query = "SELECT code, nomMission, description FROM mission;";
@@ -73,10 +73,9 @@ public class MissionImpl implements MissionInter {
                 mission.setDescription(resultSet.getString("description"));
                 missions.add(mission);
             }
-            return Optional.of(missions);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return missions;
     }
 }

@@ -99,7 +99,7 @@ public class CompteImpl implements CompteInter {
     }
 
     @Override
-    public Optional<List<Compte>> findByClient(Compte compte) {
+    public List<Compte> findByClient(Compte compte) {
         List<Compte> compteArrayList = new ArrayList<Compte>();
         try {
             String query = "SELECT numero, solde, date, etat, client FROM compte WHERE client=?;";
@@ -119,13 +119,13 @@ public class CompteImpl implements CompteInter {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return compteArrayList;
     }
 
     @Override
-    public Optional<List<Compte>> findAll() {
-        try {
+    public List<Compte> findAll() {
             List<Compte> compteArrayList = new ArrayList<Compte>();
+        try {
             String query = "SELECT numero, solde, etat, client, date FROM compte;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -140,17 +140,16 @@ public class CompteImpl implements CompteInter {
                 compte.setClient(client);
                 compteArrayList.add(compte);
             }
-            return Optional.of(compteArrayList);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return compteArrayList;
     }
 
     @Override
-    public Optional<List<Compte>> findAllByStatus() {
-        try {
+    public List<Compte> findAllByStatus() {
             List<Compte> compteArrayList = new ArrayList<Compte>();
+        try {
             String query = "SELECT numero, solde, etat, client, date FROM compte ORDER BY etat DESC;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -165,17 +164,16 @@ public class CompteImpl implements CompteInter {
                 compte.setClient(client);
                 compteArrayList.add(compte);
             }
-            return Optional.of(compteArrayList);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return compteArrayList;
     }
 
     @Override
-    public Optional<List<Compte>> findAllByDate() {
-        try {
+    public List<Compte> findAllByDate() {
             List<Compte> compteArrayList = new ArrayList<Compte>();
+        try {
             String query = "SELECT numero, solde, etat, client, date FROM compte ORDER BY date DESC;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -190,11 +188,10 @@ public class CompteImpl implements CompteInter {
                 compte.setClient(client);
                 compteArrayList.add(compte);
             }
-            return Optional.of(compteArrayList);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return compteArrayList;
     }
 
     @Override

@@ -55,11 +55,11 @@ public class MissionOfEmployesView {
     }
 
     private void MissionStatistiques() {
-        Optional<HashMap<String, Integer>> missionStatistiques = missionOfEmployeImpl.MissionStatistiques();
+        HashMap<String, Integer> missionStatistiques = missionOfEmployeImpl.MissionStatistiques();
         if (missionStatistiques.isEmpty()) {
             System.out.println("rien à montrer");
         } else {
-            missionStatistiques.get().forEach((s, integer) -> {
+            missionStatistiques.forEach((s, integer) -> {
                 System.out.println(s + "     " + integer);
             });
         }
@@ -68,11 +68,11 @@ public class MissionOfEmployesView {
     }
 
     private void EmployeStatistiques() {
-        Optional<HashMap<String, Integer>> employeStatistiques = missionOfEmployeImpl.EmployeStatistiques();
+        HashMap<String, Integer> employeStatistiques = missionOfEmployeImpl.EmployeStatistiques();
         if (employeStatistiques.isEmpty()) {
             System.out.println("rien à montrer");
         } else {
-            employeStatistiques.get().forEach((s, integer) -> {
+            employeStatistiques.forEach((s, integer) -> {
                 System.out.println(s + "     " + integer);
             });
         }
@@ -86,8 +86,8 @@ public class MissionOfEmployesView {
         Employe employe = new Employe();
         employe.setMatricule(scanner.nextLine());
         missionOfEmploye.setEmploye(employe);
-        Optional<List<MissionOfEmploye>> optionalmissionOfEmployes = missionOfEmployeImpl.findByEmploye(employe);
-        List<MissionOfEmploye> missionOfEmployes = optionalmissionOfEmployes.get();
+        List<MissionOfEmploye> optionalmissionOfEmployes = missionOfEmployeImpl.findByEmploye(employe);
+        List<MissionOfEmploye> missionOfEmployes = optionalmissionOfEmployes;
         missionOfEmployes.forEach(missionOfEmploye1 -> {
             System.out.println(missionOfEmploye1.getEmploye().getNom() + "       " + missionOfEmploye1.getMission().getNom() + "       " + missionOfEmploye1.getDateStart() + "       ");
         });

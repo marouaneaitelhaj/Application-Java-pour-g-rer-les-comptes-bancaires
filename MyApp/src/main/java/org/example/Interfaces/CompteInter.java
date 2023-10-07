@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CompteInter extends CrudRepository<Compte> {
-    Optional<List<Compte>> findByClient(Compte compte);
+    List<Compte> findByClient(Compte compte);
 
-    Optional<List<Compte>> findAllByStatus();
+    List<Compte> findAllByStatus();
 
-    Optional<List<Compte>> findAllByDate();
+    List<Compte> findAllByDate();
 
     Optional<Compte> updateEtat(Compte compte);
 }

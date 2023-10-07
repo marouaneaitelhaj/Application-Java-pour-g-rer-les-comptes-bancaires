@@ -14,5 +14,5 @@ public interface CrudRepository<M> {
 
     Optional<M> findOne(M m);
 
-    Optional<List<M>> findAll();
+    List<M> findAll();
 }

@@ -101,12 +101,12 @@ public class EmplyeeView {
         }
     }
 
-    public Optional<List<Employe>> showView() {
-        Optional<List<Employe>> employeImplAll = employeImpl.findAll();
+    public List<Employe> showView() {
+        List<Employe> employeImplAll = employeImpl.findAll();
         if (employeImplAll.isEmpty()) {
             System.out.println("Aucun employé trouvé");
         } else {
-            employeImplAll.get().forEach(employe -> {
+            employeImplAll.forEach(employe -> {
                 System.out.println(employe.getNom() + "     " + employe.getPrenom() + "     " + employe.getTelephone() + "     " + employe.getMatricule() + "     " + employe.getEmail() + "     " + employe.getDateDeNaissance().toString() + "     " + employe.getDateDeRecrutement().toString());
             });
         }
@@ -115,11 +115,11 @@ public class EmplyeeView {
 
     public void findByAtrView() {
         System.out.println("Ecris quelque chose que tu cherches");
-        Optional<List<Employe>> optionalEmployeList = employeImpl.findByAtr(scanner.nextLine());
+        List<Employe> optionalEmployeList = employeImpl.findByAtr(scanner.nextLine());
         if (optionalEmployeList.isEmpty()) {
             System.out.println("Aucun employé trouvé");
         } else {
-            optionalEmployeList.get().forEach(employe -> {
+            optionalEmployeList.forEach(employe -> {
                 System.out.println(employe.getNom() + "     " + employe.getPrenom() + "     " + employe.getTelephone() + "     " + employe.getMatricule() + "     " + employe.getEmail() + "     " + employe.getDateDeNaissance() + "     " + employe.getDateDeRecrutement());
             });
         }
@@ -127,10 +127,10 @@ public class EmplyeeView {
         new EmplyeeView();
     }
     public void updateView(){
-        Optional<List<Employe>> employeImplAll = this.showView();
+        List<Employe> employeImplAll = this.showView();
         System.out.println("matricule:");
         String matricule = scanner.nextLine();
-        employeImplAll.get().stream().forEach(employe11 -> {
+        employeImplAll.stream().forEach(employe11 -> {
             if (Objects.equals(employe11.getMatricule(), matricule)){
                 Employe employe = new Employe();
                 System.out.println("Nom :");

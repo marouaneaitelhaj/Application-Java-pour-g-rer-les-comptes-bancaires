@@ -6,7 +6,9 @@ import org.example.Entity.Employe;
 import org.example.Enums.AffectationStatus;
 import org.example.Exceptions.AgenceException;
 import org.example.Helpers.MyFunction;
+import org.example.Implementations.AgenceImpl;
 import org.example.Implementations.AgenceOfEmployeImpl;
+import org.example.Implementations.EmployeImpl;
 import org.example.Interfaces.AgenceOfEmployeInter;
 import org.example.Service.AgenceOfEmployeService;
 import org.example.Service.AgenceService;
@@ -17,12 +19,15 @@ import java.util.Scanner;
 
 public class AgenceOfEmployeView {
     Scanner scanner = new Scanner(System.in);
-    AgenceOfEmployeInter agenceOfEmployeImpl = new AgenceOfEmployeImpl();
+    EmployeImpl employeImpl = new EmployeImpl();
+    AgenceImpl agenceImpl = new AgenceImpl();
+    AgenceOfEmployeInter agenceOfEmployeImpl = new AgenceOfEmployeImpl(agenceImpl, employeImpl);
     AgenceOfEmployeService agenceOfEmployeService = new AgenceOfEmployeService(agenceOfEmployeImpl);
 
     public void AgenceOfEmployeViewMenu() {
         System.out.println("1- Affecter un employé à une agence");
         System.out.println("2- Muter un employé");
+        System.out.println("3- Historique des affectations Employé/agences");
         String choice = scanner.nextLine();
         switch (choice) {
             case "1" -> {
@@ -31,11 +36,22 @@ public class AgenceOfEmployeView {
             case "2" -> {
                 this.updateAffectation();
             }
+            case "3" -> {
+                this.findAllView();
+            }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
                 this.AgenceOfEmployeViewMenu();
             }
         }
+    }
+
+    private void findAllView() {
+        this.agenceOfEmployeService.findAll().forEach(agenceOfEmploye -> {
+            System.out.println(agenceOfEmploye.getAgence().getNom() + "          " + agenceOfEmploye.getEmploye().getNom() + "              " + agenceOfEmploye.getDate());
+        });
+        scanner.nextLine();
+        this.AgenceOfEmployeViewMenu();
     }
 
     private void updateAffectation() {

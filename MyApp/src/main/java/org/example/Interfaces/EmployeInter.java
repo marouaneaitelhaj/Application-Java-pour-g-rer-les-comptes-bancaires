@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmployeInter extends CrudRepository<Employe> {
-    Optional<List<Employe>> findByAtr(String text);
+    List<Employe> findByAtr(String text);
 }

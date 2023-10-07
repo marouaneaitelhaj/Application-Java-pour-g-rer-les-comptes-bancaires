@@ -100,11 +100,11 @@ public class CompteView {
         client.setCode(scanner.nextLine());
         Compte compte = new Compte();
         compte.setClient(client);
-        Optional<List<Compte>> compteList = compteImpl.findByClient(compte);
+        List<Compte> compteList = compteImpl.findByClient(compte);
         if (compteList.isEmpty()) {
             System.out.println("Aucun employé trouvé");
         } else {
-            compteList.get().stream().forEach(compte1 -> {
+            compteList.stream().forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
@@ -159,13 +159,13 @@ public class CompteView {
     }
 
     public void updateView() {
-        Optional<List<Compte>> compteList = this.showAllView();
+        List<Compte> compteList = this.showAllView();
         System.out.println("Numero: ");
         String numero = scanner.nextLine();
         if (compteList.isEmpty()) {
             System.out.println("quelque chose s'est mal passé");
         } else {
-            compteList.get().forEach(compte11 -> {
+            compteList.forEach(compte11 -> {
                 if (Objects.equals(compte11.getNumero(), numero)) {
                     Compte compte = new Compte();
                     Client client = new Client();
@@ -188,12 +188,12 @@ public class CompteView {
     }
 
 
-    public Optional<List<Compte>> showAllView() {
-        Optional<List<Compte>> compteList = compteImpl.findAll();
+    public List<Compte> showAllView() {
+        List<Compte> compteList = compteImpl.findAll();
         if (compteList.isEmpty()) {
             System.out.println("Aucun compte trouvé");
         } else {
-            compteList.get().forEach(compte1 -> {
+            compteList.forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
@@ -201,11 +201,11 @@ public class CompteView {
     }
 
     public void showAllByStatusView() {
-        Optional<List<Compte>> compteList = compteImpl.findAllByStatus();
+        List<Compte> compteList = compteImpl.findAllByStatus();
         if (compteList.isEmpty()) {
             System.out.println("Aucun compte trouvé");
         } else {
-            compteList.get().forEach(compte1 -> {
+            compteList.forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
@@ -214,11 +214,11 @@ public class CompteView {
     }
 
     public void showAllByDateView() {
-        Optional<List<Compte>> compteList = compteImpl.findAllByDate();
+        List<Compte> compteList = compteImpl.findAllByDate();
         if (compteList.isEmpty()) {
             System.out.println("Aucun compte trouvé");
         } else {
-            compteList.get().forEach(compte1 -> {
+            compteList.forEach(compte1 -> {
                 System.out.println(compte1.getNumero() + "    " + compte1.getSolde() + "  " + compte1.getDate() + "   " + compte1.getCompteEtat() + "   " + compte1.getClient().getCode());
             });
         }
@@ -227,12 +227,12 @@ public class CompteView {
     }
 
     public void updateEtatView() {
-        Optional<List<Compte>> compteList = this.showAllView();
+        List<Compte> compteList = this.showAllView();
         System.out.println("Numero: ");
         String numero = scanner.nextLine();
         if (compteList.isEmpty()) {
         } else {
-            compteList.get().forEach(compte -> {
+            compteList.forEach(compte -> {
                 if (Objects.equals(numero, compte.getNumero())) {
                     if (compte.getCompteEtat() == CompteEtat.Active) {
                         compte.setCompteEtat(CompteEtat.Inactive);

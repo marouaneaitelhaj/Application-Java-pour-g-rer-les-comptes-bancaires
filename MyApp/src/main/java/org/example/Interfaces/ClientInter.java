@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientInter extends CrudRepository<Client> {
-    Optional<List<Client>> findByAtr(String text);
+    List<Client> findByAtr(String text);
 }

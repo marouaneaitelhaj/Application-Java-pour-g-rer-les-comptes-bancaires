@@ -96,9 +96,9 @@ public class EmployeImpl implements EmployeInter {
     }
 
     @Override
-    public Optional<List<Employe>> findByAtr(String text) {
-        try {
+    public List<Employe> findByAtr(String text) {
             List<Employe> employeArrayList = new ArrayList<Employe>();
+        try {
             String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM employe WHERE nom LIKE ? OR  prenom LIKE ? OR  telephone LIKE ? OR  matricule LIKE ? OR  email LIKE ? ;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "%" + text + "%");
@@ -118,17 +118,16 @@ public class EmployeImpl implements EmployeInter {
                 employe.setDateDeNaissance(resultSet.getDate("datedenaissance").toLocalDate());
                 employeArrayList.add(employe);
             }
-            return Optional.of(employeArrayList);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return employeArrayList;
     }
 
     @Override
-    public Optional<List<Employe>> findAll() {
-        try {
+    public List<Employe> findAll() {
             List<Employe> employeArrayList = new ArrayList<Employe>();
+        try {
             String query = "SELECT nom, prenom, telephone, matricule, email, datederecrutement, datedenaissance FROM employe;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -143,10 +142,9 @@ public class EmployeImpl implements EmployeInter {
                 employe.setDateDeNaissance(resultSet.getDate("datedenaissance").toLocalDate());
                 employeArrayList.add(employe);
             }
-            return Optional.of(employeArrayList);
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return employeArrayList;
     }
 }

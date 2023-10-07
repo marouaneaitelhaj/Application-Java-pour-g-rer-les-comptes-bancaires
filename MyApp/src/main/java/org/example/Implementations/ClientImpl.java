@@ -93,9 +93,9 @@ public class ClientImpl implements ClientInter {
     }
 
     @Override
-    public Optional<List<Client>> findAll() {
-        try {
+    public List<Client> findAll() {
             List<Client> clientList = new ArrayList<Client>();
+        try {
             String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM client;";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -109,16 +109,16 @@ public class ClientImpl implements ClientInter {
                 client.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
                 clientList.add(client);
             }
-            return Optional.of(clientList);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return Optional.empty();
+        return clientList;
     }
+
     @Override
-    public Optional<List<Client>> findByAtr(String text) {
-        try {
+    public List<Client> findByAtr(String text) {
             List<Client> clientList = new ArrayList<Client>();
+        try {
             String query = "SELECT nom, prenom, telephone, code, adresse, datedenaissance FROM client WHERE nom LIKE ? OR prenom LIKE ? OR telephone LIKE ? OR code LIKE ? OR adresse LIKE ? ;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "%" + text + "%");
@@ -137,9 +137,8 @@ public class ClientImpl implements ClientInter {
                 client.setDateDeNaissance(LocalDate.parse(resultSet.getString("datedenaissance")));
                 clientList.add(client);
             }
-            return Optional.of(clientList);
         } catch (Exception e) {
         }
-        return Optional.empty();
+        return clientList;
     }
 }

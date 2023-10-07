@@ -41,7 +41,7 @@ public class AgenceOfEmployeService implements AgenceOfEmployeInter {
     }
 
 
-    public Optional<List<AgenceOfEmploye>> findAll() {
-        return Optional.empty();
+    public List<AgenceOfEmploye> findAll() {
+        return agenceOfEmployeInter.findAll();
     }
 }

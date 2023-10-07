@@ -38,7 +38,6 @@ public class MissionView {
     }
 
 
-
     private void deleteView() {
         System.out.println("code :");
         Mission mission = new Mission();
@@ -52,20 +51,18 @@ public class MissionView {
     }
 
 
-
     private void showView() {
-        Optional<List<Mission>> optionalMission = missionImpl.findAll();
+        List<Mission> optionalMission = missionImpl.findAll();
 
-        if (optionalMission.isPresent()) {
-            List<Mission> missions = optionalMission.get();
-            if (missions.isEmpty()) {
-                System.out.println("aucune mission trouvée");
-                new MissionView();
-            } else {
-                missions.forEach(mission -> {
-                    System.out.println(mission.getCode() + "     " + mission.getNom() + "     " + mission.getDescription());
-                });
-            }
+        List<Mission> missions = optionalMission;
+        if (missions.isEmpty()) {
+            System.out.println("aucune mission trouvée");
+            new MissionView();
+        } else {
+            missions.forEach(mission -> {
+                System.out.println(mission.getCode() + "     " + mission.getNom() + "     " + mission.getDescription());
+            });
+
         }
         MyFunction.appuyezPourQuitter();
         new MissionView();

@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MissionOfEmployeInter extends CrudRepository<MissionOfEmploye> {
-    Optional<HashMap<String, Integer>> EmployeStatistiques();
+    HashMap<String, Integer> EmployeStatistiques();
 
-    Optional<HashMap<String, Integer>> MissionStatistiques();
+    HashMap<String, Integer> MissionStatistiques();
 
-    Optional<List<MissionOfEmploye>> findByEmploye(Employe employe);
+    List<MissionOfEmploye> findByEmploye(Employe employe);
 }

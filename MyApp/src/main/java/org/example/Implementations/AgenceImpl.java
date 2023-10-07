@@ -136,8 +136,8 @@ public class AgenceImpl implements AgenceInter {
     }
 
     @Override
-    public Optional<List<Agence>> findAll() {
-        return Optional.empty();
+    public List<Agence> findAll() {
+        return null;
     }
 
     @Override
