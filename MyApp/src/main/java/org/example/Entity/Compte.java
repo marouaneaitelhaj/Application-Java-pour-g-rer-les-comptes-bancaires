@@ -22,6 +22,10 @@ public class Compte {
 
     }
 
+    public Compte(String numero) {
+        this.numero = numero;
+    }
+
 
     public String getNumero() {
         return numero;
