@@ -17,11 +17,12 @@ public class AgenceOfEmployeImpl implements AgenceOfEmployeInter {
     @Override
     public Optional<AgenceOfEmploye> save(AgenceOfEmploye agenceOfEmploye) {
         try {
-            String query = "INSERT INTO public.employeagencelogs(date, employe, agence) VALUES (?, ?, ?);";
+            String query = "INSERT INTO public.employeagencelogs(date, employe, agence, status) VALUES (?, ?, ?,?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setDate(1, Date.valueOf(LocalDate.now()));
             preparedStatement.setString(2, agenceOfEmploye.getEmploye().getMatricule());
             preparedStatement.setString(3, agenceOfEmploye.getAgence().getCode());
+            preparedStatement.setString(4, agenceOfEmploye.getAffectationStatus().name());
             int rowaffected = preparedStatement.executeUpdate();
             if (rowaffected == 0) {
                 return Optional.empty();
@@ -36,6 +37,22 @@ public class AgenceOfEmployeImpl implements AgenceOfEmployeInter {
 
     @Override
     public Optional<AgenceOfEmploye> update(AgenceOfEmploye agenceOfEmploye) {
+        try {
+            String query = "UPDATE employeagencelogs SET status=? WHERE date=? and employe=? and agence=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, agenceOfEmploye.getAffectationStatus().name());
+            preparedStatement.setDate(2, Date.valueOf(agenceOfEmploye.getDate()));
+            preparedStatement.setString(3, agenceOfEmploye.getEmploye().getMatricule());
+            preparedStatement.setString(4, agenceOfEmploye.getAgence().getCode());
+            if (preparedStatement.executeUpdate() == 0) {
+                return Optional.empty();
+            } else {
+                return Optional.of(agenceOfEmploye);
+            }
+        } catch (Exception e) {
+
+        }
+
         return Optional.empty();
     }
 
@@ -51,6 +68,7 @@ public class AgenceOfEmployeImpl implements AgenceOfEmployeInter {
 
     @Override
     public Optional<List<AgenceOfEmploye>> findAll() {
+
         return Optional.empty();
     }
 }

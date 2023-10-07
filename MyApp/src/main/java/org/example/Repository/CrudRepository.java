@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface CrudRepository<M> {
     Optional<M> save(M m) throws AgenceException;
 
-    Optional<M> update(M m);
+    Optional<M> update(M m) throws AgenceException;
 
     int delete(M m);
 

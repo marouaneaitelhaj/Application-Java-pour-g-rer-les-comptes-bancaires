@@ -22,7 +22,11 @@ public class AgenceOfEmployeService implements AgenceOfEmployeInter {
     }
 
 
-    public Optional<AgenceOfEmploye> update(AgenceOfEmploye agenceOfEmploye) {
+    public Optional<AgenceOfEmploye> update(AgenceOfEmploye agenceOfEmploye) throws AgenceException {
+        Optional<AgenceOfEmploye> agenceOfEmploye1 = this.agenceOfEmployeInter.update(agenceOfEmploye);
+        if (agenceOfEmploye1.isEmpty()){
+            throw new AgenceException("aucun affectation trouve");
+        }
         return Optional.empty();
     }
 

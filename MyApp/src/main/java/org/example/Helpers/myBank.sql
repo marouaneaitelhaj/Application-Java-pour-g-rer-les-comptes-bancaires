@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS Credit (
     );
 CREATE TABLE IF NOT EXISTS EmployeAgenceLogs (
                                                  date Date,
+                                                 status int;
                                                  employe VARCHAR(255),
     agence VARCHAR(255),
     FOREIGN KEY (employe) REFERENCES Employe(matricule) ON DELETE CASCADE,
