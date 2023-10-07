@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS Virment (
     CompteDestinataire VARCHAR(255),
     CompteEmetteur VARCHAR(255),
     mantant int,
+    date Date,
     FOREIGN KEY (CompteEmetteur) REFERENCES Compte(numero),
-    FOREIGN KEY (CompteDestinataire) REFERENCES Compte(numero),
+    FOREIGN KEY (CompteDestinataire) REFERENCES Compte(numero)
 )

@@ -7,6 +7,7 @@ import org.example.Interfaces.VirementInter;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class VirementImpl implements VirementInter {
             String query = "BEGIN;" +
                     "UPDATE compte SET solde=? WHERE numero=?;" +
                     "UPDATE compte SET solde=? WHERE numero=?;" +
-                    "INSERT INTO virment(comptedestinataire, compteemetteur, mantant) VALUES (?, ?, ?);" +
+                    "INSERT INTO virment(comptedestinataire, compteemetteur, mantant,date) VALUES (?, ?, ?, ?);" +
                     "COMMIT;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, virement.getCompteDestinataire().getSolde());
@@ -29,6 +30,7 @@ public class VirementImpl implements VirementInter {
             preparedStatement.setString(5, virement.getCompteDestinataire().getNumero());
             preparedStatement.setString(6, virement.getCompteEmetteur().getNumero());
             preparedStatement.setInt(7, virement.getMantant());
+            preparedStatement.setDate(8, Date.valueOf(LocalDate.now()));
             preparedStatement.execute();
             return Optional.of(virement);
         } catch (Exception e) {
