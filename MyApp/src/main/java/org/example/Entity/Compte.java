@@ -10,6 +10,19 @@ public class Compte {
     private LocalDate date;
     private CompteEtat compteEtat;
     private Client client;
+    private Agence agence;
+
+    public Agence getAgence() {
+        return agence;
+    }
+
+    public void setAgence(Agence agence) {
+        this.agence = agence;
+    }
+
+    public Compte(Agence agence) {
+        this.agence = agence;
+    }
 
     public Compte(String numero, int solde, LocalDate date, CompteEtat compteEtat, Client client) {
         this.numero = numero;
@@ -18,6 +31,16 @@ public class Compte {
         this.compteEtat = compteEtat;
         this.client = client;
     }
+
+    public Compte(String numero, int solde, LocalDate date, CompteEtat compteEtat, Client client, Agence agence) {
+        this.numero = numero;
+        this.solde = solde;
+        this.date = date;
+        this.compteEtat = compteEtat;
+        this.client = client;
+        this.agence = agence;
+    }
+
     public Compte() {
 
     }

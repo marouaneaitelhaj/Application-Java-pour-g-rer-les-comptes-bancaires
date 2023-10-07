@@ -12,11 +12,11 @@ public class CompteAgenceImpl implements CompteAgenceIntre {
     Connection connection = DatabaseConnection.getInstance().getConnection();
 
     @Override
-    public boolean affectCompteAgence(Compte compte, Agence agence) {
+    public boolean affectCompteAgence(Compte compte) {
         try {
             String query = "UPDATE compte SET agence=? WHERE numero=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, agence.getCode());
+            preparedStatement.setString(1, compte.getAgence().getCode());
             preparedStatement.setString(2, compte.getNumero());
             if (preparedStatement.executeUpdate() != 0) {
                 return true;

@@ -10,7 +10,7 @@ public class CompteAgenceService {
     public CompteAgenceService(CompteAgenceIntre compteAgenceIntre) {
         this.compteAgenceIntre = compteAgenceIntre;
     }
-    public boolean affectCompteAgence(Compte compte, Agence agence){
-        return compteAgenceIntre.affectCompteAgence(compte,agence);
+    public boolean affectCompteAgence(Compte compte){
+        return compteAgenceIntre.affectCompteAgence(compte);
     }
 }

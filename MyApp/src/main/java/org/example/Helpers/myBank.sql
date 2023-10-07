@@ -97,3 +97,10 @@ CREATE TABLE IF NOT EXISTS EmployeAgenceLogs (
     FOREIGN KEY (employe) REFERENCES Employe(matricule) ON DELETE CASCADE,
     FOREIGN KEY (agence) REFERENCES Agence(code) ON DELETE CASCADE
     );
+CREATE TABLE IF NOT EXISTS Virment (
+    CompteDestinataire VARCHAR(255),
+    CompteEmetteur VARCHAR(255),
+    mantant int,
+    FOREIGN KEY (CompteEmetteur) REFERENCES Compte(numero),
+    FOREIGN KEY (CompteDestinataire) REFERENCES Compte(numero),
+)

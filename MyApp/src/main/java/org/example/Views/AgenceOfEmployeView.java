@@ -4,14 +4,13 @@ import org.example.Entity.Agence;
 import org.example.Entity.AgenceOfEmploye;
 import org.example.Entity.Employe;
 import org.example.Enums.AffectationStatus;
-import org.example.Exceptions.AgenceException;
+import org.example.Exceptions.MyException;
 import org.example.Helpers.MyFunction;
 import org.example.Implementations.AgenceImpl;
 import org.example.Implementations.AgenceOfEmployeImpl;
 import org.example.Implementations.EmployeImpl;
 import org.example.Interfaces.AgenceOfEmployeInter;
 import org.example.Service.AgenceOfEmployeService;
-import org.example.Service.AgenceService;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -68,7 +67,7 @@ public class AgenceOfEmployeView {
                 System.out.println("l'employé est affecté à l'agence");
             if (agenceOfEmploye1.isEmpty())
                 System.out.println("l'employé n'a pas été affecté à l'agence");
-        } catch (AgenceException e) {
+        } catch (MyException e) {
             System.out.println(e.getMessage());
         }
         scanner.nextLine();
@@ -87,7 +86,7 @@ public class AgenceOfEmployeView {
                 System.out.println("l'employé est affecté à l'agence");
             if (agenceOfEmploye1.isEmpty())
                 System.out.println("l'employé n'a pas été affecté à l'agence");
-        } catch (AgenceException e) {
+        } catch (MyException e) {
             System.out.println(e.getMessage());
         }
         scanner.nextLine();

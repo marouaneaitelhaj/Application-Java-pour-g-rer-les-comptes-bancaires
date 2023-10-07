@@ -1,9 +1,8 @@
 package org.example.Views;
 
 import org.example.Entity.Agence;
-import org.example.Entity.AgenceOfEmploye;
 import org.example.Entity.Employe;
-import org.example.Exceptions.AgenceException;
+import org.example.Exceptions.MyException;
 import org.example.Implementations.AgenceImpl;
 import org.example.Interfaces.AgenceInter;
 import org.example.Service.AgenceService;
@@ -75,7 +74,7 @@ public class AgenceView {
             } else {
                 System.out.println("Agence n'est pas supprimé");
             }
-        } catch (AgenceException e) {
+        } catch (MyException e) {
             System.out.println(e.getMessage());
         }
         scanner.nextLine();
@@ -90,7 +89,7 @@ public class AgenceView {
         try {
             Optional<Agence> agenceOptional = agenceService.findByAdresse(agence);
             agenceOptional.ifPresent(value -> System.out.println(value.getNom() + "        " + value.getAdresse() + "        " + value.getNumeroTelephone()));
-        } catch (AgenceException e) {
+        } catch (MyException e) {
             System.out.println(e.getMessage());
         }
         scanner.nextLine();
@@ -113,7 +112,7 @@ public class AgenceView {
             } else {
                 System.out.println("l'agence n'a pas été mise à jour");
             }
-        } catch (AgenceException e) {
+        } catch (MyException e) {
             System.out.println(e.getMessage());
         }
         scanner.nextLine();
@@ -141,7 +140,7 @@ public class AgenceView {
             agenceOptional.ifPresent(agence1 -> {
                 System.out.println(agence1.getNom() + "      " + agence1.getAdresse());
             });
-        } catch (AgenceException e) {
+        } catch (MyException e) {
             System.out.println(e.getMessage());
         }
         scanner.nextLine();
@@ -164,7 +163,7 @@ public class AgenceView {
             } else {
                 System.out.println("L'agence n'a pas ajoutée");
             }
-        } catch (AgenceException e) {
+        } catch (MyException e) {
             System.out.println(e.getMessage());
         }
         this.AgenceMenuView();

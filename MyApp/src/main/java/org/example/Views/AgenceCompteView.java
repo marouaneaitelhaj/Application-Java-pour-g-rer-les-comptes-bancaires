@@ -35,7 +35,8 @@ public class AgenceCompteView {
         System.out.println("Agence :");
         String code = scanner.nextLine();
         Agence agence = new Agence(code);
-        if (this.compteAgenceService.affectCompteAgence(compte, agence))
+        compte.setAgence(agence);
+        if (this.compteAgenceService.affectCompteAgence(compte))
             System.out.println("compte a été effectué a une agence");
         else {
             System.out.println("compte n'est pas  effectué a une agence");

@@ -1,13 +1,13 @@
 package org.example.Service;
 
 import org.example.Entity.AgenceOfEmploye;
-import org.example.Exceptions.AgenceException;
+import org.example.Exceptions.MyException;
 import org.example.Interfaces.AgenceOfEmployeInter;
 
 import java.util.List;
 import java.util.Optional;
 
-public class AgenceOfEmployeService implements AgenceOfEmployeInter {
+public class AgenceOfEmployeService{
     private final AgenceOfEmployeInter agenceOfEmployeInter;
 
     public AgenceOfEmployeService(AgenceOfEmployeInter agenceOfEmployeInter) {
@@ -15,17 +15,17 @@ public class AgenceOfEmployeService implements AgenceOfEmployeInter {
     }
 
 
-    public Optional<AgenceOfEmploye> save(AgenceOfEmploye agenceOfEmploye) throws AgenceException {
+    public Optional<AgenceOfEmploye> save(AgenceOfEmploye agenceOfEmploye) throws MyException {
         if (agenceOfEmploye.getAgence().getCode().isEmpty() || agenceOfEmploye.getEmploye().getMatricule().isEmpty())
-            throw new AgenceException("Le champ de employe ou agence est vide");
+            throw new MyException("Le champ de employe ou agence est vide");
         return this.agenceOfEmployeInter.save(agenceOfEmploye);
     }
 
 
-    public Optional<AgenceOfEmploye> update(AgenceOfEmploye agenceOfEmploye) throws AgenceException {
+    public Optional<AgenceOfEmploye> update(AgenceOfEmploye agenceOfEmploye) throws MyException {
         Optional<AgenceOfEmploye> agenceOfEmploye1 = this.agenceOfEmployeInter.update(agenceOfEmploye);
         if (agenceOfEmploye1.isEmpty()){
-            throw new AgenceException("aucun affectation trouve");
+            throw new MyException("aucun affectation trouve");
         }
         return Optional.empty();
     }
