@@ -13,14 +13,15 @@ import java.util.Scanner;
 
 public class ViremantView {
     Scanner scanner = new Scanner(System.in);
-
-    VirementImpl virementImpl = new VirementImpl();
+    CompteImpl compteImpl = new CompteImpl();
+    VirementImpl virementImpl = new VirementImpl(compteImpl);
     CompteInter compteInter = new CompteImpl();
     ViremantService viremantService = new ViremantService(virementImpl, compteInter);
 
     public void ViremantMenu() {
         System.out.println("1- Ajouter un transfert");
         System.out.println("2- Supprimer un transfert");
+        System.out.println("2- Afficher la liste des transactions");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.saveView();
@@ -28,11 +29,26 @@ public class ViremantView {
             case "2" -> {
                 this.supprimerView();
             }
+            case "3" -> {
+                this.findAll();
+            }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
                 new AgenceView();
             }
         }
+    }
+
+    private void findAll() {
+        if (this.viremantService.findAll().isEmpty()){
+
+        }else {
+            this.viremantService.findAll().forEach(virement -> {
+                System.out.println(virement.getCompteEmetteur().getClient().getNom() +"         " + virement.getCompteDestinataire().getClient().getNom() + "       " + virement.getMantant() +"$       " + virement.getDate());
+            });
+        }
+        scanner.nextLine();
+        this.ViremantMenu();
     }
 
     private void supprimerView() {

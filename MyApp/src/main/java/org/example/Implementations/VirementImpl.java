@@ -1,18 +1,24 @@
 package org.example.Implementations;
 
+import org.example.Entity.Compte;
 import org.example.Entity.Virement;
 import org.example.Helpers.DatabaseConnection;
+import org.example.Interfaces.CompteInter;
 import org.example.Interfaces.VirementInter;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class VirementImpl implements VirementInter {
     Connection connection = DatabaseConnection.getInstance().getConnection();
+    private CompteInter compteInter;
+
+    public VirementImpl(CompteInter compteInter) {
+        this.compteInter = compteInter;
+    }
 
     @Override
     public Optional<Virement> save(Virement virement) {
@@ -70,6 +76,23 @@ public class VirementImpl implements VirementInter {
 
     @Override
     public List<Virement> findAll() {
-        return null;
+        List<Virement> virements = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM virment;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Compte comptedestinataire = new Compte(resultSet.getString("comptedestinataire"));
+                Compte compteemetteur = new Compte(resultSet.getString("compteemetteur"));
+                Optional<Compte> comptedestinataireOptional = this.compteInter.findOne(comptedestinataire);
+                Optional<Compte> compteemetteurOptional = this.compteInter.findOne(compteemetteur);
+                int mantant = resultSet.getInt("mantant");
+                LocalDate date = resultSet.getDate("date").toLocalDate();
+                virements.add(new Virement(compteemetteurOptional.get(), comptedestinataireOptional.get(), mantant, date));
+            }
+        } catch (Exception e) {
+
+        }
+        return virements;
     }
 }

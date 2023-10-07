@@ -6,6 +6,7 @@ import org.example.Exceptions.MyException;
 import org.example.Interfaces.CompteInter;
 import org.example.Interfaces.VirementInter;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ViremantService {
@@ -44,11 +45,15 @@ public class ViremantService {
         if (virement.getCompteDestinataire().getNumero().isEmpty() && virement.getCompteEmetteur().getNumero().isEmpty()) {
             throw new MyException("Le champ de code est vide");
         } else {
-            if (virementInter.delete(virement)==1){
+            if (virementInter.delete(virement) == 1) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         }
+    }
+
+    public List<Virement> findAll() {
+        return virementInter.findAll();
     }
 }
