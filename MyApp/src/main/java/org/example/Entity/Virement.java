@@ -1,15 +1,27 @@
 package org.example.Entity;
 
+import java.time.LocalDate;
+
 public class Virement {
     private Compte CompteEmetteur;
 
     private Compte CompteDestinataire;
     private int mantant;
+    private LocalDate date;
 
-    public Virement(Compte compteEmetteur, Compte compteDestinataire, int mantant) {
+    public Virement(Compte compteEmetteur, Compte compteDestinataire, int mantant,LocalDate date) {
         CompteEmetteur = compteEmetteur;
         CompteDestinataire = compteDestinataire;
         this.mantant = mantant;
+        this.date = date;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Compte getCompteEmetteur() {

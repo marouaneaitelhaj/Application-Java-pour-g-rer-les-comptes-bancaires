@@ -39,4 +39,16 @@ public class ViremantService {
         }
         return false;
     }
+
+    public boolean delete(Virement virement) throws MyException {
+        if (virement.getCompteDestinataire().getNumero().isEmpty() && virement.getCompteEmetteur().getNumero().isEmpty()) {
+            throw new MyException("Le champ de code est vide");
+        } else {
+            if (virementInter.delete(virement)==1){
+                return true;
+            }else {
+                return false;
+            }
+        }
+    }
 }

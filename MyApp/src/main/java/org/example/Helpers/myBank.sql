@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS EmployeAgenceLogs (
     FOREIGN KEY (agence) REFERENCES Agence(code) ON DELETE CASCADE
     );
 CREATE TABLE IF NOT EXISTS Virment (
+    id SERIAL PRIMARY KEY,
     CompteDestinataire VARCHAR(255),
     CompteEmetteur VARCHAR(255),
     mantant int,
