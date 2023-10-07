@@ -56,4 +56,7 @@ public class ViremantService {
     public List<Virement> findAll() {
         return virementInter.findAll();
     }
+    public List<Virement> findAllByDate() {
+        return virementInter.findAllByDate();
+    }
 }

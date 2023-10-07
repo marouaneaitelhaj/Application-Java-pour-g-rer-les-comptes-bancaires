@@ -95,4 +95,25 @@ public class VirementImpl implements VirementInter {
         }
         return virements;
     }
+    @Override
+    public List<Virement> findAllByDate() {
+        List<Virement> virements = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM virment ORDER BY date;";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Compte comptedestinataire = new Compte(resultSet.getString("comptedestinataire"));
+                Compte compteemetteur = new Compte(resultSet.getString("compteemetteur"));
+                Optional<Compte> comptedestinataireOptional = this.compteInter.findOne(comptedestinataire);
+                Optional<Compte> compteemetteurOptional = this.compteInter.findOne(compteemetteur);
+                int mantant = resultSet.getInt("mantant");
+                LocalDate date = resultSet.getDate("date").toLocalDate();
+                virements.add(new Virement(compteemetteurOptional.get(), comptedestinataireOptional.get(), mantant, date));
+            }
+        } catch (Exception e) {
+
+        }
+        return virements;
+    }
 }
