@@ -2,19 +2,20 @@ package org.example.Entity;
 
 import org.example.Enums.CreditEtat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Credit {
     private String numero;
     private Client client;
     private Agence agence;
-    private Date date;
+    private LocalDate date;
     private Double montant;
     private Double duree;
     private String remarques;
     private CreditEtat creditEtat;
 
-    public Credit(String numero, Client client, Agence agence, Date date, Double montant, Double duree, String remarques, CreditEtat creditEtat) {
+    public Credit(String numero, Client client, Agence agence, LocalDate date, Double montant, Double duree, String remarques, CreditEtat creditEtat) {
         this.numero = numero;
         this.client = client;
         this.agence = agence;
@@ -52,11 +53,11 @@ public class Credit {
         this.agence = agence;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
