@@ -8,14 +8,15 @@ import java.util.Date;
 public class Credit {
     private String numero;
     private Client client;
+    public static final double TAUX = 0.12;
     private Agence agence;
     private LocalDate date;
-    private Double montant;
-    private Double duree;
+    private int montant;
+    private int duree;
     private String remarques;
     private CreditEtat creditEtat;
 
-    public Credit(String numero, Client client, Agence agence, LocalDate date, Double montant, Double duree, String remarques, CreditEtat creditEtat) {
+    public Credit(String numero, Client client, Agence agence, LocalDate date, int montant, int duree, String remarques, CreditEtat creditEtat) {
         this.numero = numero;
         this.client = client;
         this.agence = agence;
@@ -61,19 +62,19 @@ public class Credit {
         this.date = date;
     }
 
-    public Double getMontant() {
+    public int getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(int montant) {
         this.montant = montant;
     }
 
-    public Double getDuree() {
+    public int getDuree() {
         return duree;
     }
 
-    public void setDuree(Double duree) {
+    public void setDuree(int duree) {
         this.duree = duree;
     }
 

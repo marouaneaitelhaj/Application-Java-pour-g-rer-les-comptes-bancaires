@@ -16,20 +16,20 @@ public class CreditImpl implements CreditInter {
     @Override
     public Optional<Credit> save(Credit credit) {
         try {
-            String query = "INSERT INTO public.credit(numero, client, agence, date, montant, duree, remarques) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO credit(client, agence, date, montant, duree, remarques,etat) VALUES (?, ?, ?, ?, ?, ?,?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, credit.getNumero());
-            preparedStatement.setString(2, credit.getClient().getCode());
-            preparedStatement.setString(3, credit.getAgence().getCode());
-            preparedStatement.setDate(4, Date.valueOf(credit.getDate()));
-            preparedStatement.setDouble(5, credit.getMontant());
-            preparedStatement.setString(6, credit.getNumero());
+            preparedStatement.setString(1, credit.getClient().getCode());
+            preparedStatement.setString(2, credit.getAgence().getCode());
+            preparedStatement.setDate(3, Date.valueOf(credit.getDate()));
+            preparedStatement.setDouble(4, credit.getMontant());
+            preparedStatement.setInt(5, credit.getDuree());
             preparedStatement.setString(6, credit.getRemarques());
+            preparedStatement.setString(7, credit.getCreditEtat().name());
             if (preparedStatement.executeUpdate() != 0) {
                 return Optional.of(credit);
             }
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
         return Optional.empty();
     }

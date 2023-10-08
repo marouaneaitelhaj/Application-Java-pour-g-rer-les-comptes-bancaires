@@ -38,7 +38,7 @@ public class ViremantView {
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
-                new AgenceView();
+                this.ViremantMenu();
             }
         }
     }
