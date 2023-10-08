@@ -30,6 +30,10 @@ public class Credit {
 
     }
 
+    public Credit(String numero) {
+        this.numero = numero;
+    }
+
     public String getNumero() {
         return numero;
     }
