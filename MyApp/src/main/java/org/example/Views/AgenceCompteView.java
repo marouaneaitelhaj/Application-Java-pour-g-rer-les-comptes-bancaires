@@ -23,7 +23,7 @@ public class AgenceCompteView {
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
-                new CompteView();
+                this.AgenceCompteMenu();
             }
         }
     }

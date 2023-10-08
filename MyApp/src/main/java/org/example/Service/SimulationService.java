@@ -1,10 +1,26 @@
 package org.example.Service;
 
-public class SimulationService {
+import org.example.Entity.Credit;
+import org.example.Interfaces.CreditInter;
 
-    public int createSimulation(int capitalEmprunte, int tauxAnnuelProportionnel, int nombreDeMensualites) {
-        double a = capitalEmprunte * (tauxAnnuelProportionnel / 12);
-        double b = Math.pow(1 - (1 + (tauxAnnuelProportionnel / 12)), -nombreDeMensualites);
-        return (int) (a / b);
+import java.util.Optional;
+
+public class SimulationService {
+    private CreditInter creditInter;
+
+    public SimulationService(CreditInter creditInter) {
+        this.creditInter = creditInter;
+    }
+
+    public Optional<Credit> save(Credit credit) {
+        return creditInter.save(credit);
+    }
+
+    public double createSimulation(int montant, int mensualite) {
+        double a = montant * (Credit.TAUX / 12);
+        System.out.println("a "+ a);
+        double b = Math.pow(1 - (1 + (Credit.TAUX / mensualite)), -mensualite);
+        System.out.println("b "+ b);
+        return a/b;
     }
 }

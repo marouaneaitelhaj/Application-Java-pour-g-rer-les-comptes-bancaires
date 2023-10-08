@@ -19,6 +19,7 @@ public class MainPage {
         System.out.println("9- Agence et compte");
         System.out.println("10- Virement");
         System.out.println("11- Créer une simulation");
+        System.out.println("12- Credit");
         switch (scanner.nextLine()) {
             case "1" -> {
                 EmplyeeView emplyeeView = new EmplyeeView();
@@ -57,6 +58,10 @@ public class MainPage {
             case "11" ->{
                 SimulationView simulationView= new SimulationView();
                 simulationView.simulation();
+            }
+            case "12" ->{
+                CreditView creditView= new CreditView();
+                creditView.creditViewmenu();
             }
             default -> {
                 System.out.println("Vous devez choisir un choix valide");
