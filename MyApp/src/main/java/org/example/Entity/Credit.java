@@ -11,12 +11,22 @@ public class Credit {
     public static final double TAUX = 0.12;
     private Agence agence;
     private LocalDate date;
-    private int montant;
-    private int duree;
+    private Double montant;
+    private Double duree;
     private String remarques;
     private CreditEtat creditEtat;
 
-    public Credit(String numero, Client client, Agence agence, LocalDate date, int montant, int duree, String remarques, CreditEtat creditEtat) {
+    public Credit(String numero, Client client, Agence agence, LocalDate date, Double montant, Double duree, String remarques, CreditEtat creditEtat) {
+        this.numero = numero;
+        this.client = client;
+        this.agence = agence;
+        this.date = date;
+        this.montant = montant;
+        this.duree = duree;
+        this.remarques = remarques;
+        this.creditEtat = creditEtat;
+    }
+    public Credit(String numero, Client client, Agence agence, Double montant, Double duree, String remarques, CreditEtat creditEtat) {
         this.numero = numero;
         this.client = client;
         this.agence = agence;
@@ -66,19 +76,19 @@ public class Credit {
         this.date = date;
     }
 
-    public int getMontant() {
+    public Double getMontant() {
         return montant;
     }
 
-    public void setMontant(int montant) {
+    public void setMontant(Double montant) {
         this.montant = montant;
     }
 
-    public int getDuree() {
+    public Double getDuree() {
         return duree;
     }
 
-    public void setDuree(int duree) {
+    public void setDuree(Double duree) {
         this.duree = duree;
     }
 

@@ -16,11 +16,9 @@ public class SimulationService {
         return creditInter.save(credit);
     }
 
-    public double createSimulation(int montant, int mensualite) {
-        double a = montant * (Credit.TAUX / 12);
-        System.out.println("a "+ a);
-        double b = Math.pow(1 - (1 + (Credit.TAUX / mensualite)), -mensualite);
-        System.out.println("b "+ b);
-        return a/b;
+    public double createSimulation(Double capitale,int nombremensualite) {
+        double tauxMensuel = (Credit.TAUX / 12) / 100;
+        return (capitale * tauxMensuel * Math.pow(1 + tauxMensuel, nombremensualite))
+                / (Math.pow(1 + tauxMensuel, nombremensualite) - 1);
     }
 }

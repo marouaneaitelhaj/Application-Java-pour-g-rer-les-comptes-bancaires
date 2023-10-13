@@ -16,7 +16,7 @@ public class SimulationView {
     SimulationService simulationService = new SimulationService(creditImpl);
 
     public void SimulationMenu() {
-        System.out.println("Créer une simulation");
+        System.out.println("Creer une simulation");
         switch (scanner.nextLine()) {
             case "1" -> {
                 this.simulation();
@@ -29,18 +29,20 @@ public class SimulationView {
     }
 
     public void simulation() {
-        System.out.print("montant de credit:");
-        int montant = scanner.nextInt();
-        System.out.print("nombre de mensualite:");
-        int mensualite = scanner.nextInt();
-        double result = simulationService.createSimulation(montant, mensualite);
-        System.out.println("Result " + (int) result);
+        System.out.print("le Capitale : ");
+        Double capitale=scanner.nextDouble();
+        /*System.out.print("le Taux : ");
+        Double taux=scanner.nextDouble();*/
+        System.out.print("le Nombre mensualite : ");
+        int nombremensualite=scanner.nextInt();
+        double mensualite = simulationService.createSimulation(capitale,nombremensualite);
+        System.out.printf("La mensualité est d'environ %.2f euros par mois.%n", mensualite);
         scanner.nextLine();
         System.out.println("1- Valider la simulation pour le credit? :");
         System.out.println("2- non :");
         switch (scanner.nextLine()) {
             case "1" -> {
-                this.validerUnSimulation(mensualite, montant);
+                this.validerUnSimulation(mensualite, capitale);
             }
             case "2" -> {
                 this.SimulationMenu();
@@ -53,7 +55,7 @@ public class SimulationView {
 
     }
 
-    private void validerUnSimulation(int mensualite, int montant) {
+    private void validerUnSimulation(Double mensualite, Double montant) {
         System.out.println("numero : ");
         String numero = scanner.nextLine();
         System.out.println("Client : ");
@@ -62,7 +64,7 @@ public class SimulationView {
         Agence agence = new Agence(scanner.nextLine());
         System.out.println("remarques : ");
         String remarques = scanner.nextLine();
-        Credit credit = new Credit(numero, client, agence, LocalDate.now(), montant, mensualite, remarques, CreditEtat.EN_ATTENTE);
+        Credit credit = new Credit(numero, client, agence, montant, mensualite, remarques, CreditEtat.EN_ATTENTE);
         if (simulationService.save(credit).isPresent()) {
             System.out.println("Credit is added");
         } else {

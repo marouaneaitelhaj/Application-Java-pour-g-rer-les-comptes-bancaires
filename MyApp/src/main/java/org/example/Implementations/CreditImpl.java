@@ -19,17 +19,28 @@ public class CreditImpl implements CreditInter {
     @Override
     public Optional<Credit> save(Credit credit) {
         try {
-            String query = "INSERT INTO credit(client, agence, date, montant, duree, remarques,etat) VALUES (?, ?, ?, ?, ?, ?,?);";
+            String query = "INSERT INTO credit(client, agence, date, montant, duree, remarques,etat) VALUES (?, ?, ?, ?, ?, ?,?) RETURNING *;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, credit.getClient().getCode());
             preparedStatement.setString(2, credit.getAgence().getCode());
-            preparedStatement.setDate(3, Date.valueOf(credit.getDate()));
+            preparedStatement.setString(3, Date.valueOf(LocalDate.now()).toString());
             preparedStatement.setDouble(4, credit.getMontant());
-            preparedStatement.setInt(5, credit.getDuree());
+            preparedStatement.setDouble(5, credit.getDuree());
             preparedStatement.setString(6, credit.getRemarques());
             preparedStatement.setString(7, credit.getCreditEtat().name());
-            if (preparedStatement.executeUpdate() != 0) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                credit.setNumero(resultSet.getString("numero"));
+                credit.setClient(new Client(resultSet.getString("client")));
+                credit.setAgence(new Agence(resultSet.getString("agence")));
+                credit.setDate(LocalDate.parse(resultSet.getString("date")));
+                credit.setMontant(resultSet.getDouble("montant"));
+                credit.setDuree(resultSet.getDouble("duree"));
+                credit.setRemarques(resultSet.getString("remarques"));
+                credit.setCreditEtat(CreditEtat.valueOf(resultSet.getString("etat")));
                 return Optional.of(credit);
+            } else {
+                return Optional.empty();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -71,8 +82,8 @@ public class CreditImpl implements CreditInter {
                 credit.setClient(new Client(resultSet.getString("client")));
                 credit.setAgence(new Agence(resultSet.getString("agence")));
                 credit.setDate(LocalDate.parse(resultSet.getString("date")));
-                credit.setMontant(resultSet.getInt("montant"));
-                credit.setDuree(resultSet.getInt("duree"));
+                credit.setMontant(resultSet.getDouble("montant"));
+                credit.setDuree(resultSet.getDouble("duree"));
                 credit.setRemarques(resultSet.getString("remarques"));
                 credit.setCreditEtat(CreditEtat.valueOf(resultSet.getString("etat")));
             }
@@ -95,8 +106,8 @@ public class CreditImpl implements CreditInter {
                 Client client = new Client(resultSet.getString("client"));
                 Agence agence = new Agence(resultSet.getString("agence"));
                 credit.setDate(LocalDate.parse(resultSet.getString("date")));
-                credit.setMontant(resultSet.getInt("montant"));
-                credit.setDuree(resultSet.getInt("duree"));
+                credit.setMontant(resultSet.getDouble("montant"));
+                credit.setDuree(resultSet.getDouble("duree"));
                 credit.setRemarques(resultSet.getString("remarques"));
                 credit.setCreditEtat(CreditEtat.valueOf(resultSet.getString("etat")));
                 creditList.add(credit);
@@ -119,8 +130,8 @@ public class CreditImpl implements CreditInter {
                 Client client = new Client(resultSet.getString("client"));
                 Agence agence = new Agence(resultSet.getString("agence"));
                 credit.setDate(LocalDate.parse(resultSet.getString("date")));
-                credit.setMontant(resultSet.getInt("montant"));
-                credit.setDuree(resultSet.getInt("duree"));
+                credit.setMontant(resultSet.getDouble("montant"));
+                credit.setDuree(resultSet.getDouble("duree"));
                 credit.setRemarques(resultSet.getString("remarques"));
                 credit.setCreditEtat(CreditEtat.valueOf(resultSet.getString("etat")));
                 creditList.add(credit);
@@ -143,8 +154,8 @@ public class CreditImpl implements CreditInter {
                 Client client = new Client(resultSet.getString("client"));
                 Agence agence = new Agence(resultSet.getString("agence"));
                 credit.setDate(LocalDate.parse(resultSet.getString("date")));
-                credit.setMontant(resultSet.getInt("montant"));
-                credit.setDuree(resultSet.getInt("duree"));
+                credit.setMontant(resultSet.getDouble("montant"));
+                credit.setDuree(resultSet.getDouble("duree"));
                 credit.setRemarques(resultSet.getString("remarques"));
                 credit.setCreditEtat(CreditEtat.valueOf(resultSet.getString("etat")));
                 creditList.add(credit);

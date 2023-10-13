@@ -35,7 +35,7 @@ public class ClientImpl implements ClientInter {
     }
 
     @Override
-    public Optional<Client> update(Client client) {
+        public Optional<Client> update(Client client) {
         try {
             String query = "UPDATE client SET nom=?, prenom=?, telephone=?, adresse=?, datedenaissance=? WHERE code=?;";
             PreparedStatement statement = connection.prepareStatement(query);

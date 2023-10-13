@@ -3,6 +3,7 @@ package org.example.Implementations;
 import org.example.Entity.Agence;
 import org.example.Entity.AgenceOfEmploye;
 import org.example.Entity.Employe;
+import org.example.Enums.AffectationStatus;
 import org.example.Helpers.DatabaseConnection;
 import org.example.Interfaces.AgenceInter;
 import org.example.Interfaces.AgenceOfEmployeInter;
@@ -35,11 +36,15 @@ public class AgenceOfEmployeImpl implements AgenceOfEmployeInter {
             preparedStatement.setString(2, agenceOfEmploye.getEmploye().getMatricule());
             preparedStatement.setString(3, agenceOfEmploye.getAgence().getCode());
             preparedStatement.setString(4, agenceOfEmploye.getAffectationStatus().name());
-            int rowaffected = preparedStatement.executeUpdate();
-            if (rowaffected == 0) {
-                return Optional.empty();
-            } else {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                agenceOfEmploye.setDate(resultSet.getDate("date").toLocalDate());
+                agenceOfEmploye.setEmploye(new Employe(resultSet.getString("employe")));
+                agenceOfEmploye.setAgence(new Agence(resultSet.getString("agence")));
+                agenceOfEmploye.setAffectationStatus(AffectationStatus.valueOf(resultSet.getString("status")));
                 return Optional.of(agenceOfEmploye);
+            } else {
+                return Optional.empty();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -50,16 +55,21 @@ public class AgenceOfEmployeImpl implements AgenceOfEmployeInter {
     @Override
     public Optional<AgenceOfEmploye> update(AgenceOfEmploye agenceOfEmploye) {
         try {
-            String query = "UPDATE employeagencelogs SET status=? WHERE date=? and employe=? and agence=?;";
+            String query = "UPDATE employeagencelogs SET status=? WHERE date=? and employe=? and agence=? RETURNING *;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, agenceOfEmploye.getAffectationStatus().name());
             preparedStatement.setDate(2, Date.valueOf(agenceOfEmploye.getDate()));
             preparedStatement.setString(3, agenceOfEmploye.getEmploye().getMatricule());
             preparedStatement.setString(4, agenceOfEmploye.getAgence().getCode());
-            if (preparedStatement.executeUpdate() == 0) {
-                return Optional.empty();
-            } else {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                agenceOfEmploye.setDate(resultSet.getDate("date").toLocalDate());
+                agenceOfEmploye.setEmploye(new Employe(resultSet.getString("employe")));
+                agenceOfEmploye.setAgence(new Agence(resultSet.getString("agence")));
+                agenceOfEmploye.setAffectationStatus(AffectationStatus.valueOf(resultSet.getString("status")));
                 return Optional.of(agenceOfEmploye);
+            } else {
+                return Optional.empty();
             }
         } catch (Exception e) {
 

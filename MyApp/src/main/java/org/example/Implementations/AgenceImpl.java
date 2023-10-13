@@ -19,17 +19,21 @@ public class AgenceImpl implements AgenceInter {
     @Override
     public Optional<Agence> save(Agence agence) {
         try {
-            String query = "INSERT INTO agence(code, nom, adresse, numero) VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO agence(code, nom, adresse, numero) VALUES (?, ?, ?, ?) RETURNING *;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, agence.getCode());
             preparedStatement.setString(2, agence.getNom());
             preparedStatement.setString(3, agence.getAdresse());
             preparedStatement.setString(4, agence.getNumeroTelephone());
-            int rowAffected = preparedStatement.executeUpdate();
-            if (rowAffected == 0) {
-                return Optional.empty();
-            } else {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                agence.setCode(resultSet.getString("code"));
+                agence.setNom(resultSet.getString("nom"));
+                agence.setAdresse(resultSet.getString("adresse"));
+                agence.setNumeroTelephone(resultSet.getString("numero"));
                 return Optional.of(agence);
+            } else {
+                return Optional.empty();
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -40,17 +44,21 @@ public class AgenceImpl implements AgenceInter {
     @Override
     public Optional<Agence> update(Agence agence) {
         try {
-            String query = "UPDATE agence SET nom=?, adresse=?, numero=? WHERE code=?;";
+            String query = "UPDATE agence SET nom=?, adresse=?, numero=? WHERE code=? RETURNING *;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, agence.getNom());
             preparedStatement.setString(2, agence.getAdresse());
             preparedStatement.setString(3, agence.getNumeroTelephone());
             preparedStatement.setString(4, agence.getCode());
-            int rowAffected = preparedStatement.executeUpdate();
-            if (rowAffected == 0) {
-                return Optional.empty();
-            } else {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                agence.setCode(resultSet.getString("code"));
+                agence.setNom(resultSet.getString("nom"));
+                agence.setAdresse(resultSet.getString("adresse"));
+                agence.setNumeroTelephone(resultSet.getString("numero"));
                 return Optional.of(agence);
+            } else {
+                return Optional.empty();
             }
         } catch (Exception e) {
             System.out.println(e);
